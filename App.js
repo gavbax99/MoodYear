@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
-//import * as Font from 'expo-font';
-//import { AppLoading } from 'expo';
-//import { enableScreens } from 'react-native-screens';
 
+// Font
+//import * as Font from 'expo-font';
+// import { AppLoading } from 'expo';
+
+// Screens
+import { enableScreens } from 'react-native-screens';
+
+// Nav
 import AppNavigator from "./navigation/AppNavigator";
 
-//import { Provider } from "react-redux";
-//import { createStore, combineReducers } from "redux";
-//import mealsReducer from "./store/reducers/meals";
+// Redux
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import reducer from "./store/reducers/index";
 
-//enableScreens();
+// ====================
 
-// const rootReducer = combineReducers({
-// 	meals: mealsReducer,
-// 	// key: otherReducer
-// })
+enableScreens();
 
-// const store = createStore(rootReducer);
+const store = createStore(reducer);
 
 // const fetchFonts = () => {
 // 	return Font.loadAsync({
@@ -25,6 +28,9 @@ import AppNavigator from "./navigation/AppNavigator";
 // 	});
 // };
 
+// ====================
+
+// App
 export default function App() {
 	//const [fontLoaded, setFontLoaded] = useState(false);
 
@@ -32,5 +38,9 @@ export default function App() {
 	// 	return <AppLoading startAsync={fetchFonts} onFinish={() => setFontLoaded(true)} />
 	// }
 
-	return <AppNavigator />;
+	return (
+		<Provider store={store}>
+			<AppNavigator />
+		</Provider>
+	);
 };

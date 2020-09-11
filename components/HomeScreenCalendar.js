@@ -1,6 +1,6 @@
 // React
 import React from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 
 // Data
 import Year2020 from "../data/Year2020";
@@ -11,6 +11,7 @@ import HomeScreenMonth from '../components/HomeScreenMonth';
 
 // ==================== Component
 const HomeScreenCalendar = props => {
+
 	// Months to be rendered
 	let renderMonths = [];
 
@@ -38,27 +39,59 @@ const HomeScreenCalendar = props => {
 	}, 0);
 
 	return (
-		<ScrollView scrollEnabled={false} contentContainerStyle={styles.calendar}>
-			
-			{/* Render our months */}
-			{renderMonths.map((monthArr) => {
-				return (
-					<HomeScreenMonth data={monthArr} />
-				);
-			})}
+		<View style={styles.calendar}>
 
-		</ScrollView>
+			{/* List of months */}
+			<View style={styles.calendarInner}>
+				{/* Render our months */}
+				{renderMonths.map((monthArr, i) => {
+					return (
+						<HomeScreenMonth 
+							data={monthArr} 
+							key={i} />
+					);
+				})}
+			</View>
+
+			{/* Blackout */}
+			<View style={styles.calendarBlackout}></View>
+
+		</View>
 	);
 }
 
 // ==================== Styles
 const styles = StyleSheet.create({
 	calendar: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		borderWidth: 1,
+		borderColor: "red",
+
+		// flex: 1,
+		// position: "relative",
+		// borderWidth: 1,
+		// borderColor: "red",
+		// height: 700
+	},
+	calendarInner: {
 		flex: 1,
-		justifyContent: "space-evenly",
 		alignItems: "flex-start",
+		justifyContent: "flex-start",
 		flexDirection: "row",
 		flexWrap: "wrap",
+		padding: "2%",
+	},
+	calendarBlackout: {
+		position: "absolute",
+		top: 0,
+		right: 0,
+		bottom: 0,
+		left: 0,
+		backgroundColor: "rgba(0,0,0,0.5)",
 	}
 });
 

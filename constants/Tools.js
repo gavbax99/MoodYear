@@ -3,7 +3,7 @@ export default {
 	primaryColor: "#4a148c",
 	accentColor: "#ff6f00",
 
-	colorLight: "rgb(236, 236, 236)",
+	colorLight: "#f4fbff",
 
 	colorBackground: "rgb(31, 31, 38)",
 	colorHeaderGrey: "rgb(20, 20, 24)",

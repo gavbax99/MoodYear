@@ -1,6 +1,6 @@
 // React
 import React from 'react';
-import { StyleSheet, FlatList, View, Text } from 'react-native';
+import { StyleSheet, FlatList, View, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 // Constants
 import Tools from '../constants/Tools';
@@ -8,6 +8,7 @@ import Tools from '../constants/Tools';
 // Components
 import AppHeader from '../components/AppHeader';
 import HomeScreenCalendar from '../components/HomeScreenCalendar';
+import HomeScreenBottomCard from '../components/HomeScreenBottomCard';
 
 
 // ==================== Functional component 
@@ -21,17 +22,37 @@ const HomeScreen = props => {
 	const day = daysOfWeek[date.getDay()];
 	const dayDate = ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
 
+	const handleTouchableWithoutFeedback = () => {
+		console.log("try")
+		Keyboard.dismiss();
+	}
+
 	return (
-		<View style={styles.screen}>
-			<AppHeader />
+		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
+			<View style={styles.screen}>
 
-			<HomeScreenCalendar style={styles.homeScreenCalendar} />
+				{/* Header */}
+				<AppHeader />
 
-			<View style={styles.dayTextContainer}>
-				<Text style={styles.dayText}>{day}</Text>
-				<Text style={styles.dayTextDate}>{dayDate}</Text>
+				{/* Inner screen */}
+				<View style={styles.innerScreen}>
+					<HomeScreenCalendar style={styles.homeScreenCalendar} />
+
+					{/* <View style={styles.reviewContainer}>
+						<Text style={styles.review}>{day}</Text>
+						<Text style={styles.reviewDate}>{dayDate}</Text>
+					</View> */}
+
+					{/* <View>
+						<Text>hi</Text>
+					</View> */}
+
+					{/* Bottom card */}
+					<HomeScreenBottomCard />
+				</View>
+
 			</View>
-		</View>
+		</TouchableWithoutFeedback>
 	);
 };
 
@@ -40,20 +61,30 @@ const HomeScreen = props => {
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,
-		justifyContent: "flex-start",
+		justifyContent: "space-between",
 		alignItems: "center",
 		backgroundColor: Tools.colorBackground,
 	},
-	dayTextContainer: {
+	innerScreen: {
+		position: "relative",
 		width: "100%",
-		marginTop: 20,
+		flex: 1,
 		flexDirection: "column",
+		justifyContent: "flex-end",
+		alignItems: "center",
+		// borderWidth: 1,
+		// borderColor: "purple",
 	},
-	homeScreenCalendar: {
-		flexDirection: "row",
-				borderWidth: 1,
-		borderColor: "blue"
-	}
+	// reviewContainer: {
+	// 	flex: 1,
+	// 	width: "100%",
+	// 	flexDirection: "column",
+	// 	borderWidth: 1,
+	// 	borderColor: "blue",
+	// },
+	// review: {
+	// 	flex: 1,
+	// }
 });
 
 export default HomeScreen;

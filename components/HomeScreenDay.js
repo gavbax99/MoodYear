@@ -14,9 +14,10 @@ const HomeScreenDay = props => {
 // ==================== Styles
 const styles = StyleSheet.create({
 	day: {
-		width: 12, 
-		height: 12,
-		margin: 2,
+		width: "10.75%",
+		paddingTop: "10%",
+		margin: "1.75%",
+
 		borderRadius: 2,
 		shadowColor: '#101010',
 		shadowOffset: { width: 0, height: 2 },
