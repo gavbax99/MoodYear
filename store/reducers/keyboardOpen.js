@@ -1,48 +1,13 @@
-// import { MEALS } from "../../data/dummy-data";
-// import { TOGGLE_FAVORITE, SET_FILTERS } from "../actions/meals";
+import { SET_KEYBOARD_OPEN } from "../actions/actions";
 
 const initialState = {
-	keyboardOpen: false,
-
-	// meals: MEALS,
-	// filteredMeals: MEALS,
-	// favoriteMeals: []
+	keyboardOpenState: false,
 }
 
-const reducer = (state = initialState, action) => {
+const keyboardOpen = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_KEYBOARD_OPEN:
-			return { ...state, keyboardOpen: action.openBool };
-
-		// case TOGGLE_FAVORITE:
-			// const existingIndex = state.favoriteMeals.findIndex(meal => meal.id === action.mealId);
-			// if (existingIndex >= 0) {
-			// 	const updatedFavMeals = [...state.favoriteMeals];
-			// 	updatedFavMeals.splice(existingIndex, 1);
-			// 	return { ...state, favoriteMeals: updatedFavMeals };
-			// } else {
-			// 	const meal = state.meals.find(meal => meal.id === action.mealId);
-			// 	return { ...state, favoriteMeals: state.favoriteMeals.concat(meal) };
-			// }
-
-		// case SET_FILTERS:
-			// const appliedFilters = action.filters;
-			// const updatedFilteredMeals = state.meals.filter(meal => {
-			// 	if (appliedFilters.glutenFree && !meal.isGlutenFree) {
-			// 		return false;
-			// 	}
-			// 	if (appliedFilters.vegetarian && !meal.isVegetarian) {
-			// 		return false;
-			// 	}
-			// 	if (appliedFilters.lactoseFree && !meal.isLactoseFree) {
-			// 		return false;
-			// 	}
-			// 	if (appliedFilters.vegan && !meal.isVegan) {
-			// 		return false;
-			// 	}
-			// 	return true;
-			// });
-			// return { ...state, filteredMeals: updatedFilteredMeals };
+			return { ...state, keyboardOpenState: action.openBool };
 
 		default:
 			return state;
@@ -50,4 +15,4 @@ const reducer = (state = initialState, action) => {
 	return state;
 }
 
-export default reducer;
+export default keyboardOpen;

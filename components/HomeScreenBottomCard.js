@@ -19,7 +19,8 @@ import Tools from '../constants/Tools';
 // ==================== Component
 const HomeScreenBottomCard = props => {
 
-	const [textInputValue, onChangeText] = React.useState('Useless Placeholder');
+	const [textInputValue, onChangeText] = React.useState("");
+	const [textboxHeight, setTextboxHeight] = useState(40);
 
 	// useEffect(() => {
 
@@ -30,17 +31,30 @@ const HomeScreenBottomCard = props => {
 	}
 	
 	// Date
+	console.log("date start");
 	const date = new Date();
 	const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
 	const day = daysOfWeek[date.getDay()];
 	const dayDate = ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+	console.log("date end");
 
+	const charactersLeft = textInputValue.length;
+
+	// Functions
+	const changeTextboxHeight = (heightInt) => {
+		setTextboxHeight(heightInt);
+	}
+
+	const handleTextChange = (textString) => {
+		onChangeText(textString);
+	}
+	
 	return (
 		<KeyboardAvoidingView 
 			behavior="padding" 
-			style={{borderColor: "blue",borderWidth: 1}}
+			style={{ borderColor: "blue", borderWidth: 1 }}
 			keyboardVerticalOffset={83}>
-			<View style={styles.screen}>
+			<View style={{...styles.screen, paddingBottom: 30}}>
 
 				{/* Date row */}
 				<View style={styles.dateRow}>
@@ -73,10 +87,11 @@ const HomeScreenBottomCard = props => {
 				{/* Input row */}
 				<View style={styles.inputRow}>
 					<TextInput
-						style={styles.textInput}
-						onChangeText={text => onChangeText(text)}
+						style={{ ...styles.textInput, height: textboxHeight }}
+						onChangeText={text => handleTextChange(text)}
 						multiline={true}
-						numberOfLines={1}
+						onFocus={() => setTextboxHeight(120)}
+						onBlur={() => setTextboxHeight(40)}
 						value={textInputValue}
 						/>
 				</View>
@@ -149,6 +164,11 @@ const styles = StyleSheet.create({
 	textInput: {
 		minWidth: "100%",
 		maxWidth: "100%",
+		backgroundColor: Tools.colorLight,
+		paddingHorizontal: Tools.paddingHalf,
+		paddingTop: Tools.paddingHalf,
+		borderRadius: 2,
+		fontSize: 16
 	}
 });
 

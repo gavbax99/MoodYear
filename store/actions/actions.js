@@ -1,7 +1,4 @@
-// export const TOGGLE_FAVORITE = "TOGGLE_FAVORITE";
-// export const SET_FILTERS = "SET_FILTERS";
 export const SET_KEYBOARD_OPEN = "SET_KEYBOARD_OPEN";
-
 
 export const setKeyboardOpen = (openBool) => {
 	return {
@@ -9,17 +6,3 @@ export const setKeyboardOpen = (openBool) => {
 		openBool: openBool
 	}
 }
-
-// export const toggleFavorite = (id) => {
-// 	return {
-// 		type: TOGGLE_FAVORITE,
-// 		mealId: id
-// 	}
-// }
-
-// export const setFilters = (filterSettings) => {
-// 	return {
-// 		type: SET_FILTERS,
-// 		filters: filterSettings
-// 	}
-// }

@@ -22,6 +22,7 @@ export default {
 	// Font sizes
 
 	// Padding
+	paddingHalf: "2%",
 	paddingNormal: "4%",
 	paddingMonths: "10%",
 };
