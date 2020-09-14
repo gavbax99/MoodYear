@@ -6,7 +6,7 @@ export default {
 	colorLight: "#f4fbff",
 	colorTextboxGrey: "#565656",
 
-	colorBackground: "rgb(31, 31, 38)",
+	colorBackground: "#1F1F1F",
 	colorHeaderGrey: "rgb(20, 20, 24)",
 
 	// Colors of feelings

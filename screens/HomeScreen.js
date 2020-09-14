@@ -14,6 +14,8 @@ import HomeScreenBottomCard from '../components/HomeScreenBottomCard';
 // ==================== Functional component 
 const HomeScreen = props => {
 
+	console.log("HomeScreen");
+
 	// console.log((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
 	// console.log(date.getDay());
 	
@@ -37,6 +39,7 @@ const HomeScreen = props => {
 				<View style={styles.innerScreen}>
 					{/* Calendar */}
 					<HomeScreenCalendar style={styles.homeScreenCalendar} />
+					{/* <HomeScreenCalendarBlackout /> */}
 
 					{/* Bottom card */}
 					<HomeScreenBottomCard />

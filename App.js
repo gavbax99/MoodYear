@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { StatusBar } from "react-native";
 
 // Font
 //import * as Font from 'expo-font';
@@ -32,6 +33,8 @@ const store = createStore(reducer);
 
 // App
 export default function App() {
+	console.log("App render");
+	StatusBar.setHidden(true);
 	//const [fontLoaded, setFontLoaded] = useState(false);
 
 	// if (!fontLoaded) {

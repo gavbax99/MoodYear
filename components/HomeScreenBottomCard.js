@@ -24,9 +24,10 @@ import Tools from '../constants/Tools';
 // ==================== Component
 const HomeScreenBottomCard = props => {
 
-	console.log("here");
+	console.log("HomeScreenBottomCard");
 
 	const [textInputValue, onChangeText] = React.useState("");
+	const [textInputHoldValue, setTextInputHoldValue] = useState("");
 	const [textboxHeight, setTextboxHeight] = useState(36);
 	
 	const dispatch = useDispatch();
@@ -60,14 +61,17 @@ const HomeScreenBottomCard = props => {
 		underInputRowOverflow = "visible";
 	};
 
-	const handleTextboxHeightChange = (heightInt) => {
-		if (heightInt === 36) {
-			dispatch(setKeyboardOpen(false));
-		} else {
-			dispatch(setKeyboardOpen(true));
-		}
-		
-		setTextboxHeight(heightInt);
+	// Textbox functions
+	const onTextboxFocus = () => {
+		const height = 128;
+		dispatch(setKeyboardOpen(true));
+		setTextboxHeight(height);
+	};
+
+	const onTextboxBlur = () => {
+		const height = 36;
+		setTextboxHeight(height);
+		dispatch(setKeyboardOpen(false));
 	};
 	
 	return (
@@ -108,18 +112,20 @@ const HomeScreenBottomCard = props => {
 				<View style={styles.inputRow}>
 					<TextInput
 						style={{ ...styles.textInput, height: textboxHeight }}
-						// style={{ ...styles.textInput}}
 						onChangeText={text => onChangeText(text)}
 						multiline={true}
-						onFocus={() => handleTextboxHeightChange(128)}
-						onBlur={() => handleTextboxHeightChange(36)}
+						numberOfLines={1}
+						onFocus={() => onTextboxFocus()}
+						onBlur={() => onTextboxBlur()}
 						maxLength={characaterLimit}
 						placeholder={"How are you?"}
 						selectionColor={Tools.colorLight}
+						keyboardAppearance={"dark"}
 						value={textInputValue}
 						/>
 				</View>
 
+				{/* Under nput row */}
 				<View style={{ ...styles.underInputRow, maxHeight: textBoxDisplay, overflow: underInputRowOverflow }}>
 					<Text style={styles.underInputText}>
 						{charactersLeft}/{characaterLimit}
@@ -197,7 +203,7 @@ const styles = StyleSheet.create({
 		maxWidth: "100%",
 		backgroundColor: Tools.colorTextboxGrey,
 		color: Tools.colorLight,
-		// textAlignVertical: "top",
+		textAlignVertical: "top",
 		paddingHorizontal: 12,
 		paddingTop: 8,
 		paddingBottom: 8,

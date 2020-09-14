@@ -14,16 +14,13 @@ import HomeScreenMonth from '../components/HomeScreenMonth';
 
 
 // ==================== Component
-const HomeScreenCalendar = React.memo(() => {
+const HomeScreenCalendar = props => {
 
-	console.log("but hwy");
+	console.log("HomeScreenCalendar");
 
-	const keyboardIsOpen = useSelector(state => state.keyboardOpenReducer.keyboardOpenState);
-	let blackoutOpacityValue = 0;
-	if (keyboardIsOpen) blackoutOpacityValue = 1;
-
-
-	// console.log(keyboardIsOpen);
+	// const keyboardIsOpen = useSelector(state => state.keyboardOpenReducer.keyboardOpenState);
+	// let blackoutOpacityValue = 0;
+	// if (keyboardIsOpen) blackoutOpacityValue = 1;
 
 	// Months to be rendered
 	let renderMonths = [];
@@ -37,6 +34,7 @@ const HomeScreenCalendar = React.memo(() => {
 	// console.log(`Current day: ${currentDay}`);
 
 	// Separate data into months
+	let newDaysArr = [...Year2020.days];
 	Year2020.monthLength.reduce((t, monthArr, i) => {
 		// if today
 		// console.log(`currentDay: ${currentDay} | t: ${t} | monthArr[i]: ${monthArr[i]}`)
@@ -46,7 +44,7 @@ const HomeScreenCalendar = React.memo(() => {
 		// 	console.log(Year2020.days[currentDay]);
 		// }
 
-		const nextArr = Year2020.days.splice(t, Year2020.monthLength[i]);
+		const nextArr = newDaysArr.splice(t, Year2020.monthLength[i]);
 		renderMonths.push(nextArr);
 		return t += monthArr[i];
 	}, 0);
@@ -71,7 +69,7 @@ const HomeScreenCalendar = React.memo(() => {
 
 		</View>
 	);
-});
+};
 
 // ==================== Styles
 const styles = StyleSheet.create({
@@ -90,14 +88,14 @@ const styles = StyleSheet.create({
 		flexWrap: "wrap",
 		padding: "2%",
 	},
-	calendarBlackout: {
-		position: "absolute",
-		top: 0,
-		right: 0,
-		bottom: 0,
-		left: 0,
-		backgroundColor: "rgba(0,0,0,0.3)",
-	}
+	// calendarBlackout: {
+	// 	position: "absolute",
+	// 	top: 0,
+	// 	right: 0,
+	// 	bottom: 0,
+	// 	left: 0,
+	// 	backgroundColor: "rgba(0,0,0,0.3)",
+	// }
 });
 
 export default HomeScreenCalendar;
