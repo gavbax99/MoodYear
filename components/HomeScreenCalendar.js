@@ -1,6 +1,10 @@
 // React
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+
 
 // Data
 import Year2020 from "../data/Year2020";
@@ -10,7 +14,16 @@ import HomeScreenMonth from '../components/HomeScreenMonth';
 
 
 // ==================== Component
-const HomeScreenCalendar = props => {
+const HomeScreenCalendar = React.memo(() => {
+
+	console.log("but hwy");
+
+	const keyboardIsOpen = useSelector(state => state.keyboardOpenReducer.keyboardOpenState);
+	let blackoutOpacityValue = 0;
+	if (keyboardIsOpen) blackoutOpacityValue = 1;
+
+
+	// console.log(keyboardIsOpen);
 
 	// Months to be rendered
 	let renderMonths = [];
@@ -54,11 +67,11 @@ const HomeScreenCalendar = props => {
 			</View>
 
 			{/* Blackout */}
-			<View style={styles.calendarBlackout}></View>
+			{/* <View style={{...styles.calendarBlackout, opacity: blackoutOpacityValue }}></View> */}
 
 		</View>
 	);
-}
+});
 
 // ==================== Styles
 const styles = StyleSheet.create({
@@ -68,14 +81,6 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		bottom: 0,
-		borderWidth: 1,
-		borderColor: "red",
-
-		// flex: 1,
-		// position: "relative",
-		// borderWidth: 1,
-		// borderColor: "red",
-		// height: 700
 	},
 	calendarInner: {
 		flex: 1,
@@ -91,7 +96,7 @@ const styles = StyleSheet.create({
 		right: 0,
 		bottom: 0,
 		left: 0,
-		backgroundColor: "rgba(0,0,0,0.5)",
+		backgroundColor: "rgba(0,0,0,0.3)",
 	}
 });
 

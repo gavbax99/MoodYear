@@ -23,7 +23,6 @@ const HomeScreen = props => {
 	const dayDate = ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
 
 	const handleTouchableWithoutFeedback = () => {
-		console.log("try")
 		Keyboard.dismiss();
 	}
 
@@ -36,16 +35,8 @@ const HomeScreen = props => {
 
 				{/* Inner screen */}
 				<View style={styles.innerScreen}>
+					{/* Calendar */}
 					<HomeScreenCalendar style={styles.homeScreenCalendar} />
-
-					{/* <View style={styles.reviewContainer}>
-						<Text style={styles.review}>{day}</Text>
-						<Text style={styles.reviewDate}>{dayDate}</Text>
-					</View> */}
-
-					{/* <View>
-						<Text>hi</Text>
-					</View> */}
 
 					{/* Bottom card */}
 					<HomeScreenBottomCard />
@@ -72,19 +63,7 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		justifyContent: "flex-end",
 		alignItems: "center",
-		// borderWidth: 1,
-		// borderColor: "purple",
-	},
-	// reviewContainer: {
-	// 	flex: 1,
-	// 	width: "100%",
-	// 	flexDirection: "column",
-	// 	borderWidth: 1,
-	// 	borderColor: "blue",
-	// },
-	// review: {
-	// 	flex: 1,
-	// }
+	}
 });
 
 export default HomeScreen;

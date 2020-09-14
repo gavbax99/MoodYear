@@ -4,6 +4,7 @@ export default {
 	accentColor: "#ff6f00",
 
 	colorLight: "#f4fbff",
+	colorTextboxGrey: "#565656",
 
 	colorBackground: "rgb(31, 31, 38)",
 	colorHeaderGrey: "rgb(20, 20, 24)",
@@ -24,6 +25,8 @@ export default {
 	// Padding
 	paddingHalf: "2%",
 	paddingNormal: "4%",
+	paddingLarge: "6%",
+	paddingDouble: "8%",
 	paddingMonths: "10%",
 };
 

@@ -1,5 +1,5 @@
 // React
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { 
 	StyleSheet, 
 	View, 
@@ -7,8 +7,13 @@ import {
 	Image,
 	TextInput, 
 	KeyboardAvoidingView, 
+	Button,
 } from "react-native";
 import Slider from '@react-native-community/slider';
+
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { setKeyboardOpen } from "../store/actions/actions";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -19,42 +24,57 @@ import Tools from '../constants/Tools';
 // ==================== Component
 const HomeScreenBottomCard = props => {
 
+	console.log("here");
+
 	const [textInputValue, onChangeText] = React.useState("");
-	const [textboxHeight, setTextboxHeight] = useState(40);
-
-	// useEffect(() => {
-
-	// });
+	const [textboxHeight, setTextboxHeight] = useState(36);
+	
+	const dispatch = useDispatch();
 
 	const sliderCheck = (val) => {
 		console.log(val);
 	}
-	
+
+	// const keyboardIsOpen = useSelector(state => state.keyboardOpenReducer.keyboardOpenState);
+	// console.log(keyboardIsOpen);
+
 	// Date
-	console.log("date start");
 	const date = new Date();
 	const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
 	const day = daysOfWeek[date.getDay()];
 	const dayDate = ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
-	console.log("date end");
-
+		
+	// Variables
 	const charactersLeft = textInputValue.length;
+	const characaterLimit = 200;
 
-	// Functions
-	const changeTextboxHeight = (heightInt) => {
+	// Default values for when textbox is closed
+	let textBoxDisplay = 0;
+	let topOfSubmitButton = 50;
+	let underInputRowOverflow = "hidden";
+	
+	// If textbox is open:
+	if (textboxHeight !== 36) {
+		textBoxDisplay = 100;
+		topOfSubmitButton = -35;
+		underInputRowOverflow = "visible";
+	};
+
+	const handleTextboxHeightChange = (heightInt) => {
+		if (heightInt === 36) {
+			dispatch(setKeyboardOpen(false));
+		} else {
+			dispatch(setKeyboardOpen(true));
+		}
+		
 		setTextboxHeight(heightInt);
-	}
-
-	const handleTextChange = (textString) => {
-		onChangeText(textString);
-	}
+	};
 	
 	return (
 		<KeyboardAvoidingView 
 			behavior="padding" 
-			style={{ borderColor: "blue", borderWidth: 1 }}
 			keyboardVerticalOffset={83}>
-			<View style={{...styles.screen, paddingBottom: 30}}>
+			<View style={styles.screen}>
 
 				{/* Date row */}
 				<View style={styles.dateRow}>
@@ -88,18 +108,30 @@ const HomeScreenBottomCard = props => {
 				<View style={styles.inputRow}>
 					<TextInput
 						style={{ ...styles.textInput, height: textboxHeight }}
-						onChangeText={text => handleTextChange(text)}
+						// style={{ ...styles.textInput}}
+						onChangeText={text => onChangeText(text)}
 						multiline={true}
-						onFocus={() => setTextboxHeight(120)}
-						onBlur={() => setTextboxHeight(40)}
+						onFocus={() => handleTextboxHeightChange(128)}
+						onBlur={() => handleTextboxHeightChange(36)}
+						maxLength={characaterLimit}
+						placeholder={"How are you?"}
+						selectionColor={Tools.colorLight}
 						value={textInputValue}
 						/>
 				</View>
 
+				<View style={{ ...styles.underInputRow, maxHeight: textBoxDisplay, overflow: underInputRowOverflow }}>
+					<Text style={styles.underInputText}>
+						{charactersLeft}/{characaterLimit}
+					</Text>
+
+					<View style={{ ...styles.underInputSubmitButton, top: topOfSubmitButton }}>
+					</View>
+				</View>
 			</View>
 		</KeyboardAvoidingView>
 	);
-}
+};
 
 // ==================== Styles
 const styles = StyleSheet.create({
@@ -109,9 +141,8 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		padding: Tools.paddingNormal,
-		borderColor: "green",
-		borderWidth: 1,
 		backgroundColor: Tools.colorBackground,
+		paddingBottom: Tools.paddingLarge,
 	},
 	dateRow: {
 		minWidth: "100%",
@@ -164,12 +195,40 @@ const styles = StyleSheet.create({
 	textInput: {
 		minWidth: "100%",
 		maxWidth: "100%",
-		backgroundColor: Tools.colorLight,
-		paddingHorizontal: Tools.paddingHalf,
-		paddingTop: Tools.paddingHalf,
-		borderRadius: 2,
-		fontSize: 16
+		backgroundColor: Tools.colorTextboxGrey,
+		color: Tools.colorLight,
+		// textAlignVertical: "top",
+		paddingHorizontal: 12,
+		paddingTop: 8,
+		paddingBottom: 8,
+		lineHeight: 22,
+		borderRadius: 3,
+		fontSize: 18
+	},
+	underInputRow: {
+		position: "relative",
+		marginTop: 6,
+		minWidth: "100%",
+		maxWidth: "100%",		
+		flexDirection: "row",
+		justifyContent: "space-between",
+	},
+	underInputText: {
+		color: Tools.colorLight,
+		fontSize: 10,
+	},
+	underInputSubmitButton: {
+		position: "absolute",
+		right: 8,
+		width: 55,
+		height: 55,
+		backgroundColor: "blue",
+		borderRadius: 100,
+		shadowOffset: {  width: 0,  height: 3,  },
+		shadowColor: Tools.colorHeaderGrey,
+		shadowOpacity: 0.05,
 	}
+
 });
 
 export default HomeScreenBottomCard;
