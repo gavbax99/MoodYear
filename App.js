@@ -18,6 +18,8 @@ import reducer from "./store/reducers/index";
 
 // ====================
 
+// StatusBar.setHidden(true);
+// StatusBar.setTranslucent(true);
 enableScreens();
 
 const store = createStore(reducer);
@@ -34,7 +36,6 @@ const store = createStore(reducer);
 // App
 export default function App() {
 	console.log("App render");
-	StatusBar.setHidden(true);
 	//const [fontLoaded, setFontLoaded] = useState(false);
 
 	// if (!fontLoaded) {

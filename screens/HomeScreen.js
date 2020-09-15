@@ -9,6 +9,7 @@ import Tools from '../constants/Tools';
 import AppHeader from '../components/AppHeader';
 import HomeScreenCalendar from '../components/HomeScreenCalendar';
 import HomeScreenBottomCard from '../components/HomeScreenBottomCard';
+import HomeScreenCalendarBlackout from '../components/HomeScreenCalendarBlackout';
 
 
 // ==================== Functional component 
@@ -35,11 +36,12 @@ const HomeScreen = props => {
 				{/* Header */}
 				<AppHeader />
 
+
 				{/* Inner screen */}
 				<View style={styles.innerScreen}>
 					{/* Calendar */}
-					<HomeScreenCalendar style={styles.homeScreenCalendar} />
-					{/* <HomeScreenCalendarBlackout /> */}
+					<HomeScreenCalendar />
+					<HomeScreenCalendarBlackout />
 
 					{/* Bottom card */}
 					<HomeScreenBottomCard />

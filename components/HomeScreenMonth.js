@@ -49,7 +49,7 @@ const ComponentName = props => {
 				return (
 					<HomeScreenDay 
 						color={monthObj.color}
-						id={monthObj.id} />
+						key={monthObj.id} />
 				);
 			})}
 

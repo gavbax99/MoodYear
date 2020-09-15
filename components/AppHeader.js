@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		flexDirection: "row",
 		alignItems: 'center',
+		zIndex: 999,
 	},
 	logoContainer: {
 		width: 30,
