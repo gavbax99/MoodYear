@@ -59,7 +59,7 @@ const HomeScreenCalendar = props => {
 					return (
 						<HomeScreenMonth 
 							data={monthArr} 
-							key={i} />
+							key={monthArr[0].id} />
 					);
 				})}
 			</View>

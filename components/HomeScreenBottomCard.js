@@ -1,5 +1,9 @@
 // React
-import React, { useState, useEffect, useCallback } from "react";
+import React, { 
+	useState, 
+	useEffect, 
+	useCallback
+} from "react";
 import { 
 	StyleSheet, 
 	View, 
@@ -26,9 +30,9 @@ const HomeScreenBottomCard = props => {
 
 	console.log("HomeScreenBottomCard");
 
-	const [textInputValue, onChangeText] = React.useState("");
+	const [textInputValue, onChangeText] = useState("");
 	const [textInputHoldValue, setTextInputHoldValue] = useState("");
-	const [textboxHeight, setTextboxHeight] = useState(36);
+	const [textboxHeight, setTextboxHeight] = useState(40);
 	
 	const dispatch = useDispatch();
 
@@ -36,8 +40,8 @@ const HomeScreenBottomCard = props => {
 		console.log(val);
 	}
 
-	// const keyboardIsOpen = useSelector(state => state.keyboardOpenReducer.keyboardOpenState);
-	// console.log(keyboardIsOpen);
+	// State of keyboard
+	const keyboardIsOpen = useSelector(state => state.keyboardOpenReducer.keyboardOpenState);
 
 	// Date
 	const date = new Date();
@@ -47,7 +51,7 @@ const HomeScreenBottomCard = props => {
 		
 	// Variables
 	const charactersLeft = textInputValue.length;
-	const characaterLimit = 200;
+	const characaterLimit = 150;
 
 	// Default values for when textbox is closed
 	let textBoxDisplay = 0;
@@ -55,22 +59,24 @@ const HomeScreenBottomCard = props => {
 	let underInputRowOverflow = "hidden";
 	
 	// If textbox is open:
-	if (textboxHeight !== 36) {
+	if (keyboardIsOpen) {
 		textBoxDisplay = 100;
-		topOfSubmitButton = -35;
+		topOfSubmitButton = -16;
 		underInputRowOverflow = "visible";
 	};
 
 	// Textbox functions
 	const onTextboxFocus = () => {
-		const height = 128;
+		onChangeText(textInputHoldValue);
+		setTextInputHoldValue("");
+
 		dispatch(setKeyboardOpen(true));
-		setTextboxHeight(height);
 	};
 
 	const onTextboxBlur = () => {
-		const height = 36;
-		setTextboxHeight(height);
+		setTextInputHoldValue(textInputValue);
+		textInputValue.length > 0 ? onChangeText("Entry in progres...") : onChangeText("");
+
 		dispatch(setKeyboardOpen(false));
 	};
 	
@@ -78,7 +84,7 @@ const HomeScreenBottomCard = props => {
 		<KeyboardAvoidingView 
 			behavior="padding" 
 			keyboardVerticalOffset={83}>
-			<View style={styles.screen}>
+			<View style={[styles.screen, keyboardIsOpen ? styles.screenKeyboardOpen : null ]}>
 
 				{/* Date row */}
 				<View style={styles.dateRow}>
@@ -111,30 +117,42 @@ const HomeScreenBottomCard = props => {
 				{/* Input row */}
 				<View style={styles.inputRow}>
 					<TextInput
-						style={{ ...styles.textInput, height: textboxHeight }}
+						style={{
+							...styles.textInput, 
+							fontStyle: keyboardIsOpen ? null : "italic",
+							height: keyboardIsOpen ? 104 : 40
+						}}
 						onChangeText={text => onChangeText(text)}
 						multiline={true}
-						numberOfLines={1}
 						onFocus={() => onTextboxFocus()}
 						onBlur={() => onTextboxBlur()}
 						maxLength={characaterLimit}
 						placeholder={"How are you?"}
 						selectionColor={Tools.colorLight}
 						keyboardAppearance={"dark"}
+						spellCheck={false}
 						value={textInputValue}
 						/>
 				</View>
 
 				{/* Under nput row */}
-				<View style={{ ...styles.underInputRow, maxHeight: textBoxDisplay, overflow: underInputRowOverflow }}>
+				<View style={{ 
+					...styles.underInputRow, 
+					maxHeight: keyboardIsOpen ? 100 : 0, 
+					overflow: underInputRowOverflow 
+					}}>
 					<Text style={styles.underInputText}>
 						{charactersLeft}/{characaterLimit}
 					</Text>
 
 					<View style={{ ...styles.underInputSubmitButton, top: topOfSubmitButton }}>
+						<Text style={styles.underInputSubmitButtonText}>
+							+
+						</Text>
 					</View>
 				</View>
 			</View>
+
 		</KeyboardAvoidingView>
 	);
 };
@@ -149,7 +167,24 @@ const styles = StyleSheet.create({
 		padding: Tools.paddingNormal,
 		backgroundColor: Tools.colorBackground,
 		paddingBottom: Tools.paddingLarge,
+
+		zIndex: 999,
 	},
+	screenKeyboardOpen: {
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: -3,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 4,
+		elevation: 6,
+		borderBottomColor: Tools.colorHeaderGrey,
+		borderBottomWidth: 1,
+		paddingBottom: Tools.paddingMonths,
+	},
+
+	// Date row
 	dateRow: {
 		minWidth: "100%",
 		maxWidth: "100%",
@@ -176,8 +211,8 @@ const styles = StyleSheet.create({
 		textShadowRadius: 3
 	},
 	dateFace: {
-		width: 60,
-		height: 60,
+		width: 58,
+		height: 58,
 	},
 
 	// slider
@@ -203,7 +238,6 @@ const styles = StyleSheet.create({
 		maxWidth: "100%",
 		backgroundColor: Tools.colorTextboxGrey,
 		color: Tools.colorLight,
-		textAlignVertical: "top",
 		paddingHorizontal: 12,
 		paddingTop: 8,
 		paddingBottom: 8,
@@ -211,6 +245,8 @@ const styles = StyleSheet.create({
 		borderRadius: 3,
 		fontSize: 18
 	},
+
+	// underinput
 	underInputRow: {
 		position: "relative",
 		marginTop: 6,
@@ -224,15 +260,25 @@ const styles = StyleSheet.create({
 		fontSize: 10,
 	},
 	underInputSubmitButton: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
 		position: "absolute",
-		right: 8,
-		width: 55,
-		height: 55,
-		backgroundColor: "blue",
+		right: 4,
+		width: 48,
+		height: 48,
+		backgroundColor: Tools.accentColor,
 		borderRadius: 100,
 		shadowOffset: {  width: 0,  height: 3,  },
 		shadowColor: Tools.colorHeaderGrey,
-		shadowOpacity: 0.05,
+		shadowOpacity: 0.25,
+	},
+	underInputSubmitButtonText: {
+		color: Tools.colorLight,
+		fontSize: 32,
+		fontWeight: "700",
+		paddingBottom: 2,
+		paddingLeft: 1,
 	}
 
 });
