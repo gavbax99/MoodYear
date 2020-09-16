@@ -12,6 +12,7 @@ import {
 	TextInput, 
 	KeyboardAvoidingView, 
 	Button,
+	Animated
 } from "react-native";
 import Slider from '@react-native-community/slider';
 
@@ -22,17 +23,30 @@ import { setKeyboardOpen } from "../store/actions/actions";
 // Constants
 import Tools from '../constants/Tools';
 
-// Components
+// Vars
+const characaterLimit = 150;
+const date = new Date();
+const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
+const day = daysOfWeek[date.getDay()];
+const dayDate = ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+
+const textboxHeightOpen = 104;
+const textboxHeightClosed = 40;
+
+const underTextboxHeightOpen = 100;
+const underTextboxHeightClosed = 0;
+
+const submitButtonTopOpen = -16;
+const submitButtonTopClosed = 50;
 
 
 // ==================== Component
 const HomeScreenBottomCard = props => {
 
-	console.log("HomeScreenBottomCard");
+	console.log("bottom card rerender")
 
 	const [textInputValue, onChangeText] = useState("");
 	const [textInputHoldValue, setTextInputHoldValue] = useState("");
-	const [textboxHeight, setTextboxHeight] = useState(40);
 	
 	const dispatch = useDispatch();
 
@@ -42,28 +56,9 @@ const HomeScreenBottomCard = props => {
 
 	// State of keyboard
 	const keyboardIsOpen = useSelector(state => state.keyboardOpenReducer.keyboardOpenState);
-
-	// Date
-	const date = new Date();
-	const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
-	const day = daysOfWeek[date.getDay()];
-	const dayDate = ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
 		
 	// Variables
 	const charactersLeft = textInputValue.length;
-	const characaterLimit = 150;
-
-	// Default values for when textbox is closed
-	let textBoxDisplay = 0;
-	let topOfSubmitButton = 50;
-	let underInputRowOverflow = "hidden";
-	
-	// If textbox is open:
-	if (keyboardIsOpen) {
-		textBoxDisplay = 100;
-		topOfSubmitButton = -16;
-		underInputRowOverflow = "visible";
-	};
 
 	// Textbox functions
 	const onTextboxFocus = () => {
@@ -83,8 +78,12 @@ const HomeScreenBottomCard = props => {
 	return (
 		<KeyboardAvoidingView 
 			behavior="padding" 
-			keyboardVerticalOffset={83}>
-			<View style={[styles.screen, keyboardIsOpen ? styles.screenKeyboardOpen : null ]}>
+			keyboardVerticalOffset={83}
+			>
+			<View style={[
+				styles.screen, 
+				keyboardIsOpen ? styles.screenKeyboardOpen : null 
+				]}>
 
 				{/* Date row */}
 				<View style={styles.dateRow}>
@@ -115,12 +114,14 @@ const HomeScreenBottomCard = props => {
 				</View>
 
 				{/* Input row */}
-				<View style={styles.inputRow}>
+				<View style={{
+					...styles.inputRow,
+					height: keyboardIsOpen ? textboxHeightOpen : textboxHeightClosed,
+					}}>
 					<TextInput
 						style={{
 							...styles.textInput, 
 							fontStyle: keyboardIsOpen ? null : "italic",
-							height: keyboardIsOpen ? 104 : 40
 						}}
 						onChangeText={text => onChangeText(text)}
 						multiline={true}
@@ -138,14 +139,17 @@ const HomeScreenBottomCard = props => {
 				{/* Under nput row */}
 				<View style={{ 
 					...styles.underInputRow, 
-					maxHeight: keyboardIsOpen ? 100 : 0, 
-					overflow: underInputRowOverflow 
+					maxHeight: keyboardIsOpen ? underTextboxHeightOpen : underTextboxHeightClosed, 
+					overflow: keyboardIsOpen ? "visible" : "hidden" 
 					}}>
 					<Text style={styles.underInputText}>
 						{charactersLeft}/{characaterLimit}
 					</Text>
 
-					<View style={{ ...styles.underInputSubmitButton, top: topOfSubmitButton }}>
+					<View style={{ 
+						...styles.underInputSubmitButton, 
+						top: keyboardIsOpen ? submitButtonTopOpen : submitButtonTopClosed 
+						}}>
 						<Text style={styles.underInputSubmitButtonText}>
 							+
 						</Text>
@@ -167,9 +171,9 @@ const styles = StyleSheet.create({
 		padding: Tools.paddingNormal,
 		backgroundColor: Tools.colorBackground,
 		paddingBottom: Tools.paddingLarge,
-
 		zIndex: 999,
 	},
+
 	screenKeyboardOpen: {
 		shadowColor: "#000",
 		shadowOffset: {
@@ -191,10 +195,12 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 	},
+
 	dateCol: {
 		alignItems: "flex-start",
 		justifyContent: "center",
 	},
+
 	dateDay: {
 		color: Tools.colorLight,
 		fontSize: 28,
@@ -203,6 +209,7 @@ const styles = StyleSheet.create({
 		textShadowOffset: {width: 1, height: 2},
 		textShadowRadius: 3
 	},
+
 	dateDate: {
 		color: Tools.colorLight,
 		fontSize: 18,
@@ -210,6 +217,7 @@ const styles = StyleSheet.create({
 		textShadowOffset: {width: 1, height: 2},
 		textShadowRadius: 3
 	},
+
 	dateFace: {
 		width: 58,
 		height: 58,
@@ -221,6 +229,7 @@ const styles = StyleSheet.create({
 		maxWidth: "100%",
 		paddingTop: 30
 	},
+
 	slider: {
 		minWidth: "100%",
 		maxWidth: "100%",
@@ -231,11 +240,13 @@ const styles = StyleSheet.create({
 	inputRow: {
 		minWidth: "100%",
 		maxWidth: "100%",
-		paddingTop: 30
+		marginTop: 30
 	},
+
 	textInput: {
 		minWidth: "100%",
 		maxWidth: "100%",
+		height: "100%",
 		backgroundColor: Tools.colorTextboxGrey,
 		color: Tools.colorLight,
 		paddingHorizontal: 12,
@@ -255,10 +266,12 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 	},
+
 	underInputText: {
 		color: Tools.colorLight,
 		fontSize: 10,
 	},
+
 	underInputSubmitButton: {
 		flex: 1,
 		justifyContent: "center",
@@ -273,6 +286,7 @@ const styles = StyleSheet.create({
 		shadowColor: Tools.colorHeaderGrey,
 		shadowOpacity: 0.25,
 	},
+	
 	underInputSubmitButtonText: {
 		color: Tools.colorLight,
 		fontSize: 32,

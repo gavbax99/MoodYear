@@ -35,7 +35,9 @@ const store = createStore(reducer);
 
 // App
 export default function App() {
+
 	console.log("App render");
+	
 	//const [fontLoaded, setFontLoaded] = useState(false);
 
 	// if (!fontLoaded) {

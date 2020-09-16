@@ -1,21 +1,60 @@
 // React
 import React from 'react';
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { 
+	StyleSheet, 
+	View,
+	Dimensions,
+	Animated
+} from 'react-native';
 
 // Redux
 import { useSelector } from "react-redux";
 
+// Vars
+const windowHeight = Dimensions.get('window').height;
+
+
 // ==================== Component
 const HomeScreenCalendarBlackout = props => {
 
+	// fadeAnim will be used as the value for opacity. Initial Value: 0
+	const fadeAnim = React.useRef(new Animated.Value(0)).current;
+
+	const fadeIn = () => {
+		console.log("fadeIn")
+		// Will change fadeAnim value to 1 in 5 seconds
+		Animated.timing(fadeAnim, {
+			toValue: 1,
+			duration: 300,
+			useNativeDriver: true
+		}).start();
+	};
+
+	const fadeOut = () => {
+		console.log("fadeOut")
+		// Will change fadeAnim value to 0 in 5 seconds
+		Animated.timing(fadeAnim, {
+			toValue: 0,
+			duration: 1000,
+			useNativeDriver: true
+		}).start();
+	};
+
+	// Keyboard open constant
 	const keyboardOpen = useSelector(state => state.keyboardOpenReducer.keyboardOpenState);
-	const windowHeight = Dimensions.get('window').height - 20;
+
+	// Fade the blackout
+	keyboardOpen ? fadeIn() : fadeOut();
 	
 	return (
-		<View style={{...styles.screen, height: windowHeight }}>
-			{keyboardOpen && (
-				<View style={styles.blackout} />
-			)}
+		<View style={{
+			...styles.screen, 
+			height: keyboardOpen ? windowHeight : 0
+			}}>
+			<Animated.View style={{
+				...styles.blackout,
+				opacity: fadeAnim
+				}} />
 		</View>
 	);
 }
@@ -23,7 +62,6 @@ const HomeScreenCalendarBlackout = props => {
 // ==================== Styles
 const styles = StyleSheet.create({
 	screen: {
-		// flex: 1,
 		width: "100%",
 	},
 	blackout: {
