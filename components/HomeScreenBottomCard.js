@@ -14,7 +14,6 @@ import {
 	Button,
 	Animated
 } from "react-native";
-import Slider from '@react-native-community/slider';
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -22,6 +21,9 @@ import { setKeyboardOpen } from "../store/actions/actions";
 
 // Constants
 import Tools from '../constants/Tools';
+
+// Components
+import MySlider from "./MySlider";
 
 // Vars
 const characaterLimit = 150;
@@ -101,15 +103,12 @@ const HomeScreenBottomCard = props => {
 
 				{/* Slider row */}
 				<View style={styles.sliderRow}>
-					<Slider 
-						style={styles.slider}    
-						minimumValue={1}
-						maximumValue={7}
-						step={1}
-						onValueChange={sliderCheck}
-						minimumTrackTintColor={Tools.color1}
-						maximumTrackTintColor={Tools.color7}
-						thumbTintColor={Tools.colorLight}
+					<MySlider 
+						minVal={10}
+						maxVal={70}
+						minTrackColor={Tools.color1}
+						maxTrackColor={Tools.color7}
+						thumbColor={Tools.colorLight}
 						/>
 				</View>
 
