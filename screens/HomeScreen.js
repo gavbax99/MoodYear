@@ -1,6 +1,11 @@
 // React
 import React from 'react';
-import { StyleSheet, FlatList, View, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { 
+	StyleSheet, 
+	View, 
+	TouchableWithoutFeedback, 
+	Keyboard 
+} from 'react-native';
 
 // Constants
 import Tools from '../constants/Tools';
@@ -15,15 +20,7 @@ import HomeScreenCalendarBlackout from '../components/HomeScreenCalendarBlackout
 // ==================== Functional component 
 const HomeScreen = props => {
 
-	console.log("HomeScreen");
-
-	// console.log((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
-	// console.log(date.getDay());
-	
-	const date = new Date(); // Or your date here
-	const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
-	const day = daysOfWeek[date.getDay()];
-	const dayDate = ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+	console.log("HomeScreen render");
 
 	const handleTouchableWithoutFeedback = () => {
 		Keyboard.dismiss();

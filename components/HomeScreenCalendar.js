@@ -1,10 +1,18 @@
 // React
 import React, { useCallback } from 'react';
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { 
+	StyleSheet, 
+	View 
+} from 'react-native';
 
 // Redux
-import { useSelector, useDispatch } from "react-redux";
+import { 
+	useSelector, 
+	useDispatch 
+} from "react-redux";
 
+// Constants
+import Tools from '../constants/Tools';
 
 // Data
 import Year2020 from "../data/Year2020";
@@ -16,11 +24,7 @@ import HomeScreenMonth from '../components/HomeScreenMonth';
 // ==================== Component
 const HomeScreenCalendar = props => {
 
-	console.log("HomeScreenCalendar");
-
-	// const keyboardIsOpen = useSelector(state => state.keyboardOpenReducer.keyboardOpenState);
-	// let blackoutOpacityValue = 0;
-	// if (keyboardIsOpen) blackoutOpacityValue = 1;
+	console.log("HomeScreenCalendar render");
 
 	// Months to be rendered
 	let renderMonths = [];
@@ -35,7 +39,7 @@ const HomeScreenCalendar = props => {
 
 	// Separate data into months
 	let newDaysArr = [...Year2020.days];
-	Year2020.monthLength.reduce((t, monthArr, i) => {
+	Year2020.months.reduce((t, monthArr, i) => {
 		// if today
 		// console.log(`currentDay: ${currentDay} | t: ${t} | monthArr[i]: ${monthArr[i]}`)
 		// if (currentDay >= t && currentDay <= t + monthArr[i] ) {
@@ -44,7 +48,7 @@ const HomeScreenCalendar = props => {
 		// 	console.log(Year2020.days[currentDay]);
 		// }
 
-		const nextArr = newDaysArr.splice(t, Year2020.monthLength[i]);
+		const nextArr = newDaysArr.splice(t, Year2020.months[i].length);
 		renderMonths.push(nextArr);
 		return t += monthArr[i];
 	}, 0);
@@ -58,14 +62,13 @@ const HomeScreenCalendar = props => {
 				{renderMonths.map((monthArr, i) => {
 					return (
 						<HomeScreenMonth 
-							data={monthArr} 
+							data={monthArr}
+							name={monthArr}
+							monthName={Year2020.months[i].name} 
 							key={monthArr[0].id} />
 					);
 				})}
 			</View>
-
-			{/* Blackout */}
-			{/* <View style={{...styles.calendarBlackout, opacity: blackoutOpacityValue }}></View> */}
 
 		</View>
 	);
@@ -86,16 +89,8 @@ const styles = StyleSheet.create({
 		justifyContent: "flex-start",
 		flexDirection: "row",
 		flexWrap: "wrap",
-		padding: "2%",
+		padding: Tools.paddingHalf,
 	},
-	// calendarBlackout: {
-	// 	position: "absolute",
-	// 	top: 0,
-	// 	right: 0,
-	// 	bottom: 0,
-	// 	left: 0,
-	// 	backgroundColor: "rgba(0,0,0,0.3)",
-	// }
 });
 
 export default HomeScreenCalendar;
