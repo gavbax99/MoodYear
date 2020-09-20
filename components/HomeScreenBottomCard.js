@@ -72,7 +72,7 @@ const HomeScreenBottomCard = props => {
 
 	const onTextboxBlur = () => {
 		setTextInputHoldValue(textInputValue);
-		textInputValue.length > 0 ? onChangeText("Entry in progres...") : onChangeText("");
+		textInputValue.length > 0 ? onChangeText("Entry in progress...") : onChangeText("");
 
 		dispatch(setKeyboardOpen(false));
 	};
@@ -141,7 +141,10 @@ const HomeScreenBottomCard = props => {
 					maxHeight: keyboardIsOpen ? underTextboxHeightOpen : underTextboxHeightClosed, 
 					overflow: keyboardIsOpen ? "visible" : "hidden" 
 					}}>
-					<Text style={styles.underInputText}>
+					<Text style={{
+						...styles.underInputText,
+						color: charactersLeft === 150 ? Tools.accentColor : Tools.colorLight, 
+						}}>
 						{charactersLeft}/{characaterLimit}
 					</Text>
 

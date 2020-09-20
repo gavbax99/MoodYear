@@ -9,7 +9,6 @@ export default {
 	colorTextboxGrey: "#404040",
 
 	color0: "#2b2b2b",
-	// color0: "rgb(44, 44, 49)",
 	color1: "#502872",
 	color2: "#763b73",
 	color3: "#aa5675",
@@ -18,8 +17,6 @@ export default {
 	color6: "#f49c7a",
 	color7: "#ffbb8d",
 
-	// Font sizes
-
 	// Padding
 	paddingHalf: "2%",
 	paddingNormal: "4%",
@@ -27,7 +24,3 @@ export default {
 	paddingDouble: "8%",
 	paddingMonths: "10%",
 };
-
-// CONVERSION
-// 18px = ~4%
-// 4.5px = ~1%
