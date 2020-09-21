@@ -23,7 +23,7 @@ const HomeScreenDay = props => {
 			{(props.dayNo === props.currentDay && props.isCurrentMonth) && (
 				<View style={{
 					...styles.today,
-					borderColor: Tools.accentColor,
+					borderColor: Tools.colorLight,
 					}} />
 			)}
 		</View>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 		top: 0,
 		right: 0,
 		bottom: 0,
-		borderWidth: 1.25,
+		borderWidth: 1,
 		borderRadius: 2,
 	}
 });

@@ -24,6 +24,7 @@ import Tools from '../constants/Tools';
 
 // Components
 import MySlider from "./MySlider";
+import Face from "./Face";
 
 // Vars
 const characaterLimit = 150;
@@ -95,19 +96,22 @@ const HomeScreenBottomCard = props => {
 						<Text style={styles.dateDate}>{dayDate}</Text>
 					</View>
 
+
+					<Face />
+
 					{/* Icon */}
-					<View style={styles.dateFaceContainer}>
+					{/* <View style={styles.dateFaceContainer}>
 						<Image style={styles.dateFace} source={require("../assets/images/face-6.png")} />
-					</View>
+					</View> */}
 				</View>
 
 				{/* Slider row */}
 				<View style={styles.sliderRow}>
 					<MySlider 
 						minVal={10}
-						maxVal={70}
+						maxVal={50}
 						minTrackColor={Tools.color1}
-						maxTrackColor={Tools.color7}
+						maxTrackColor={Tools.color5}
 						thumbColor={Tools.colorLight}
 						/>
 				</View>

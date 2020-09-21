@@ -9,6 +9,7 @@ npm-debug.*
 *.orig.*
 web-build/
 notes.md
+ai_assets.ai
 
 # macOS
 .DS_Store
