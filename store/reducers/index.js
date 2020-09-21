@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
-import keyboardOpen from "./keyboardOpen";
+import keyboardReducer from "./keyboardReducer";
+import navReducer from "./navReducer";
 
 export default combineReducers({
-	keyboardOpenReducer: keyboardOpen,
+	keyboardReducer: keyboardReducer,
+	navReducer: navReducer,
 	//keyboardOpen
 });

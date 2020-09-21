@@ -3,9 +3,13 @@ import React from 'react';
 import { 
 	StyleSheet, 
 	View, 
-	Text, 
-	Image 
+	Image,
+	TouchableOpacity
 } from 'react-native';
+
+// Redux
+import { useDispatch } from "react-redux";
+import { setHeaderHeight } from "../store/actions/actions";
 
 // Icons
 import { Ionicons } from '@expo/vector-icons';
@@ -13,28 +17,33 @@ import { Ionicons } from '@expo/vector-icons';
 // Constants
 import Tools from '../constants/Tools';
 
-// Components
-
 
 // ==================== Component
 const AppHeader = props => {
+
+	const findHeaderHeight = (event) => {
+		const { x, y, width, height } = event.nativeEvent.layout;
+
+		console.log(x, y, width, height);
+		dispatch(setHeaderHeight(height));
+	}
+
+	const dispatch = useDispatch();
+
 	return (
-		<View style={styles.header}>
+		<View style={styles.header} onLayout={findHeaderHeight}>
 			{/* Logo */}
-			<View style={styles.logoContainer}>
+			<TouchableOpacity onPress={() => {props.navigation.goBack()}}>
 				<Image 
 					style={styles.logoImage}
-					source={require("../assets/images/sober-logo.png")}/>
-			</View>
-
-			<Text style={styles.headerText}>
-				2020
-			</Text>
+					source={require("../assets/images/sober-logo.png")}
+					/>
+			</TouchableOpacity>
 
 			{/* Text */}
 			<View style={styles.textContainer}>
 				{/* <Text style={styles.headerText}>144</Text> */}
-				<Ionicons name="ios-more" size={30} color="#ffffff" />
+				<Ionicons style={{paddingHorizontal: 6}}name="ios-more" size={30} color="#ffffff" />
 			</View>
 		</View>
 	);
@@ -51,13 +60,16 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		zIndex: 999,
 	},
-	logoContainer: {
+	// logoContainer: {
+	// 	width: "10%",
+	// 	height: 30,
+	// 	borderWidth: 1,
+	// 	borderColor: 'red'
+	// },
+	logoImage: {
 		width: 30,
 		height: 30,
-	},
-	logoImage: {
-		width: "100%",
-		height: "100%"
+		resizeMode: "contain",
 	},
 	headerText: {
 		color: Tools.colorLight,

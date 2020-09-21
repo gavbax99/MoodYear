@@ -4,12 +4,12 @@ import { createStackNavigator } from "react-navigation-stack";
 
 // Screens
 import HomeScreen from "../screens/HomeScreen";
+import MonthDetailScreen from "../screens/MonthDetailScreen";
 
 // Default styles
 const defaultStackNavOptions = {
 	headerStyle: {
-		backgroundColor: "rgb(189, 189, 189)",
-		height: 20
+		height: 0,
 	},
 };
 
@@ -17,6 +17,9 @@ const defaultStackNavOptions = {
 const HomeNavigator = createStackNavigator({
 	Home: {
 		screen: HomeScreen,
+	}, 
+	MonthDetail: {
+		screen: MonthDetailScreen
 	}
 }, {
 	defaultNavigationOptions: defaultStackNavOptions,

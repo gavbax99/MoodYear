@@ -24,8 +24,19 @@ const ComponentName = props => {
 	const getMonth = date.getMonth() + 1;
 	const getDay = date.getDate();
 
+	const goToMonth = () => {
+		props.navigation.navigate({
+			routeName: "MonthDetail",
+			// params: {
+			// 	mealId: itemData.item.id,
+			// 	mealTitle: itemData.item.title,
+			// 	isFav: isFavorite
+			// }
+		});
+	};
+
 	return (
-		<TouchableOpacity  style={styles.month} onPress={() => {console.log("works")}}>
+		<TouchableOpacity  style={styles.month} onPress={goToMonth}>
 
 			{/* Render our days */}
 			{props.data.map((monthObj, i) => {

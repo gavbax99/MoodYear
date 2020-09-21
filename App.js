@@ -18,8 +18,9 @@ import reducer from "./store/reducers/index";
 
 // ====================
 
-// StatusBar.setHidden(true);
+StatusBar.setHidden(true);
 // StatusBar.setTranslucent(true);
+// StatusBar.setBarStyle("dark-content");
 enableScreens();
 
 const store = createStore(reducer);
