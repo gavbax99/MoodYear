@@ -4,7 +4,8 @@ import {
 	StyleSheet, 
 	View, 
 	TouchableWithoutFeedback, 
-	Keyboard 
+	Keyboard,
+	StatusBar 
 } from 'react-native';
 
 // Constants
@@ -29,6 +30,13 @@ const HomeScreen = props => {
 	return (
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
 			<View style={styles.screen}>
+				{/* <View style={{ height: 20, backgroundColor: "#161616"}}>
+					<StatusBar 
+						translucent 
+						backgroundColor={"#161616"} 
+						barStyle={"dark-content"}
+						/>
+				</View> */}
 
 				{/* Header */}
 				<AppHeader />

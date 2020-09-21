@@ -12,6 +12,7 @@ import Tools from '../constants/Tools';
 // ==================== Component
 const HomeScreenDay = props => {
 	
+	// If today, highlight the day in accent color
 	// (props.dayNo === props.currentDay && props.isCurrentMonth) ? console.log("it is: " + props.dayNo) : null;
 
 	return (
@@ -22,7 +23,7 @@ const HomeScreenDay = props => {
 			{(props.dayNo === props.currentDay && props.isCurrentMonth) && (
 				<View style={{
 					...styles.today,
-					borderColor: Tools.color7,
+					borderColor: Tools.colorLight,
 					}} />
 			)}
 		</View>
@@ -50,7 +51,6 @@ const styles = StyleSheet.create({
 		right: 0,
 		bottom: 0,
 		borderWidth: 1,
-		// borderColor: 'red',
 		borderRadius: 2,
 	}
 });

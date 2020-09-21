@@ -8,17 +8,23 @@ export default {
 	colorHeaderGrey: "#161616",
 	colorTextboxGrey: "#404040",
 
+	// Empty day color
 	color0: "#2b2b2b",
-	// color0: "rgb(44, 44, 49)",
+
+	// Feeling colors (1 low 5 high)
 	color1: "#502872",
 	color2: "#763b73",
-	color3: "#aa5675",
-	color4: "#e17d78",
-	color5: "#ec9079",
-	color6: "#f49c7a",
-	color7: "#ffbb8d",
+	color3: "#c6587a",
+	color4: "#e88262",
+	color5: "#ffb471",
 
-	// Font sizes
+	// color1: "#502872",
+	// color2: "#763b73",
+	// color3: "#aa5675",
+	// color4: "#e17d78",
+	// color5: "#ec9079",
+	// color6: "#f49c7a",
+	// color7: "#ffbb8d",
 
 	// Padding
 	paddingHalf: "2%",
@@ -27,7 +33,3 @@ export default {
 	paddingDouble: "8%",
 	paddingMonths: "10%",
 };
-
-// CONVERSION
-// 18px = ~4%
-// 4.5px = ~1%

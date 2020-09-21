@@ -27,10 +27,14 @@ const AppHeader = props => {
 					source={require("../assets/images/sober-logo.png")}/>
 			</View>
 
+			<Text style={styles.headerText}>
+				2020
+			</Text>
+
 			{/* Text */}
 			<View style={styles.textContainer}>
-				<Text style={styles.headerText}>144</Text>
-				<Ionicons name="md-calendar" size={20} color="#ffffff" />
+				{/* <Text style={styles.headerText}>144</Text> */}
+				<Ionicons name="ios-more" size={30} color="#ffffff" />
 			</View>
 		</View>
 	);
@@ -56,9 +60,12 @@ const styles = StyleSheet.create({
 		height: "100%"
 	},
 	headerText: {
-		fontSize: 18,
 		color: Tools.colorLight,
-		paddingRight: 6,
+		fontSize: 18,
+		fontWeight: "600",
+
+		// fontSize: 18,
+		// paddingRight: 6,
 	},
 	textContainer: {
 		flexDirection: "row",

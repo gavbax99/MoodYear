@@ -24,6 +24,7 @@ import Tools from '../constants/Tools';
 
 // Components
 import MySlider from "./MySlider";
+import Face from "./Face";
 
 // Vars
 const characaterLimit = 150;
@@ -72,7 +73,7 @@ const HomeScreenBottomCard = props => {
 
 	const onTextboxBlur = () => {
 		setTextInputHoldValue(textInputValue);
-		textInputValue.length > 0 ? onChangeText("Entry in progres...") : onChangeText("");
+		textInputValue.length > 0 ? onChangeText("Entry in progress...") : onChangeText("");
 
 		dispatch(setKeyboardOpen(false));
 	};
@@ -95,19 +96,22 @@ const HomeScreenBottomCard = props => {
 						<Text style={styles.dateDate}>{dayDate}</Text>
 					</View>
 
+
+					<Face />
+
 					{/* Icon */}
-					<View style={styles.dateFaceContainer}>
+					{/* <View style={styles.dateFaceContainer}>
 						<Image style={styles.dateFace} source={require("../assets/images/face-6.png")} />
-					</View>
+					</View> */}
 				</View>
 
 				{/* Slider row */}
 				<View style={styles.sliderRow}>
 					<MySlider 
 						minVal={10}
-						maxVal={70}
+						maxVal={50}
 						minTrackColor={Tools.color1}
-						maxTrackColor={Tools.color7}
+						maxTrackColor={Tools.color5}
 						thumbColor={Tools.colorLight}
 						/>
 				</View>
@@ -141,7 +145,10 @@ const HomeScreenBottomCard = props => {
 					maxHeight: keyboardIsOpen ? underTextboxHeightOpen : underTextboxHeightClosed, 
 					overflow: keyboardIsOpen ? "visible" : "hidden" 
 					}}>
-					<Text style={styles.underInputText}>
+					<Text style={{
+						...styles.underInputText,
+						color: charactersLeft === 150 ? Tools.accentColor : Tools.colorLight, 
+						}}>
 						{charactersLeft}/{characaterLimit}
 					</Text>
 
