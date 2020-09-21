@@ -30,22 +30,14 @@ const HomeScreen = props => {
 	return (
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
 			<View style={styles.screen}>
-				{/* <View style={{ height: 20, backgroundColor: "#161616"}}>
-					<StatusBar 
-						translucent 
-						backgroundColor={"#161616"} 
-						barStyle={"dark-content"}
-						/>
-				</View> */}
-
 				{/* Header */}
-				<AppHeader />
+				<AppHeader navigation={props.navigation} />
 
 
 				{/* Inner screen */}
 				<View style={styles.innerScreen}>
 					{/* Calendar */}
-					<HomeScreenCalendar />
+					<HomeScreenCalendar navigation={props.navigation} />
 					<HomeScreenCalendarBlackout />
 
 					{/* Bottom card */}

@@ -41,7 +41,7 @@ const HomeScreenCalendarBlackout = props => {
 	};
 
 	// Keyboard open constant
-	const keyboardOpen = useSelector(state => state.keyboardOpenReducer.keyboardOpenState);
+	const keyboardOpen = useSelector(state => state.keyboardReducer.keyboardReducerState);
 
 	// Fade the blackout
 	keyboardOpen ? fadeIn() : fadeOut();

@@ -58,7 +58,7 @@ const HomeScreenBottomCard = props => {
 	}
 
 	// State of keyboard
-	const keyboardIsOpen = useSelector(state => state.keyboardOpenReducer.keyboardOpenState);
+	const keyboardIsOpen = useSelector(state => state.keyboardReducer.keyboardReducerState);
 		
 	// Variables
 	const charactersLeft = textInputValue.length;
@@ -81,7 +81,8 @@ const HomeScreenBottomCard = props => {
 	return (
 		<KeyboardAvoidingView 
 			behavior="padding" 
-			keyboardVerticalOffset={83}
+			// keyboardVerticalOffset={63}
+			keyboardVerticalOffset={useSelector(state => state.navReducer.headerHeightState)}
 			>
 			<View style={[
 				styles.screen, 
@@ -184,13 +185,13 @@ const styles = StyleSheet.create({
 		shadowColor: "#000",
 		shadowOffset: {
 			width: 0,
-			height: -3,
+			height: -4,
 		},
 		shadowOpacity: 0.25,
-		shadowRadius: 4,
+		shadowRadius: 10,
 		elevation: 6,
-		borderBottomColor: Tools.colorHeaderGrey,
-		borderBottomWidth: 1,
+		// borderBottomColor: Tools.colorHeaderGrey,
+		// borderBottomWidth: 1,
 		paddingBottom: Tools.paddingMonths,
 	},
 
