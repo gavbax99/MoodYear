@@ -63,7 +63,7 @@ const HomeScreenCalendar = props => {
 					return (
 						<HomeScreenMonth 
 							data={monthArr}
-							name={monthArr}
+							// name={monthArr}
 							monthName={Year2020.months[i].name} 
 							navigation={props.navigation}
 							key={monthArr[0].id} 

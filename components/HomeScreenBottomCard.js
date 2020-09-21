@@ -101,9 +101,9 @@ const HomeScreenBottomCard = props => {
 					<Face />
 
 					{/* Icon */}
-					{/* <View style={styles.dateFaceContainer}>
-						<Image style={styles.dateFace} source={require("../assets/images/face-6.png")} />
-					</View> */}
+					<View style={styles.dateFaceContainer}>
+						<Image style={styles.dateFace} source={require("../assets/images/face-8.png")} />
+					</View>
 				</View>
 
 				{/* Slider row */}

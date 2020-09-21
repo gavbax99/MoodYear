@@ -5,6 +5,9 @@ import { StyleSheet, View, Text } from 'react-native';
 // Components
 import AppHeader from '../components/AppHeader';
 
+// Constants
+import Tools from '../constants/Tools';
+
 
 // ==================== Component
 const MonthDetailScreen = props => {
@@ -22,9 +25,10 @@ const MonthDetailScreen = props => {
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,
-		justifyContent: 'flex-start',
-		alignItems: 'flex-start',
-	}
+		justifyContent: "space-between",
+		alignItems: "center",
+		backgroundColor: Tools.colorBackground,
+	},
 });
 
 export default MonthDetailScreen;
