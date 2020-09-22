@@ -23,8 +23,6 @@ const AppHeader = props => {
 
 	const findHeaderHeight = (event) => {
 		const { x, y, width, height } = event.nativeEvent.layout;
-
-		console.log(x, y, width, height);
 		dispatch(setHeaderHeight(height));
 	}
 

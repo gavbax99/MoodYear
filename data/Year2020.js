@@ -6,6 +6,7 @@ export default {
 			name: "January",
 			length: 31,
 			firstDayOfWeek: "Wednesday",
+			firstDayOfWeekNo: 4,
 			monthNo: 1,
 			days: [
 				{ color: 0, id: "L4Gd", monthNo: 1, dayNo: 1,  dayOfYear: 1 , dayOfWeek: "Wednesday" },
@@ -45,6 +46,7 @@ export default {
 			name: "Febuary",
 			length: 29,
 			firstDayOfWeek: "Saturday",
+			firstDayOfWeekNo: 7,
 			monthNo: 2,
 			days: [
 				{ color: 0, id: "ntry", monthNo: 2, dayNo: 1,  dayOfYear: 32, dayOfWeek: "Saturday" },
@@ -82,6 +84,7 @@ export default {
 			name: "March",
 			length: 31,
 			firstDayOfWeek: "Sunday",
+			firstDayOfWeekNo: 1,
 			monthNo: 3,
 			days: [
 				{ color: 2, id: "72aw", monthNo: 3, dayNo: 1,  dayOfYear: 61, dayOfWeek: "Sunday" },
@@ -121,6 +124,7 @@ export default {
 			name: "April",
 			length: 30,
 			firstDayOfWeek: "Wednesday",
+			firstDayOfWeekNo: 4,
 			monthNo: 4,
 			days: [
 				{ color: 2, id: "KwUm", monthNo: 4, dayNo: 1,  dayOfYear: 92 , dayOfWeek: "Wednesday" },
@@ -159,6 +163,7 @@ export default {
 			name: "May",
 			length: 31,
 			firstDayOfWeek: "Friday",
+			firstDayOfWeekNo: 6,
 			monthNo: 5,
 			days: [
 				{ color: 1, id: "Tf5i", monthNo: 5, dayNo: 1,  dayOfYear: 122, dayOfWeek: "Friday" },
@@ -198,6 +203,7 @@ export default {
 			name: "June",
 			length: 30,
 			firstDayOfWeek: "Monday",
+			firstDayOfWeekNo: 2,
 			monthNo: 6,
 			days: [
 				{ color: 4, id: "REgK", monthNo: 6, dayNo: 1,  dayOfYear: 153, dayOfWeek: "Monday" },
@@ -236,6 +242,7 @@ export default {
 			name: "July",
 			length: 31,
 			firstDayOfWeek: "Wednesday",
+			firstDayOfWeekNo: 4,
 			monthNo: 7,
 			days: [
 				{ color: 2, id: "h48T", monthNo: 7, dayNo: 1,  dayOfYear: 183, dayOfWeek: "Wednesday" },
@@ -275,6 +282,7 @@ export default {
 			name: "August",
 			length: 31,
 			firstDayOfWeek: "Saturday",
+			firstDayOfWeekNo: 7,
 			monthNo: 8,
 			days: [
 				{ color: 3, id: "Hnhi", monthNo: 8, dayNo: 1,  dayOfYear: 214, dayOfWeek: "Saturday" },
@@ -314,6 +322,7 @@ export default {
 			name: "September",
 			length: 30,
 			firstDayOfWeek: "Tuesday",
+			firstDayOfWeekNo: 3,
 			monthNo: 9,
 			days: [
 				{ color: 4, id: "Tf5i", monthNo: 9, dayNo: 1,  dayOfYear: 245, dayOfWeek: "Tuesday" },
@@ -352,6 +361,7 @@ export default {
 			name: "October",
 			length: 31,
 			firstDayOfWeek: "Thursday",
+			firstDayOfWeekNo: 5,
 			monthNo: 10,
 			days: [
 				{ color: 0, id: "Tf5i", monthNo: 10, dayNo: 1,  dayOfYear: 275, dayOfWeek: "Thursday" },
@@ -391,6 +401,7 @@ export default {
 			name: "November",
 			length: 30,
 			firstDayOfWeek: "Sunday",
+			firstDayOfWeekNo: 1,
 			monthNo: 11,
 			days: [
 				{ color: 0, id: "Tf5i", monthNo: 11, dayNo: 1,  dayOfYear: 306, dayOfWeek: "Sunday" },
@@ -429,6 +440,7 @@ export default {
 			name: "December",
 			length: 31,
 			firstDayOfWeek: "Tuesday",
+			firstDayOfWeekNo: 3,
 			monthNo: 12,
 			days: [
 				{ color: 0, id: "Tf5i", monthNo: 12, dayNo: 1,  dayOfYear: 336, dayOfWeek: "Tuesday" },

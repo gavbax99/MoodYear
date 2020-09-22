@@ -19,6 +19,8 @@ const HomeScreenDay = props => {
 		<View style={{ 
 			...styles.day, 
 			backgroundColor: props.color,
+			// add margin left of the first day to represent calendar format
+			marginLeft: props.isFirstDay ? `${(14.25*(props.firstDayNo-1))+1.75}%` : "1.75%",
 			}}>
 			{(props.dayNo === props.currentDay && props.isCurrentMonth) && (
 				<View style={{
@@ -34,6 +36,7 @@ const HomeScreenDay = props => {
 const styles = StyleSheet.create({
 	day: {
 		position: "relative",
+		// total width with margin: 14.25%
 		width: "10.75%",
 		paddingTop: "10%",
 		margin: "1.75%",

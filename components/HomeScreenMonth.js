@@ -2,7 +2,8 @@
 import React from 'react';
 import { 
 	StyleSheet, 
-	TouchableOpacity 
+	TouchableOpacity,
+	Text, 
 } from 'react-native';
 
 // Constants
@@ -21,6 +22,8 @@ const ComponentName = props => {
 
 	const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
 	const day = daysOfWeek[date.getDay()];
+
+	const isCurrentMonth = getMonth === props.monthObj.monthNo ? true : false
 
 	const goToMonth = () => {
 		props.navigation.navigate({
@@ -67,10 +70,10 @@ const ComponentName = props => {
 					default: break;
 				}
 
-				const isCurrentMonth = getMonth === dayObj.monthNo ? true : false;
-
 				return (
 					<HomeScreenDay 
+						isFirstDay={i===0}
+						firstDayNo={props.monthObj.firstDayOfWeekNo}
 						color={dayObj.color}
 						dayNo={dayObj.dayNo}
 						currentDay={getDay}
@@ -80,9 +83,16 @@ const ComponentName = props => {
 				);
 			})}
 
-			{/* <Text style={styles.monthName}>
-				{props.monthName.slice(0, 3).toUpperCase()}
-			</Text> */}
+			<Text style={{
+				...styles.monthName,
+				bottom:  props.monthObj.firstDayOfWeekNo < 3 ? "1.55%" : null,
+				right:  props.monthObj.firstDayOfWeekNo < 3 ? "8%" : null,
+
+				top: props.monthObj.firstDayOfWeekNo >= 3 ? "1.55%" : null,
+				left: props.monthObj.firstDayOfWeekNo >= 3 ? "8%" : null,
+				}}>
+				{props.monthObj.name.slice(0, 3).toUpperCase()}
+			</Text>
 
 		</TouchableOpacity >
 	);
@@ -100,11 +110,13 @@ const styles = StyleSheet.create({
 		flexWrap: "wrap",
 	},
 	monthName: {
-		paddingRight: "1.75%",
-		paddingTop: 1,
+		position: "absolute",
 		color: Tools.colorTextboxGrey,
 		fontSize: 10,
-		marginLeft: "auto",
+		
+		// paddingTop: 1,
+		// paddingRight: "1.75%",
+		// marginLeft: "auto",
 	}
 });
 

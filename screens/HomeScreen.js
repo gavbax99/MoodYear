@@ -20,7 +20,7 @@ import HomeScreenCalendarBlackout from '../components/HomeScreenCalendarBlackout
 // ==================== Functional component 
 const HomeScreen = props => {
 
-	console.log("HomeScreen render");
+	// console.log("HomeScreen render");
 
 	const handleTouchableWithoutFeedback = () => {
 		Keyboard.dismiss();
