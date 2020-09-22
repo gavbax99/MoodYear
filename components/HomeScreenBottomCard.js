@@ -1,8 +1,6 @@
 // React
 import React, { 
 	useState, 
-	useEffect, 
-	useCallback
 } from "react";
 import { 
 	StyleSheet, 
@@ -11,8 +9,6 @@ import {
 	Image,
 	TextInput, 
 	KeyboardAvoidingView, 
-	Button,
-	Animated
 } from "react-native";
 
 // Redux
@@ -53,9 +49,20 @@ const HomeScreenBottomCard = props => {
 	
 	const dispatch = useDispatch();
 
-	const sliderCheck = (val) => {
-		console.log(val);
-	}
+	// const sliderCheck = (val) => {
+	// 	console.log(val);
+	// }
+
+	// fetch('https://jsonplaceholder.typicode.com/posts/1', {
+	// 	method: 'GET'
+	// })
+	// .then((response) => response.json())
+	// .then((responseJson) => {
+	// 	console.log(responseJson);
+	// })
+	// .catch((error) => {
+	// 	console.error(error);
+	// });
 
 	// State of keyboard
 	const keyboardIsOpen = useSelector(state => state.keyboardReducer.keyboardReducerState);
@@ -81,7 +88,6 @@ const HomeScreenBottomCard = props => {
 	return (
 		<KeyboardAvoidingView 
 			behavior="padding" 
-			// keyboardVerticalOffset={63}
 			keyboardVerticalOffset={useSelector(state => state.navReducer.headerHeightState)}
 			>
 			<View style={[
@@ -190,8 +196,6 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.25,
 		shadowRadius: 10,
 		elevation: 6,
-		// borderBottomColor: Tools.colorHeaderGrey,
-		// borderBottomWidth: 1,
 		paddingBottom: Tools.paddingMonths,
 	},
 

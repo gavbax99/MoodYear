@@ -1,11 +1,10 @@
 // React
-import React, { useEffect } from 'react';
+import React from 'react';
 import { 
 	StyleSheet, 
 	View, 
 	TouchableWithoutFeedback, 
 	Keyboard,
-	StatusBar 
 } from 'react-native';
 
 // Constants

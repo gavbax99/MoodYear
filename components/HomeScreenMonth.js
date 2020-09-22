@@ -2,16 +2,11 @@
 import React from 'react';
 import { 
 	StyleSheet, 
-	View,
-	Text,
 	TouchableOpacity 
 } from 'react-native';
 
 // Constants
 import Tools from '../constants/Tools';
-
-// Data
-import Year2020 from "../data/Year2020";
 
 // Components
 import HomeScreenDay from '../components/HomeScreenDay';
@@ -23,6 +18,9 @@ const ComponentName = props => {
 	const date = new Date();
 	const getMonth = date.getMonth() + 1;
 	const getDay = date.getDate();
+
+	const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
+	const day = daysOfWeek[date.getDay()];
 
 	const goToMonth = () => {
 		props.navigation.navigate({
@@ -39,52 +37,52 @@ const ComponentName = props => {
 		<TouchableOpacity  style={styles.month} onPress={goToMonth}>
 
 			{/* Render our days */}
-			{props.data.map((monthObj, i) => {
+			{props.monthObj.days.map((dayObj, i) => {
 
-				switch (monthObj.color) {
+				switch (dayObj.color) {
 					case 0:
-						monthObj.color = Tools.color0;
+						dayObj.color = Tools.color0;
 						break;
 					case 1:
-						monthObj.color = Tools.color1;
+						dayObj.color = Tools.color1;
 						break;
 					case 2:
-						monthObj.color = Tools.color2;
+						dayObj.color = Tools.color2;
 						break;
 					case 3:
-						monthObj.color = Tools.color3;
+						dayObj.color = Tools.color3;
 						break;
 					case 4:
-						monthObj.color = Tools.color4;
+						dayObj.color = Tools.color4;
 						break;
 					case 5:
-						monthObj.color = Tools.color5;
+						dayObj.color = Tools.color5;
 						break;
 					case 6:
-						monthObj.color = Tools.color6;
+						dayObj.color = Tools.color6;
 						break;
 					case 7:
-						monthObj.color = Tools.color7;
+						dayObj.color = Tools.color7;
 						break;
 					default: break;
 				}
 
-				const isCurrentMonth = getMonth === monthObj.monthNo ? true : false;
+				const isCurrentMonth = getMonth === dayObj.monthNo ? true : false;
 
 				return (
 					<HomeScreenDay 
-						color={monthObj.color}
-						dayNo={monthObj.dayNo}
+						color={dayObj.color}
+						dayNo={dayObj.dayNo}
 						currentDay={getDay}
 						isCurrentMonth={isCurrentMonth}
-						key={monthObj.id} 
+						key={dayObj.id} 
 						/>
 				);
 			})}
 
-			<Text style={styles.monthName}>
+			{/* <Text style={styles.monthName}>
 				{props.monthName.slice(0, 3).toUpperCase()}
-			</Text>
+			</Text> */}
 
 		</TouchableOpacity >
 	);

@@ -42,7 +42,6 @@ const AppHeader = props => {
 
 			{/* Text */}
 			<View style={styles.textContainer}>
-				{/* <Text style={styles.headerText}>144</Text> */}
 				<Ionicons style={{paddingHorizontal: 6}}name="ios-more" size={30} color="#ffffff" />
 			</View>
 		</View>
@@ -60,12 +59,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		zIndex: 999,
 	},
-	// logoContainer: {
-	// 	width: "10%",
-	// 	height: 30,
-	// 	borderWidth: 1,
-	// 	borderColor: 'red'
-	// },
 	logoImage: {
 		width: 30,
 		height: 30,
@@ -75,9 +68,6 @@ const styles = StyleSheet.create({
 		color: Tools.colorLight,
 		fontSize: 18,
 		fontWeight: "600",
-
-		// fontSize: 18,
-		// paddingRight: 6,
 	},
 	textContainer: {
 		flexDirection: "row",
