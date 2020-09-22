@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar } from "react-native";
 
 // Font
@@ -19,8 +19,6 @@ import reducer from "./store/reducers/index";
 // ====================
 
 StatusBar.setHidden(true);
-// StatusBar.setTranslucent(true);
-// StatusBar.setBarStyle("dark-content");
 enableScreens();
 
 const store = createStore(reducer);
@@ -36,6 +34,10 @@ const store = createStore(reducer);
 
 // App
 export default function App() {
+
+	useEffect(() => {
+		console.log("app use effect");
+	});
 
 	console.log("App render");
 	
