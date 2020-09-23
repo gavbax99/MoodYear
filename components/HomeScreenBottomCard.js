@@ -29,8 +29,8 @@ const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Fr
 const day = daysOfWeek[date.getDay()];
 const dayDate = ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
 
-const textboxHeightOpen = 104;
-const textboxHeightClosed = 40;
+const textboxHeightOpen = 96;
+const textboxHeightClosed = 38;
 
 const underTextboxHeightOpen = 100;
 const underTextboxHeightClosed = 0;
@@ -74,6 +74,7 @@ const HomeScreenBottomCard = props => {
 	const onTextboxFocus = () => {
 		onChangeText(textInputHoldValue);
 		setTextInputHoldValue("");
+		_textInput.setNativeProps({ selection: { start: textInputValue.length , end: textInputValue.length } })
 
 		dispatch(setKeyboardOpen(true));
 	};
@@ -131,17 +132,18 @@ const HomeScreenBottomCard = props => {
 					<TextInput
 						style={{
 							...styles.textInput, 
-							fontStyle: keyboardIsOpen ? null : "italic",
+							// fontStyle: keyboardIsOpen ? null : "italic",
 						}}
 						onChangeText={text => onChangeText(text)}
 						multiline={true}
 						onFocus={() => onTextboxFocus()}
 						onBlur={() => onTextboxBlur()}
 						maxLength={characaterLimit}
-						placeholder={"How are you?"}
+						placeholder={"How are you today?"}
 						selectionColor={Tools.colorLight}
 						keyboardAppearance={"dark"}
 						spellCheck={false}
+						ref={component => _textInput = component}
 						value={textInputValue}
 						/>
 				</View>
@@ -260,12 +262,12 @@ const styles = StyleSheet.create({
 		height: "100%",
 		backgroundColor: Tools.colorTextboxGrey,
 		color: Tools.colorLight,
-		paddingHorizontal: 12,
+		paddingHorizontal: 10,
 		paddingTop: 8,
 		paddingBottom: 8,
-		lineHeight: 22,
+		lineHeight: 20,
 		borderRadius: 3,
-		fontSize: 18
+		fontSize: 16
 	},
 
 	// underinput

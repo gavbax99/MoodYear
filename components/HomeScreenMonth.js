@@ -23,16 +23,15 @@ const ComponentName = props => {
 	const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
 	const day = daysOfWeek[date.getDay()];
 
-	const isCurrentMonth = getMonth === props.monthObj.monthNo ? true : false
+	const isCurrentMonth = getMonth === props.monthObj.monthNo ? true : false;
 
 	const goToMonth = () => {
 		props.navigation.navigate({
 			routeName: "MonthDetail",
-			// params: {
-			// 	mealId: itemData.item.id,
-			// 	mealTitle: itemData.item.title,
-			// 	isFav: isFavorite
-			// }
+			params: {
+				yearInt: props.year,
+				monthNo: props.monthObj.monthNo-1,
+			}
 		});
 	};
 
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		color: Tools.colorTextboxGrey,
 		fontSize: 10,
-		
+
 		// paddingTop: 1,
 		// paddingRight: "1.75%",
 		// marginLeft: "auto",

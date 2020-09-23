@@ -16,7 +16,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 // ==================== Component
-const HomeScreenCalendarBlackout = props => {
+const Blackout = props => {
 
 	const [dynamicDisplay, setDynamicDisplay] = useState(false);
 
@@ -63,7 +63,7 @@ const HomeScreenCalendarBlackout = props => {
 				...styles.blackout,
 				opacity: fadeAnim,
 				}}>
-					<Text style={{color: "#fff", paddingTop: 20}}>hi</Text>
+					<Text style={{color: "#fff", paddingTop: 40}}>\/</Text>
 			</Animated.View>
 		);
 	} else {
@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 		backgroundColor: "rgba(16, 16, 16, 0.7)",
+		// backgroundColor: "red",
 	}
 });
 
-export default HomeScreenCalendarBlackout;
+export default Blackout;

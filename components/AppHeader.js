@@ -31,7 +31,7 @@ const AppHeader = props => {
 	return (
 		<View style={styles.header} onLayout={findHeaderHeight}>
 			{/* Logo */}
-			<TouchableOpacity onPress={() => {props.navigation.goBack()}}>
+			<TouchableOpacity style={{padding: Tools.paddingNormal}} onPress={() => {props.navigation.goBack()}}>
 				<Image 
 					style={styles.logoImage}
 					source={require("../assets/images/sober-logo.png")}
@@ -40,7 +40,7 @@ const AppHeader = props => {
 
 			{/* Text */}
 			<View style={styles.textContainer}>
-				<Ionicons style={{paddingHorizontal: 6}}name="ios-more" size={30} color="#ffffff" />
+				<Ionicons style={{paddingHorizontal: 6}}name="ios-more" size={24} color="#ffffff" />
 			</View>
 		</View>
 	);
@@ -50,7 +50,6 @@ const AppHeader = props => {
 const styles = StyleSheet.create({
 	header: {
 		width: "100%",
-		padding: Tools.paddingNormal,
 		backgroundColor: Tools.colorHeaderGrey,
 		justifyContent: "space-between",
 		flexDirection: "row",
@@ -58,8 +57,8 @@ const styles = StyleSheet.create({
 		zIndex: 999,
 	},
 	logoImage: {
-		width: 30,
-		height: 30,
+		width: 24,
+		height: 24,
 		resizeMode: "contain",
 	},
 	headerText: {
@@ -68,6 +67,7 @@ const styles = StyleSheet.create({
 		fontWeight: "600",
 	},
 	textContainer: {
+		padding: Tools.paddingNormal,
 		flexDirection: "row",
 	}
 });

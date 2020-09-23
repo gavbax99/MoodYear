@@ -29,6 +29,7 @@ const HomeScreenCalendar = props => {
 				{Year2020.months.map((monthObj, i) => {
 					return (
 						<HomeScreenMonth 
+							year={Year2020.yearInt}
 							monthObj={monthObj}
 							navigation={props.navigation}
 							key={monthObj.name} 
