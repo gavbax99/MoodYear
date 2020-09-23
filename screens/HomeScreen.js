@@ -5,7 +5,6 @@ import {
 	View, 
 	TouchableWithoutFeedback, 
 	Keyboard,
-	StatusBar 
 } from 'react-native';
 
 // Constants
@@ -15,13 +14,13 @@ import Tools from '../constants/Tools';
 import AppHeader from '../components/AppHeader';
 import HomeScreenCalendar from '../components/HomeScreenCalendar';
 import HomeScreenBottomCard from '../components/HomeScreenBottomCard';
-import HomeScreenCalendarBlackout from '../components/HomeScreenCalendarBlackout';
+import Blackout from '../components/Blackout';
 
 
 // ==================== Functional component 
 const HomeScreen = props => {
 
-	console.log("HomeScreen render");
+	// console.log("HomeScreen render");
 
 	const handleTouchableWithoutFeedback = () => {
 		Keyboard.dismiss();
@@ -38,7 +37,7 @@ const HomeScreen = props => {
 				<View style={styles.innerScreen}>
 					{/* Calendar */}
 					<HomeScreenCalendar navigation={props.navigation} />
-					<HomeScreenCalendarBlackout />
+					<Blackout />
 
 					{/* Bottom card */}
 					<HomeScreenBottomCard />
@@ -54,7 +53,7 @@ const HomeScreen = props => {
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,
-		justifyContent: "space-between",
+		justifyContent: "flex-start",
 		alignItems: "center",
 		backgroundColor: Tools.colorBackground,
 	},
