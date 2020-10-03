@@ -1,11 +1,15 @@
 // React
 import React, { useState } from 'react';
-import { 
-	StyleSheet, 
+import {
+	StyleSheet,
 	View,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Slider from "@react-native-community/slider";
 import Svg, { G, Path } from 'react-native-svg';
+
+import { tween, easing } from 'popmotion';
+import { interpolate } from 'flubber';
 
 const faceSvgPathsIndex = [
 	"one",
@@ -43,30 +47,78 @@ const faceSvgPaths = {
 // ==================== Component
 const TestScreen = props => {
 
-	const [faceState, setFaceState] = useState(faceSvgPathsIndex.length - 1);
+	// console.log("TestScreen rere");
 
-	const handle = () => {
-		setFaceState(faceState - 1);
-	}
+	const [sliderVal, setSliderVal] = useState(faceSvgPathsIndex.length - 1);
+	// const [faceState, setFaceState] = useState(faceSvgPathsIndex.length - 1);
 
-	const handle2 = () => {
-		setFaceState(4);
+	const [leftEyePath, setLeftEyePath] = useState(faceSvgPaths.leftEye[faceSvgPathsIndex[sliderVal]]);
+	const [mouthPath, setMouthPath] = useState(faceSvgPaths.mouth[faceSvgPathsIndex[sliderVal]]);
+	const [rightEyePath, setRightEyePath] = useState(faceSvgPaths.rightEye[faceSvgPathsIndex[sliderVal]]);
+	// const [leftEyePath, setLeftEyePath] = useState(faceSvgPaths.leftEye[faceSvgPathsIndex[faceState]]);
+	// const [mouthPath, setMouthPath] = useState(faceSvgPaths.mouth[faceSvgPathsIndex[faceState]]);
+	// const [rightEyePath, setRightEyePath] = useState(faceSvgPaths.rightEye[faceSvgPathsIndex[faceState]]);
+
+	// const handle = () => {
+	// 	setFaceState(faceState - 1);
+	// }
+
+	// const handle2 = () => {
+	// 	setFaceState(4);
+	// }
+
+	const interpolatePaths = (val) => {
+		const leftEyeInterpolator = interpolate(leftEyePath, faceSvgPaths.leftEye[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
+		const mouthInterpolator = interpolate(mouthPath, faceSvgPaths.mouth[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
+		const rightEyeInterpolator = interpolate(rightEyePath, faceSvgPaths.rightEye[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
+		// const leftEyeInterpolator = interpolate(leftEyePath, faceSvgPaths.leftEye[faceSvgPathsIndex[faceState]], { maxSegmentLength: 2 });
+		// const mouthInterpolator = interpolate(mouthPath, faceSvgPaths.mouth[faceSvgPathsIndex[faceState]], { maxSegmentLength: 2 });
+		// const rightEyeInterpolator = interpolate(rightEyePath, faceSvgPaths.rightEye[faceSvgPathsIndex[faceState]], { maxSegmentLength: 2 });
+
+		tween({
+			duration: 250,
+			from: { i: 0 },
+			to: { i: 1 }
+		})
+		.pipe(({ i }) => ({ 
+			leftEyePathInterpolator: leftEyeInterpolator(i), 
+			mouthPathInterpolator: mouthInterpolator(i), 
+			rightEyePathInterpolator: rightEyeInterpolator(i), 
+		}))
+		.start(({ leftEyePathInterpolator, mouthPathInterpolator, rightEyePathInterpolator }) => {
+			setLeftEyePath(leftEyePathInterpolator);
+			setMouthPath(mouthPathInterpolator);
+			setRightEyePath(rightEyePathInterpolator);
+		})
 	}
 
 	return (
 		<View style={styles.screen}>
-			<Svg width={76}	height={59}	viewBow="0 0 76 59">
+			<Svg width={76} height={59} viewBow="0 0 76 59">
 
 				<G>
-					<Path fill="blue" d={faceSvgPaths.leftEye[faceSvgPathsIndex[faceState]]} />
-					<Path fill="blue" d={faceSvgPaths.mouth[faceSvgPathsIndex[faceState]]} />
-					<Path fill="blue" d={faceSvgPaths.rightEye[faceSvgPathsIndex[faceState]]} />
+					<Path fill="blue" d={leftEyePath} />
+					<Path fill="blue" d={mouthPath} />
+					<Path fill="blue" d={rightEyePath} />
 				</G>
 
 			</Svg>
 
+			{/* <TouchableOpacity style={styles.button} onPress={interpolatePaths} />
 			<TouchableOpacity style={styles.button} onPress={handle} />
-			<TouchableOpacity style={styles.button} onPress={handle2} />
+			<TouchableOpacity style={styles.button} onPress={handle2} /> */}
+
+			<Slider 
+				style={styles.slider}
+
+				minimumValue={0}
+				maximumValue={4}
+				step={1}
+
+				onSlidingComplete={(val) => interpolatePaths(val) }
+				onValueChange={(val) => { setSliderVal(val) }}
+				value={sliderVal}
+				/>
 		</View>
 	);
 }
@@ -84,7 +136,13 @@ const styles = StyleSheet.create({
 		width: 200,
 		height: 50,
 		backgroundColor: "red",
-	}
+	},
+	slider: {
+		minWidth: "80%",
+		maxWidth: "80%",
+		height: 30,
+		marginTop: 40,
+	},
 });
 
 export default TestScreen;
