@@ -4,12 +4,15 @@ import {
 	StyleSheet,
 	View,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Slider from "@react-native-community/slider";
+import Slider from "react-native-slider";
 import Svg, { G, Path } from 'react-native-svg';
 
-import { tween, easing } from 'popmotion';
+// Anim
+import { tween  } from 'popmotion';
 import { interpolate } from 'flubber';
+
+// Constants
+import Tools from '../constants/Tools';
 
 const faceSvgPathsIndex = [
 	"one",
@@ -17,7 +20,15 @@ const faceSvgPathsIndex = [
 	"three",
 	"four",
 	"five",
-]
+];
+
+const faceColorIndex = [
+	Tools.color1,
+	Tools.color2,
+	Tools.color3,
+	Tools.color4,
+	Tools.color5,
+];
 
 const faceSvgPaths = {
 	leftEye: {
@@ -41,7 +52,7 @@ const faceSvgPaths = {
 		"two": "M 65.3 4.6 c -3 0 -5.8 -0.3 -8.2 -0.7 c -1.5 1.9 -2.5 4.2 -2.5 6.9 c 0 5.9 4.8 10.7 10.7 10.7 c 5.9 0 10.7 -4.8 10.7 -10.7 c 0 -2.6 -0.9 -5 -2.5 -6.9 C 71.1 4.3 68.3 4.6 65.3 4.6 Z",
 		"one": "M 65.3 10.3 c -3.8 0 -7.4 -0.3 -10.6 -0.8 c 0 0.4 -0.1 0.8 -0.1 1.2 c 0 5.9 4.8 10.7 10.7 10.7 S 76 16.6 76 10.7 c 0 -0.4 0 -0.8 -0.1 -1.2 C 72.7 10 69.1 10.3 65.3 10.3 Z",
 	},
-}
+};
 
 
 // ==================== Component
@@ -50,64 +61,53 @@ const TestScreen = props => {
 	// console.log("TestScreen rere");
 
 	const [sliderVal, setSliderVal] = useState(faceSvgPathsIndex.length - 1);
-	// const [faceState, setFaceState] = useState(faceSvgPathsIndex.length - 1);
+	const [faceColor, setFaceColor] = useState(Tools.color5);
 
 	const [leftEyePath, setLeftEyePath] = useState(faceSvgPaths.leftEye[faceSvgPathsIndex[sliderVal]]);
 	const [mouthPath, setMouthPath] = useState(faceSvgPaths.mouth[faceSvgPathsIndex[sliderVal]]);
 	const [rightEyePath, setRightEyePath] = useState(faceSvgPaths.rightEye[faceSvgPathsIndex[sliderVal]]);
-	// const [leftEyePath, setLeftEyePath] = useState(faceSvgPaths.leftEye[faceSvgPathsIndex[faceState]]);
-	// const [mouthPath, setMouthPath] = useState(faceSvgPaths.mouth[faceSvgPathsIndex[faceState]]);
-	// const [rightEyePath, setRightEyePath] = useState(faceSvgPaths.rightEye[faceSvgPathsIndex[faceState]]);
 
-	// const handle = () => {
-	// 	setFaceState(faceState - 1);
-	// }
-
-	// const handle2 = () => {
-	// 	setFaceState(4);
-	// }
 
 	const interpolatePaths = (val) => {
+		// Interpolates between two svg paths
 		const leftEyeInterpolator = interpolate(leftEyePath, faceSvgPaths.leftEye[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
 		const mouthInterpolator = interpolate(mouthPath, faceSvgPaths.mouth[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
 		const rightEyeInterpolator = interpolate(rightEyePath, faceSvgPaths.rightEye[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
-		// const leftEyeInterpolator = interpolate(leftEyePath, faceSvgPaths.leftEye[faceSvgPathsIndex[faceState]], { maxSegmentLength: 2 });
-		// const mouthInterpolator = interpolate(mouthPath, faceSvgPaths.mouth[faceSvgPathsIndex[faceState]], { maxSegmentLength: 2 });
-		// const rightEyeInterpolator = interpolate(rightEyePath, faceSvgPaths.rightEye[faceSvgPathsIndex[faceState]], { maxSegmentLength: 2 });
 
+		// Tween the path (i) and face color (color) 
 		tween({
 			duration: 250,
-			from: { i: 0 },
-			to: { i: 1 }
+			from: { i: 0, color: faceColor },
+			to: { i: 1, color: faceColorIndex[val] }
 		})
-		.pipe(({ i }) => ({ 
+		.pipe(({ i, color }) => ({ 
 			leftEyePathInterpolator: leftEyeInterpolator(i), 
 			mouthPathInterpolator: mouthInterpolator(i), 
 			rightEyePathInterpolator: rightEyeInterpolator(i), 
+			color
 		}))
-		.start(({ leftEyePathInterpolator, mouthPathInterpolator, rightEyePathInterpolator }) => {
+		.start(({ leftEyePathInterpolator, mouthPathInterpolator, rightEyePathInterpolator, color }) => {
 			setLeftEyePath(leftEyePathInterpolator);
 			setMouthPath(mouthPathInterpolator);
 			setRightEyePath(rightEyePathInterpolator);
+			setFaceColor(color);
 		})
 	}
 
 	return (
 		<View style={styles.screen}>
-			<Svg width={76} height={59} viewBow="0 0 76 59">
 
-				<G>
-					<Path fill="blue" d={leftEyePath} />
-					<Path fill="blue" d={mouthPath} />
-					<Path fill="blue" d={rightEyePath} />
-				</G>
+			<View style={{...styles.svgContainer, backgroundColor: faceColor }}>
+				<Svg style={{ marginTop: 8 }} width={76} height={59} viewBow="0 0 76 59">
+					<G>
+						<Path fill="white" d={leftEyePath} />
+						<Path fill="white" d={mouthPath} />
+						<Path fill="white" d={rightEyePath} />
+					</G>
+				</Svg>
+			</View>
 
-			</Svg>
-
-			{/* <TouchableOpacity style={styles.button} onPress={interpolatePaths} />
-			<TouchableOpacity style={styles.button} onPress={handle} />
-			<TouchableOpacity style={styles.button} onPress={handle2} /> */}
-
+			{/* Custom slider react-native-slider */}
 			<Slider 
 				style={styles.slider}
 
@@ -115,10 +115,21 @@ const TestScreen = props => {
 				maximumValue={4}
 				step={1}
 
+				// debugTouchArea={true}
+				
+				trackStyle={{ height: 12, borderRadius: 12 }}
+				thumbStyle={{ height: 28, width: 28, borderRadius: 28, shadowColor: "#000",	shadowOffset: {	width: 0, height: 2 }, shadowOpacity: 0.15,	shadowRadius: 3.5 }}
+				thumbTouchSize={{ width: 60, height: 60 }}
+				thumbTintColor={"#ffffff"}
+
+				minimumTrackTintColor={faceColor}
+				maximumTrackTintColor={faceColor}
+
 				onSlidingComplete={(val) => interpolatePaths(val) }
 				onValueChange={(val) => { setSliderVal(val) }}
 				value={sliderVal}
 				/>
+
 		</View>
 	);
 }
@@ -131,11 +142,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		flexDirection: "column"
 	},
-	button: {
-		marginTop: 50,
-		width: 200,
-		height: 50,
-		backgroundColor: "red",
+	svgContainer: {
+		width: 125,
+		height: 125,
+		backgroundColor: "blue",
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 1000
 	},
 	slider: {
 		minWidth: "80%",

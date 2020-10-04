@@ -22,11 +22,13 @@ const MySlider = props => {
 	// color gradient for slider
 	const sliderGradientArr = [
 		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, Tools.color1,
+
 		Tools.color1,
 		Tools.color1,
 		Tools.color1,
 		Tools.color1,
 		Tools.color1,
+
 		Tools.color1,
 		Tools.color1,
 		Tools.color1,
@@ -38,6 +40,7 @@ const MySlider = props => {
 		Tools.color2,
 		Tools.color2,
 		Tools.color2,
+
 		Tools.color2,
 		Tools.color2,
 		Tools.color2,
@@ -49,6 +52,7 @@ const MySlider = props => {
 		Tools.color3,
 		Tools.color3,
 		Tools.color3,
+
 		Tools.color3,
 		Tools.color3,
 		Tools.color3,
@@ -60,6 +64,7 @@ const MySlider = props => {
 		Tools.color4,
 		Tools.color4,
 		Tools.color4,
+
 		Tools.color4,
 		Tools.color4,
 		Tools.color4,
@@ -71,11 +76,13 @@ const MySlider = props => {
 		Tools.color5,
 		Tools.color5,
 		Tools.color5,
+
 		Tools.color5,
 		Tools.color5,
 		Tools.color5,
 		Tools.color5,
 		Tools.color5,
+		
 		Tools.color5,
 		Tools.color5,
 		Tools.color5,
