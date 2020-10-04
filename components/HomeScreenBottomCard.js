@@ -21,6 +21,7 @@ import Tools from '../constants/Tools';
 // Components
 import MySlider from "./MySlider";
 import Face from "./Face";
+import FaceSlider from "./FaceSlider";
 
 // Vars
 const characaterLimit = 150;
@@ -96,33 +97,8 @@ const HomeScreenBottomCard = props => {
 				keyboardIsOpen ? styles.screenKeyboardOpen : null 
 				]}>
 
-				{/* Date row */}
-				<View style={styles.dateRow}>
-					{/* Date */}
-					<View style={styles.dateCol}>
-						<Text style={styles.dateDay}>{day}</Text>
-						<Text style={styles.dateDate}>{dayDate}</Text>
-					</View>
-
-
-					<Face />
-
-					{/* Icon */}
-					<View style={styles.dateFaceContainer}>
-						<Image style={styles.dateFace} source={require("../assets/images/face-8.png")} />
-					</View>
-				</View>
-
-				{/* Slider row */}
-				<View style={styles.sliderRow}>
-					<MySlider 
-						minVal={10}
-						maxVal={50}
-						minTrackColor={Tools.color1}
-						maxTrackColor={Tools.color5}
-						thumbColor={Tools.colorLight}
-						/>
-				</View>
+				{/* Icon and slider */}
+				<FaceSlider day={day} dayDate={dayDate} />
 
 				{/* Input row */}
 				<View style={{
@@ -201,59 +177,11 @@ const styles = StyleSheet.create({
 		paddingBottom: Tools.paddingMonths,
 	},
 
-	// Date row
-	dateRow: {
-		minWidth: "100%",
-		maxWidth: "100%",
-		flexDirection: "row",
-		justifyContent: "space-between",
-	},
-
-	dateCol: {
-		alignItems: "flex-start",
-		justifyContent: "center",
-	},
-
-	dateDay: {
-		color: Tools.colorLight,
-		fontSize: 28,
-		fontWeight: "bold",
-		textShadowColor: "rgba(37,37,37,1)",
-		textShadowOffset: {width: 1, height: 2},
-		textShadowRadius: 3
-	},
-
-	dateDate: {
-		color: Tools.colorLight,
-		fontSize: 18,
-		textShadowColor: "rgba(37,37,37,1)",
-		textShadowOffset: {width: 1, height: 2},
-		textShadowRadius: 3
-	},
-
-	dateFace: {
-		width: 58,
-		height: 58,
-	},
-
-	// slider
-	sliderRow: {
-		minWidth: "100%",
-		maxWidth: "100%",
-		paddingTop: 30
-	},
-
-	slider: {
-		minWidth: "100%",
-		maxWidth: "100%",
-		height: 20,
-	},
-
 	// input
 	inputRow: {
 		minWidth: "100%",
 		maxWidth: "100%",
-		marginTop: 30
+		marginTop: 24
 	},
 
 	textInput: {

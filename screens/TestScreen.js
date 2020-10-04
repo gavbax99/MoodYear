@@ -92,7 +92,7 @@ const TestScreen = props => {
 			setRightEyePath(rightEyePathInterpolator);
 			setFaceColor(color);
 		})
-	}
+	};
 
 	return (
 		<View style={styles.screen}>
