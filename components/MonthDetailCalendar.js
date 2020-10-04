@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { useState } from 'react';
 import { 
 	StyleSheet, 
 	View, 
@@ -20,8 +20,11 @@ import MonthDetailDay from "../components/MonthDetailDay";
 // ==================== Component
 const MonthDetailCalendar = props => {
 
+	const [currentMonth, setCurrentMonth] = useState(props.monthNo);
+	const [currentYear, setCurrentYear] = useState(props.yearInt);
+
 	// Data
-	const monthData = Year2020.months[props.monthNo];
+	const monthData = Year2020.months[currentMonth];
 
 	// Time
 	const date = new Date();
@@ -43,22 +46,55 @@ const MonthDetailCalendar = props => {
 		"December",
 	];
 
+	const prevMonth = () => {
+		// Cant go before 2020
+		if (currentYear === 2020 && currentMonth === 0) return;
+
+		if (currentMonth === 0) {
+			// If January change year too
+			setCurrentMonth(11);
+			setCurrentYear(currentYear - 1);
+		} else {
+			setCurrentMonth(currentMonth - 1);
+		}
+	};
+
+	const nextMonth = () => {
+		// Cant go past 2020
+		if (currentYear === 2020 && currentMonth === 11) return;
+
+		if (currentMonth === 11) {
+			// If December change year too
+			setCurrentMonth(0);
+			setCurrentYear(currentYear + 1);
+		} else {
+			setCurrentMonth(currentMonth + 1);
+		}
+	};
 
 	return (
 		<View style={styles.calendar}>
 
 			{/* Title row */}
 			<View style={styles.titleRow}>
-				<TouchableOpacity>
+				{/* PREV MONTH BUTTON */}
+				<TouchableOpacity 
+					onPress={prevMonth}
+					style={{ paddingRight: 8 }}>
 					<Text style={styles.titleButtonText}>{`<`}</Text>
 				</TouchableOpacity>
 
 				<View style={styles.titleRow_textGroup}>
-					<Text style={styles.titleRow_textLarge}>{monthList[props.monthNo]}</Text>
-					<Text style={styles.titleRow_textSmall}>{props.yearInt}</Text>
+					<Text style={styles.titleRow_textLarge}>{monthList[currentMonth]}</Text>
+					<Text style={styles.titleRow_textSmall}>{currentYear}</Text>
+					{/* <Text style={styles.titleRow_textLarge}>{monthList[props.monthNo]}</Text>
+					<Text style={styles.titleRow_textSmall}>{props.yearInt}</Text> */}
 				</View>
 
-				<TouchableOpacity style={{ marginLeft: "auto" }}>
+				{/* NEXT MONTH BUTTON */}
+				<TouchableOpacity 
+					onPress={nextMonth}
+					style={{ marginLeft: "auto", paddingLeft: 8 }}>
 					<Text style={styles.titleButtonText}>{`>`}</Text>
 				</TouchableOpacity>
 			</View>

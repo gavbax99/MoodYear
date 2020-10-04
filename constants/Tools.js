@@ -18,14 +18,6 @@ export default {
 	color4: "#e88262",
 	color5: "#ffb471",
 
-	// color1: "#502872",
-	// color2: "#763b73",
-	// color3: "#aa5675",
-	// color4: "#e17d78",
-	// color5: "#ec9079",
-	// color6: "#f49c7a",
-	// color7: "#ffbb8d",
-
 	// Padding
 	paddingHalf: "2%",
 	paddingNormal: "4%",
