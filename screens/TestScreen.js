@@ -98,7 +98,7 @@ const TestScreen = props => {
 		<View style={styles.screen}>
 
 			<View style={{...styles.svgContainer, backgroundColor: faceColor }}>
-				<Svg style={{ marginTop: 8 }} width={76} height={59} viewBow="0 0 76 59">
+				<Svg style={{ marginTop: 8 }} width={76} height={59} viewBox="0 0 76 59">
 					<G>
 						<Path fill="white" d={leftEyePath} />
 						<Path fill="white" d={mouthPath} />

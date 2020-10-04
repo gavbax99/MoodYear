@@ -15,7 +15,7 @@ import Tools from '../constants/Tools';
 const MonthDetailDay = props => {
 
 	return (
-		<TouchableOpacity style={{
+		<TouchableOpacity activeOpacity={Tools.activeOpacity} style={{
 			...styles.day, 
 			backgroundColor: props.color,
 			// add margin left of the first day to represent calendar format
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 		shadowColor: '#101010',
 		shadowOffset: { width: 0, height: 2 },
 		shadowRadius: 4,
-		shadowOpacity: 0.6,
+		shadowOpacity: 0.5,
 	},
 	dayText: {
 		position: "absolute",

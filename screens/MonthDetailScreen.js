@@ -37,7 +37,7 @@ const MonthDetailScreen = props => {
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
 			<View style={styles.screen}>
 				{/* Header */}
-				<AppHeader navigation={props.navigation} />
+				<AppHeader navigation={props.navigation} backButton={true} />
 
 				{/* Inner screen */}
 				<View style={styles.innerScreen}>

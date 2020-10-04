@@ -36,7 +36,7 @@ const ComponentName = props => {
 	};
 
 	return (
-		<TouchableOpacity  style={styles.month} onPress={goToMonth}>
+		<TouchableOpacity activeOpacity={Tools.activeOpacity} style={styles.month} onPress={goToMonth}>
 
 			{/* Render our days */}
 			{props.monthObj.days.map((dayObj, i) => {

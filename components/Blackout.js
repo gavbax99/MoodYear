@@ -4,15 +4,19 @@ import {
 	StyleSheet, 
 	Dimensions,
 	Animated,
-	Text,
 	View,
 } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useSelector } from "react-redux";
 
 // Vars
 const windowHeight = Dimensions.get('window').height;
+
+// Arrow
+const arrowPath = "M 0 14.4 V 1.6 c 0 -1.2 1.3 -1.9 2.3 -1.4 l 10.9 6.3 c 1.1 0.6 1.1 2.3 0 2.9 L 2.3 15.8 C 1.3 16.4 0 15.6 0 14.4 Z";
+
 
 
 // ==================== Component
@@ -63,7 +67,20 @@ const Blackout = props => {
 				...styles.blackout,
 				opacity: fadeAnim,
 				}}>
-					<Text style={{color: "#fff", paddingTop: 40}}>\/</Text>
+					<Svg style={{ 
+						transform: [{ rotateZ: "90deg" }], 
+						shadowColor: "#000",
+						shadowOffset: {
+							width: 0,
+							height: 3,
+						},
+						shadowOpacity: 1,
+						shadowRadius: 3.5, }}
+						width={14} 
+						height={16} 
+						viewBox="0 0 14 16">
+						<Path fill="white" d={arrowPath} />
+					</Svg>
 			</Animated.View>
 		);
 	} else {
@@ -87,7 +104,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 		backgroundColor: "rgba(16, 16, 16, 0.7)",
-		// backgroundColor: "red",
+		paddingTop: "4%",
 	}
 });
 
