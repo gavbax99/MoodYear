@@ -164,14 +164,15 @@ const styles = StyleSheet.create({
 	dateDay: {
 		color: Tools.colorLight,
 		fontSize: 28,
-		fontWeight: "bold",
+		fontWeight: "500",
 		textShadowColor: "rgba(37,37,37,1)",
 		textShadowOffset: {width: 1, height: 2},
 		textShadowRadius: 3
 	},
 	dateDate: {
 		color: Tools.colorLight,
-		fontSize: 18,
+		fontSize: 20,
+		fontWeight: "100",
 		textShadowColor: "rgba(37,37,37,1)",
 		textShadowOffset: {width: 1, height: 2},
 		textShadowRadius: 3

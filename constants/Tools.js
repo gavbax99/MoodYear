@@ -24,4 +24,6 @@ export default {
 	paddingLarge: "6%",
 	paddingDouble: "8%",
 	paddingMonths: "10%",
+
+	activeOpacity: 0.35,
 };
