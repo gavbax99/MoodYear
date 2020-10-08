@@ -17,8 +17,8 @@ const defaultStackNavOptions = {
 // ***** Shop stack
 const HomeNavigator = createStackNavigator({
 	Home: {
-		screen: HomeScreen,
-		// screen: TestScreen,
+		// screen: HomeScreen,
+		screen: TestScreen,
 	}, 
 	MonthDetail: {
 		screen: MonthDetailScreen
