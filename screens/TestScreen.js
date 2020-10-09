@@ -25,7 +25,7 @@ const TestScreen = props => {
 	const testText = useSelector(state => state.dataReducer.test);
 
 	const testFunct = () => {
-		dispatch(test("whattup nerd"));
+		dispatch(test(Math.random().toString()));
 	}
 
 	return (
