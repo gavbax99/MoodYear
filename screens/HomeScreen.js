@@ -19,19 +19,15 @@ import Blackout from '../components/Blackout';
 
 // ==================== Functional component 
 const HomeScreen = props => {
-
-	// console.log("HomeScreen render");
-
 	const handleTouchableWithoutFeedback = () => {
 		Keyboard.dismiss();
-	}
+	};
 
 	return (
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
 			<View style={styles.screen}>
 				{/* Header */}
 				<AppHeader navigation={props.navigation} backButton={false} />
-
 
 				{/* Inner screen */}
 				<View style={styles.innerScreen}>
