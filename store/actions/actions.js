@@ -117,7 +117,6 @@ export const loadData = (userId) => {
 	// ====================================
 	// ====================================
 	// ====================================
-	// did this while wding from benzos, sorry bro
 	// when login, first we load data from firebase, THEN goes to home
 	// when reg, we create and post a new user to firebse, then loads the info, THEN goes to home
 	// ====================================

@@ -5,7 +5,6 @@ import { createStackNavigator } from "react-navigation-stack";
 // Screens
 import HomeScreen from "../screens/HomeScreen";
 import MonthDetailScreen from "../screens/MonthDetailScreen";
-import TestScreen from "../screens/TestScreen";
 import AuthScreen from "../screens/AuthScreen";
 
 // Tools
@@ -29,8 +28,6 @@ const HomeNavigator = createStackNavigator({
 	},
 	Home: {
 		screen: HomeScreen,
-		// screen: TestScreen,
-		// screen: AuthScreen,
 	}, 
 	MonthDetail: {
 		screen: MonthDetailScreen

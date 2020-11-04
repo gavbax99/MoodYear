@@ -23,19 +23,9 @@ import Input from "../components/Input";
 
 // Constants 
 import Tools from '../constants/Tools';
-const arrowPath = "M 0 14.4 V 1.6 c 0 -1.2 1.3 -1.9 2.3 -1.4 l 10.9 6.3 c 1.1 0.6 1.1 2.3 0 2.9 L 2.3 15.8 C 1.3 16.4 0 15.6 0 14.4 Z";
+// const arrowPath = "M 0 14.4 V 1.6 c 0 -1.2 1.3 -1.9 2.3 -1.4 l 10.9 6.3 c 1.1 0.6 1.1 2.3 0 2.9 L 2.3 15.8 C 1.3 16.4 0 15.6 0 14.4 Z";
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
-
-
-// ================================
-// ====   LAST UPDATE:
-// ====   WORJKED ON AUTH / LOGIN
-// ====   NEXT UP: NAV FOR LOGIN 
-// ====            LOGIN POLISH
-// ====            DATA SETUP
-// ====            
-// ================================
 
 const initialState = {
 	inputValues: {
@@ -78,9 +68,10 @@ const AuthScreen = props => {
 	const dispatch = useDispatch();
 
 	// State
+	const [formState, dispatchFormState] = useReducer(formReducer, initialState);
+
 	const [error, setError] = useState();
 	const [isLoading, setIsLoading] = useState(false);
-	const [formState, dispatchFormState] = useReducer(formReducer, initialState);
 	const [isLogin, setIsLogin] = useState(true);
 
 	// Keyboard open constant
@@ -99,43 +90,69 @@ const AuthScreen = props => {
 	// Handle login/reg
 	const loginHandler = async () => {
 		console.log("loginHandler");
+
+		setError(null);
+		setIsLoading(true);
+
 		// If not valid, stop
-		if (!formState.inputValidities.email) return;
-
-		if (isLogin) {
-			// Login logic
-			console.log("login");
-			setError(null);
-			setIsLoading(true);
-			try {
-				await dispatch(Actions.login(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
-
-				// const currentData = useSelector(state => state.authReducer.userId);
-				console.log("current data: ", currentData);
-
-				props.navigation.navigate("Home");
-			} catch (err) {
-				setError(err.message);
-				setIsLoading(false);
-			}
-		} else {
-			// Reg logic
-			console.log("reg");
-			setError(null);
-			setIsLoading(true);
-			try {
-				// Fire signup action
-				await dispatch(Actions.signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
-				
-				// Get new signup state
-				// const currentData = useSelector(state => state.authReducer.userId);
-				console.log("current data: ", currentData);
-				props.navigation.navigate("Home");
-			} catch (err) {
-				setError(err.message);
-				setIsLoading(false);
-			}
+		if (!formState.inputValidities.email) {
+			setIsLoading(false);
+			setError("Please enter a valid email.");
+			return;
+		} else if (!formState.inputValidities.password) {
+			setIsLoading(false);
+			setError("Please enter a valid password.");
+			return;
 		}
+
+		try {
+			if (isLogin) {
+				await dispatch(Actions.login(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+			} else {
+				await dispatch(Actions.signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+			}
+
+			// const currentData = useSelector(state => state.authReducer.userId);
+			console.log("current data: ", currentData);
+			props.navigation.navigate("Home");
+		} catch (err) {
+			setError(err.message);
+			setIsLoading(false);
+		}
+		
+
+		// if (isLogin) {
+		// 	// Login logic
+		// 	console.log("login");
+
+		// 	try {
+		// 		await dispatch(Actions.login(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+
+		// 		// const currentData = useSelector(state => state.authReducer.userId);
+		// 		console.log("current data: ", currentData);
+
+		// 		props.navigation.navigate("Home");
+		// 	} catch (err) {
+		// 		setError(err.message);
+		// 		setIsLoading(false);
+		// 	}
+		// } else {
+		// 	// Reg logic
+		// 	console.log("reg");
+
+		// 	try {
+		// 		// Fire signup action
+		// 		await dispatch(Actions.signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+				
+		// 		// Get new signup state
+		// 		// const currentData = useSelector(state => state.authReducer.userId);
+		// 		console.log("current data: ", currentData);
+		// 		props.navigation.navigate("Home");
+		// 	} catch (err) {
+		// 		setError(err.message);
+		// 		setIsLoading(false);
+		// 	}
+		// }
 	};
 
 	useEffect(() => {
@@ -143,13 +160,6 @@ const AuthScreen = props => {
 			Alert.alert("An error occurred!", error, [{ test: "Okay" }]);
 		}
 	}, [error]);
-
-	// const test = () => {
-	// 	console.log(formState.inputValues.password.length);
-	// 	if (!formState.inputValidities.email || formState.inputValues.password.length < 8) return;
-
-	// 	console.log(formState.inputValidities.email, formState.inputValidities.password, formState.formIsValid);
-	// }
 
 	const inputChangeHandler = useCallback(
 		(inputIdentifier, inputValue, inputValidity) => {
@@ -164,6 +174,9 @@ const AuthScreen = props => {
 	);
 
 
+	console.log(formState);
+
+
 	return (
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
 			<KeyboardAvoidingView
@@ -175,6 +188,10 @@ const AuthScreen = props => {
 					<View style={{ width: "100%" }}>
 						<Text style={styles.titleText}>FeelBetter</Text>
 					</View>
+
+					<TextInput 
+
+						/>
 
 					{/* EMAIL */}
 					<Input
@@ -231,7 +248,7 @@ const AuthScreen = props => {
 							width={8}
 							height={10}
 							viewBox="0 0 14 16">
-							<Path fill={Tools.colorLight} d={arrowPath} />
+							<Path fill={Tools.colorLight} d={Tools.arrowPath} />
 						</Svg>
 					</TouchableOpacity>}
 

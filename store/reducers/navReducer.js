@@ -4,7 +4,6 @@ const initialState = {
 	headerHeightState: 0,
 };
 
-// export const navReducer = (state = initialState, action) => {
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case SET_HEADER_HEIGHT:
@@ -15,10 +14,6 @@ export default (state = initialState, action) => {
 	}
 	return state;
 };
-
-// export default navReducer;
-
-
 
 // import { useSelector } from "react-redux";
 // const headerHeightState = useSelector(state => state.navReducer.headerHeightState);

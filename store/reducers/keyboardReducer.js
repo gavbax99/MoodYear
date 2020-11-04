@@ -6,7 +6,6 @@ const initialState = {
 	keyboardReducerState: false,
 };
 
-// const keyboardReducer = (state = initialState, action) => {
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case SET_KEYBOARD_OPEN:
@@ -17,11 +16,6 @@ export default (state = initialState, action) => {
 	}
 	return state;
 };
-
-// export default keyboardReducer;
-
-
-
 
 // import { useSelector } from "react-redux";
 // const headerHeightState = useSelector(state => state.keyboardReducer.keyboardReducerState);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StatusBar } from "react-native";
 
 // Font
@@ -36,13 +36,6 @@ const store = createStore(reducer, applyMiddleware(ReduxThunk));
 
 // App
 export default function App() {
-
-	// useEffect(() => {
-	// 	console.log("app use effect");
-	// });
-
-	console.log("App render");
-	
 	//const [fontLoaded, setFontLoaded] = useState(false);
 
 	// if (!fontLoaded) {

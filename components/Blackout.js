@@ -11,11 +11,14 @@ import Svg, { Path } from 'react-native-svg';
 // Redux
 import { useSelector } from "react-redux";
 
+// Tools
+import Tools from '../constants/Tools';
+
 // Vars
 const windowHeight = Dimensions.get('window').height;
 
 // Arrow
-const arrowPath = "M 0 14.4 V 1.6 c 0 -1.2 1.3 -1.9 2.3 -1.4 l 10.9 6.3 c 1.1 0.6 1.1 2.3 0 2.9 L 2.3 15.8 C 1.3 16.4 0 15.6 0 14.4 Z";
+// const arrowPath = "M 0 14.4 V 1.6 c 0 -1.2 1.3 -1.9 2.3 -1.4 l 10.9 6.3 c 1.1 0.6 1.1 2.3 0 2.9 L 2.3 15.8 C 1.3 16.4 0 15.6 0 14.4 Z";
 
 
 
@@ -79,7 +82,7 @@ const Blackout = props => {
 						width={14} 
 						height={16} 
 						viewBox="0 0 14 16">
-						<Path fill="white" d={arrowPath} />
+						<Path fill="white" d={Tools.arrowPath} />
 					</Svg>
 			</Animated.View>
 		);
