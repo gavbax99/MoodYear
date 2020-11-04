@@ -1,20 +1,32 @@
-import { TEST } from "../actions/actions";
+import { 
+	LOADDATA,
+	CREATE_NEW_ACCOUNT_DATA,
+ } from "../actions/actions";
 
 const initialState = {
-	test: "hi",
+	data: {},
 };
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case TEST:
-			return { ...state, test: action.test };
+		case LOADDATA:
+			// If no data
+			// if (Object.keys(initialState.data).length) {
 
-		default:
-			return state;
-	}
+			// }
+			return { 
+				...state, 
+				data: action.data 
+			};
+
+		case CREATE_NEW_ACCOUNT_DATA:
+			return { 
+				...state, 
+				data: action.data 
+			};
+	};
 	return state;
 };
-
 
 // import { useSelector } from "react-redux";
 // const headerHeightState = useSelector(state => state.navReducer.headerHeightState);

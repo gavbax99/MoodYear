@@ -1,5 +1,5 @@
 // React
-import React, { useState, useReducer, useCallback } from 'react';
+import React, { useState, useReducer, useCallback, useEffect } from 'react';
 import {
 	StyleSheet,
 	View,
@@ -8,7 +8,9 @@ import {
 	TextInput,
 	TouchableWithoutFeedback,
 	Keyboard,
-	TouchableOpacity
+	TouchableOpacity,
+	ActivityIndicator,
+	Alert
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import * as Actions from "../store/actions/actions";
@@ -24,6 +26,16 @@ import Tools from '../constants/Tools';
 const arrowPath = "M 0 14.4 V 1.6 c 0 -1.2 1.3 -1.9 2.3 -1.4 l 10.9 6.3 c 1.1 0.6 1.1 2.3 0 2.9 L 2.3 15.8 C 1.3 16.4 0 15.6 0 14.4 Z";
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+
+
+// ================================
+// ====   LAST UPDATE:
+// ====   WORJKED ON AUTH / LOGIN
+// ====   NEXT UP: NAV FOR LOGIN 
+// ====            LOGIN POLISH
+// ====            DATA SETUP
+// ====            
+// ================================
 
 const initialState = {
 	inputValues: {
@@ -66,8 +78,13 @@ const AuthScreen = props => {
 	const dispatch = useDispatch();
 
 	// State
+	const [error, setError] = useState();
+	const [isLoading, setIsLoading] = useState(false);
 	const [formState, dispatchFormState] = useReducer(formReducer, initialState);
 	const [isLogin, setIsLogin] = useState(true);
+
+	// Keyboard open constant
+	const currentData = useSelector(state => state.dataReducer.data);
 
 	// Min keyboard
 	const handleTouchableWithoutFeedback = () => {
@@ -80,20 +97,52 @@ const AuthScreen = props => {
 	}
 
 	// Handle login/reg
-	const loginHandler = () => {
+	const loginHandler = async () => {
+		console.log("loginHandler");
 		// If not valid, stop
-		if (!formState.inputValidities.email || formState.inputValues.password.length < 8) return;
+		if (!formState.inputValidities.email) return;
 
 		if (isLogin) {
 			// Login logic
-			console.log("login")
-			dispatch(Actions.login(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+			console.log("login");
+			setError(null);
+			setIsLoading(true);
+			try {
+				await dispatch(Actions.login(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+
+				// const currentData = useSelector(state => state.authReducer.userId);
+				console.log("current data: ", currentData);
+
+				props.navigation.navigate("Home");
+			} catch (err) {
+				setError(err.message);
+				setIsLoading(false);
+			}
 		} else {
 			// Reg logic
-			console.log("reg")
-			dispatch(Actions.signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+			console.log("reg");
+			setError(null);
+			setIsLoading(true);
+			try {
+				// Fire signup action
+				await dispatch(Actions.signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+				
+				// Get new signup state
+				// const currentData = useSelector(state => state.authReducer.userId);
+				console.log("current data: ", currentData);
+				props.navigation.navigate("Home");
+			} catch (err) {
+				setError(err.message);
+				setIsLoading(false);
+			}
 		}
-	}
+	};
+
+	useEffect(() => {
+		if (error) {
+			Alert.alert("An error occurred!", error, [{ test: "Okay" }]);
+		}
+	}, [error]);
 
 	// const test = () => {
 	// 	console.log(formState.inputValues.password.length);
@@ -173,7 +222,7 @@ const AuthScreen = props => {
 						</TouchableOpacity>
 					</View>
 
-					<TouchableOpacity style={{ ...styles.button, backgroundColor: isLogin ? Tools.color1 : Tools.color3 }} onPress={loginHandler}>
+					{isLoading ? <ActivityIndicator size="small" color={Tools.color1} /> : <TouchableOpacity style={{ ...styles.button, backgroundColor: isLogin ? Tools.color1 : Tools.color3 }} onPress={loginHandler}>
 						<Text style={{ color: "#fff", fontSize: 18 }}>
 							{isLogin ? "Login" : "Register"}
 						</Text>
@@ -184,7 +233,7 @@ const AuthScreen = props => {
 							viewBox="0 0 14 16">
 							<Path fill={Tools.colorLight} d={arrowPath} />
 						</Svg>
-					</TouchableOpacity>
+					</TouchableOpacity>}
 
 					{/* <TouchableOpacity style={{ ...styles.button, backgroundColor: isLogin ? Tools.color1 : Tools.color3 }} onPress={test}>
 						<Text style={{ color: "#fff", fontSize: 18 }}>
@@ -265,3 +314,4 @@ const styles = StyleSheet.create({
 });
 
 export default AuthScreen;
+

@@ -18,15 +18,19 @@ const defaultStackNavOptions = {
 	},
 	cardStyle: { 
 		backgroundColor: Tools.colorBackground,
-	}
+	},
+	gestureEnabled: false,
 };
 
 // ***** Shop stack
 const HomeNavigator = createStackNavigator({
-	Home: {
-		// screen: HomeScreen,
-		// screen: TestScreen,
+	Login: {
 		screen: AuthScreen,
+	},
+	Home: {
+		screen: HomeScreen,
+		// screen: TestScreen,
+		// screen: AuthScreen,
 	}, 
 	MonthDetail: {
 		screen: MonthDetailScreen

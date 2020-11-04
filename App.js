@@ -37,9 +37,9 @@ const store = createStore(reducer, applyMiddleware(ReduxThunk));
 // App
 export default function App() {
 
-	useEffect(() => {
-		console.log("app use effect");
-	});
+	// useEffect(() => {
+	// 	console.log("app use effect");
+	// });
 
 	console.log("App render");
 	
