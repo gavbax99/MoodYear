@@ -18,6 +18,12 @@ import { Ionicons } from '@expo/vector-icons';
 // Constants
 import Tools from '../constants/Tools';
 
+// Data
+import Year2020 from "../data/Year2020";
+
+// Redux
+import { useSelector } from "react-redux";
+
 
 // ==================== Component
 const AppHeader = props => {
@@ -28,6 +34,16 @@ const AppHeader = props => {
 		const { height } = event.nativeEvent.layout;
 		dispatch(setHeaderHeight(height));
 	};
+
+	const changeData = () => {
+		const year = new Date().getFullYear();
+		dispatch(loadData({ [year]: Year2020[year] }));
+	}
+
+	const data = useSelector(state => state.dataReducer.data);
+	const test = () => {
+		console.log("data from appheader", data);
+	}
 
 	const HeaderImage = () => {
 		if (props.backButton) {
@@ -62,7 +78,7 @@ const AppHeader = props => {
 			<TouchableOpacity 
 				activeOpacity={Tools.activeOpacity} 
 				style={{padding: Tools.paddingNormal}} 
-				onPress={() => {props.navigation.goBack()}}>
+				onPress={test}>
 				<HeaderImage />
 			</TouchableOpacity>
 
@@ -70,7 +86,7 @@ const AppHeader = props => {
 			<TouchableOpacity 
 				activeOpacity={Tools.activeOpacity} 
 				style={styles.textContainer} 
-				onPress={() => {dispatch(loadData({ this: "that" }))}}>
+				onPress={changeData}>
 				<Ionicons style={{paddingHorizontal: 6}}name="ios-more" size={24} color="#ffffff" />
 			</TouchableOpacity>
 		</View>

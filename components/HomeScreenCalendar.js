@@ -22,9 +22,19 @@ const HomeScreenCalendar = props => {
 
 	console.log("HomeScreenCalendar render");
 
+	const date = new Date();
+	const getYear = date.getFullYear();
+	const getMonth = date.getMonth();
+	const getDay = date.getDate();
+
 	const data = useSelector(state => state.dataReducer.data);
 	useEffect(() => {
-		console.log(data);
+		// console.log(data);
+		if (data[getYear] !== undefined) {
+			console.log(data[getYear].months[getMonth].name);
+			console.log(data[getYear].months[getMonth].days[getDay-1]);
+			console.log(getDay, data[getYear].months[getMonth].days[getDay-1].message);
+		}
 	}, [data]);
 
 	return (
@@ -33,10 +43,10 @@ const HomeScreenCalendar = props => {
 			{/* List of months */}
 			<View style={styles.calendarInner}>
 				{/* Render our months */}
-				{Year2020.months.map((monthObj, i) => {
+				{Year2020[2020].months.map((monthObj, i) => {
 					return (
 						<HomeScreenMonth 
-							year={Year2020.yearInt}
+							year={Year2020[2020].yearInt}
 							monthObj={monthObj}
 							navigation={props.navigation}
 							key={monthObj.name} 
