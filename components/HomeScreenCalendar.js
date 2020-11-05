@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { useEffect } from 'react';
 import { 
 	StyleSheet, 
 	View 
@@ -14,11 +14,18 @@ import Year2020 from "../data/Year2020";
 // Components
 import HomeScreenMonth from '../components/HomeScreenMonth';
 
+// Redux
+import { useSelector } from "react-redux";
 
 // ==================== Component
 const HomeScreenCalendar = props => {
 
 	console.log("HomeScreenCalendar render");
+
+	const data = useSelector(state => state.dataReducer.data);
+	useEffect(() => {
+		console.log(data);
+	}, [data]);
 
 	return (
 		<View style={styles.calendar}>

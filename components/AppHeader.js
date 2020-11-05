@@ -10,7 +10,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight } from "../store/actions/actions";
+import { setHeaderHeight, loadData } from "../store/actions/actions";
 
 // Icons
 import { Ionicons } from '@expo/vector-icons';
@@ -18,19 +18,16 @@ import { Ionicons } from '@expo/vector-icons';
 // Constants
 import Tools from '../constants/Tools';
 
-// Arrow
-// const arrowPath = "M 0 14.4 V 1.6 c 0 -1.2 1.3 -1.9 2.3 -1.4 l 10.9 6.3 c 1.1 0.6 1.1 2.3 0 2.9 L 2.3 15.8 C 1.3 16.4 0 15.6 0 14.4 Z";
-
 
 // ==================== Component
 const AppHeader = props => {
 
+	const dispatch = useDispatch();
+
 	const findHeaderHeight = (event) => {
 		const { height } = event.nativeEvent.layout;
 		dispatch(setHeaderHeight(height));
-	}
-
-	const dispatch = useDispatch();
+	};
 
 	const HeaderImage = () => {
 		if (props.backButton) {
@@ -57,19 +54,25 @@ const AppHeader = props => {
 					/>
 			);
 		}
-	}
+	};
 
 	return (
 		<View style={styles.header} onLayout={findHeaderHeight}>
 			{/* Logo */}
-			<TouchableOpacity activeOpacity={Tools.activeOpacity} style={{padding: Tools.paddingNormal}} onPress={() => {props.navigation.goBack()}}>
+			<TouchableOpacity 
+				activeOpacity={Tools.activeOpacity} 
+				style={{padding: Tools.paddingNormal}} 
+				onPress={() => {props.navigation.goBack()}}>
 				<HeaderImage />
 			</TouchableOpacity>
 
 			{/* Text */}
-			<View style={styles.textContainer}>
+			<TouchableOpacity 
+				activeOpacity={Tools.activeOpacity} 
+				style={styles.textContainer} 
+				onPress={() => {dispatch(loadData({ this: "that" }))}}>
 				<Ionicons style={{paddingHorizontal: 6}}name="ios-more" size={24} color="#ffffff" />
-			</View>
+			</TouchableOpacity>
 		</View>
 	);
 }

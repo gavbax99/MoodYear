@@ -113,7 +113,7 @@ const AuthScreen = props => {
 
 			// const currentData = useSelector(state => state.authReducer.userId);
 			console.log("current data: ", currentData);
-			props.navigation.navigate("Home");
+			props.navigation.replace("Home");
 		} catch (err) {
 			setError(err.message);
 			setIsLoading(false);

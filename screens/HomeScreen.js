@@ -1,11 +1,12 @@
 // React
-import React from 'react';
+import React, { useEffect } from 'react';
 import { 
 	StyleSheet, 
 	View, 
 	TouchableWithoutFeedback, 
 	Keyboard,
 } from 'react-native';
+import { useSelector } from "react-redux";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -22,6 +23,11 @@ const HomeScreen = props => {
 	const handleTouchableWithoutFeedback = () => {
 		Keyboard.dismiss();
 	};
+	
+	// const data = useSelector(state => state.dataReducer.data);
+	// useEffect(() => {
+	// 	console.log(data);
+	// }, [data]);
 
 	return (
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>

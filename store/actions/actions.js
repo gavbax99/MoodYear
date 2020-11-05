@@ -110,7 +110,13 @@ export const login = (email, password) => {
 };
 
 // Loading data (fetched from firebase)
-export const loadData = (userId) => {
+export const loadData = (data) => {
+// export const loadData = (userId) => {
+
+	return {
+		type: LOADDATA,
+		data: data
+	};
 
 	// ====================================
 	// ====================================
