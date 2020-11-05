@@ -104,7 +104,7 @@ export const login = (email, password) => {
 		dispatch({ 
 			type: LOGIN,
 			token: resData.idToken,
-			userId: resData.loaclId,
+			userId: resData.localId,
 		});
 	};
 };

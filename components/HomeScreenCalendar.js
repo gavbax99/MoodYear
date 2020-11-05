@@ -2,14 +2,15 @@
 import React, { useEffect } from 'react';
 import { 
 	StyleSheet, 
-	View 
+	View,
+	ActivityIndicator
 } from 'react-native';
 
 // Constants
 import Tools from '../constants/Tools';
 
 // Data
-import Year2020 from "../data/Year2020";
+// import Year2020 from "../data/Year2020";
 
 // Components
 import HomeScreenMonth from '../components/HomeScreenMonth';
@@ -37,22 +38,34 @@ const HomeScreenCalendar = props => {
 		}
 	}, [data]);
 
+	const Loading = () => {
+		return (
+			<View style={styles.loadingIconContainer}>
+				<ActivityIndicator size="large" color={Tools.color1} />
+			</View>
+		);
+	};
+
 	return (
 		<View style={styles.calendar}>
 
 			{/* List of months */}
 			<View style={styles.calendarInner}>
+
 				{/* Render our months */}
-				{Year2020[2020].months.map((monthObj, i) => {
-					return (
-						<HomeScreenMonth 
-							year={Year2020[2020].yearInt}
-							monthObj={monthObj}
-							navigation={props.navigation}
-							key={monthObj.name} 
-							/>
-					);
-				})}
+				{data[getYear] !== undefined ? 
+					data[getYear].months.map((monthObj, i) => {
+						return (
+							<HomeScreenMonth 
+								year={data[getYear].yearInt}
+								monthObj={monthObj}
+								navigation={props.navigation}
+								key={monthObj.name} 
+								/>
+						);
+					}) 
+				: <Loading/>}
+
 			</View>
 
 		</View>
@@ -75,6 +88,10 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		flexWrap: "wrap",
 		padding: Tools.paddingHalf,
+	},
+	loadingIconContainer: {
+		width: "100%",
+		marginTop: 20,
 	},
 });
 

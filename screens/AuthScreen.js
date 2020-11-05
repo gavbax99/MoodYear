@@ -24,8 +24,8 @@ import Input from "../components/Input";
 // Constants 
 import Tools from '../constants/Tools';
 
+// Form stat and reducer
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
-
 const initialState = {
 	inputValues: {
 		email: "",
@@ -68,7 +68,6 @@ const AuthScreen = props => {
 
 	// State
 	const [formState, dispatchFormState] = useReducer(formReducer, initialState);
-
 	const [error, setError] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLogin, setIsLogin] = useState(true);
@@ -154,12 +153,14 @@ const AuthScreen = props => {
 		// }
 	};
 
+	// Error logging
 	useEffect(() => {
 		if (error) {
 			Alert.alert("An error occurred!", error, [{ test: "Okay" }]);
 		}
 	}, [error]);
 
+	// Input change handler
 	const inputChangeHandler = useCallback(
 		(inputIdentifier, inputValue, inputValidity) => {
 			dispatchFormState({
@@ -171,10 +172,6 @@ const AuthScreen = props => {
 		},
 		[dispatchFormState]
 	);
-
-
-	console.log(formState);
-
 
 	return (
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>

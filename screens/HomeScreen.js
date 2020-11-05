@@ -23,11 +23,6 @@ const HomeScreen = props => {
 	const handleTouchableWithoutFeedback = () => {
 		Keyboard.dismiss();
 	};
-	
-	// const data = useSelector(state => state.dataReducer.data);
-	// useEffect(() => {
-	// 	console.log(data);
-	// }, [data]);
 
 	return (
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>

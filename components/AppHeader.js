@@ -35,15 +35,20 @@ const AppHeader = props => {
 		dispatch(setHeaderHeight(height));
 	};
 
+	// 
 	const changeData = () => {
 		const year = new Date().getFullYear();
 		dispatch(loadData({ [year]: Year2020[year] }));
 	}
+	// 
 
+	// 
 	const data = useSelector(state => state.dataReducer.data);
+	const auth = useSelector(state => state.authReducer.userId);
 	const test = () => {
-		console.log("data from appheader", data);
+		console.log("uid from appheader", auth);
 	}
+	// 
 
 	const HeaderImage = () => {
 		if (props.backButton) {
@@ -78,6 +83,7 @@ const AppHeader = props => {
 			<TouchableOpacity 
 				activeOpacity={Tools.activeOpacity} 
 				style={{padding: Tools.paddingNormal}} 
+				// onPress={() => {props.navigation.goBack()}}>
 				onPress={test}>
 				<HeaderImage />
 			</TouchableOpacity>
