@@ -128,7 +128,7 @@ const FaceSlider = props => {
 				// debugTouchArea={true}
 				
 				trackStyle={{ height: 10, borderRadius: 10 }}
-				thumbStyle={{ height: 26, width: 26, borderRadius: 26, shadowColor: "#000",	shadowOffset: {	width: 0, height: 2 }, shadowOpacity: 0.15,	shadowRadius: 3.5 }}
+				thumbStyle={{ height: 30, width: 30, borderRadius: 30, shadowColor: "#000",	shadowOffset: {	width: 0, height: 2 }, shadowOpacity: 0.15,	shadowRadius: 3.5 }}
 				thumbTouchSize={{ width: 60, height: 60 }}
 				thumbTintColor={"#ffffff"}
 

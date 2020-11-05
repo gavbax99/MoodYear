@@ -17,10 +17,6 @@ import Year2020 from "../data/Year2020";
 // Components
 import MonthDetailDay from "../components/MonthDetailDay";
 
-// Arrow
-const arrowPath = "M 0 14.4 V 1.6 c 0 -1.2 1.3 -1.9 2.3 -1.4 l 10.9 6.3 c 1.1 0.6 1.1 2.3 0 2.9 L 2.3 15.8 C 1.3 16.4 0 15.6 0 14.4 Z";
-
-
 // ==================== Component
 const MonthDetailCalendar = props => {
 
@@ -28,7 +24,7 @@ const MonthDetailCalendar = props => {
 	const [currentYear, setCurrentYear] = useState(props.yearInt);
 
 	// Data
-	const monthData = Year2020.months[currentMonth];
+	const monthData = Year2020[2020].months[currentMonth];
 
 	// Time
 	const date = new Date();
@@ -96,7 +92,7 @@ const MonthDetailCalendar = props => {
 							width={14} 
 							height={16} 
 							viewBox="0 0 14 16">
-							<Path fill="white" d={arrowPath} />
+							<Path fill="white" d={Tools.arrowPath} />
 						</Svg>
 				</TouchableOpacity>
 
@@ -119,7 +115,7 @@ const MonthDetailCalendar = props => {
 							width={14} 
 							height={16} 
 							viewBox="0 0 14 16">
-							<Path fill="white" d={arrowPath} />
+							<Path fill="white" d={Tools.arrowPath} />
 						</Svg>
 				</TouchableOpacity>
 			</View>

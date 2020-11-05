@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StatusBar } from "react-native";
 
 // Font
@@ -13,15 +13,17 @@ import AppNavigator from "./navigation/AppNavigator";
 
 // Redux
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import reducer from "./store/reducers/index";
+import ReduxThunk from "redux-thunk";
 
 // ====================
 
 StatusBar.setHidden(true);
 enableScreens();
 
-const store = createStore(reducer);
+// redux with reduxthunk middleware applied
+const store = createStore(reducer, applyMiddleware(ReduxThunk));
 
 // const fetchFonts = () => {
 // 	return Font.loadAsync({
@@ -34,13 +36,6 @@ const store = createStore(reducer);
 
 // App
 export default function App() {
-
-	useEffect(() => {
-		console.log("app use effect");
-	});
-
-	console.log("App render");
-	
 	//const [fontLoaded, setFontLoaded] = useState(false);
 
 	// if (!fontLoaded) {

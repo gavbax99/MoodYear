@@ -10,7 +10,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight } from "../store/actions/actions";
+import { setHeaderHeight, loadData } from "../store/actions/actions";
 
 // Icons
 import { Ionicons } from '@expo/vector-icons';
@@ -18,19 +18,37 @@ import { Ionicons } from '@expo/vector-icons';
 // Constants
 import Tools from '../constants/Tools';
 
-// Arrow
-const arrowPath = "M 0 14.4 V 1.6 c 0 -1.2 1.3 -1.9 2.3 -1.4 l 10.9 6.3 c 1.1 0.6 1.1 2.3 0 2.9 L 2.3 15.8 C 1.3 16.4 0 15.6 0 14.4 Z";
+// Data
+import Year2020 from "../data/Year2020";
+
+// Redux
+import { useSelector } from "react-redux";
 
 
 // ==================== Component
 const AppHeader = props => {
 
+	const dispatch = useDispatch();
+
 	const findHeaderHeight = (event) => {
 		const { height } = event.nativeEvent.layout;
 		dispatch(setHeaderHeight(height));
-	}
+	};
 
-	const dispatch = useDispatch();
+	// 
+	const changeData = () => {
+		const year = new Date().getFullYear();
+		dispatch(loadData({ [year]: Year2020[year] }));
+	}
+	// 
+
+	// 
+	const data = useSelector(state => state.dataReducer.data);
+	const auth = useSelector(state => state.authReducer.userId);
+	const test = () => {
+		console.log("uid from appheader", auth);
+	}
+	// 
 
 	const HeaderImage = () => {
 		if (props.backButton) {
@@ -45,7 +63,7 @@ const AppHeader = props => {
 						width={14} 
 						height={16} 
 						viewBox="0 0 14 16">
-						<Path fill={Tools.color3} d={arrowPath} />
+						<Path fill={Tools.color3} d={Tools.arrowPath} />
 					</Svg>
 				</View>
 			);
@@ -57,19 +75,26 @@ const AppHeader = props => {
 					/>
 			);
 		}
-	}
+	};
 
 	return (
 		<View style={styles.header} onLayout={findHeaderHeight}>
 			{/* Logo */}
-			<TouchableOpacity activeOpacity={Tools.activeOpacity} style={{padding: Tools.paddingNormal}} onPress={() => {props.navigation.goBack()}}>
+			<TouchableOpacity 
+				activeOpacity={Tools.activeOpacity} 
+				style={{padding: Tools.paddingNormal}} 
+				// onPress={() => {props.navigation.goBack()}}>
+				onPress={test}>
 				<HeaderImage />
 			</TouchableOpacity>
 
 			{/* Text */}
-			<View style={styles.textContainer}>
+			<TouchableOpacity 
+				activeOpacity={Tools.activeOpacity} 
+				style={styles.textContainer} 
+				onPress={changeData}>
 				<Ionicons style={{paddingHorizontal: 6}}name="ios-more" size={24} color="#ffffff" />
-			</View>
+			</TouchableOpacity>
 		</View>
 	);
 }
