@@ -35,7 +35,6 @@ const HomeScreenCalendar = props => {
 	const uid = useSelector(state => state.authReducer.userId);
 	useEffect(() => {
 		dispatch(loadData(uid, getYear));
-		setDataLoaded(true);
 
 		// if (data[getYear] !== undefined) {
 		// 	console.log(data[getYear].months[getMonth].name);

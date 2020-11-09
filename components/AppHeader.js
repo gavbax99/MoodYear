@@ -10,7 +10,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight, loadData, testData } from "../store/actions/actions";
+import { setHeaderHeight } from "../store/actions/actions";
 
 // Icons
 import { Ionicons } from '@expo/vector-icons';
@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Tools from '../constants/Tools';
 
 // Data
-import Year2020 from "../data/Year2020";
+import Year2020Hold from "../data/Year2020Hold";
 
 // Redux
 import { useSelector } from "react-redux";
@@ -38,6 +38,21 @@ const AppHeader = props => {
 	const placeholder = () => {
 		console.log("ph");
 	}
+
+	// const ADD_NEW_YEAR = () => {
+	// 	async function setData() {
+	// 		const response = await fetch(`https://rn-health.firebaseio.com/emptyCalendar.json`, {
+	// 		method: "PUT",
+	// 		headers: {
+	// 			"Content-Type": "application/json"
+	// 		},
+	// 		body: JSON.stringify(Year2020Hold)
+	// 	});
+	// 		const resData = await response.json();
+	// 	};
+
+	// 	setData();
+	// };
 
 	const HeaderImage = () => {
 		if (props.backButton) {
