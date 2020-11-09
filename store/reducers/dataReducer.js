@@ -10,10 +10,6 @@ const initialState = {
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case LOADDATA:
-			// If no data
-			// if (Object.keys(initialState.data).length) {
-
-			// }
 			return { 
 				...state, 
 				data: action.data 

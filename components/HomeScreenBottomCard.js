@@ -43,7 +43,7 @@ const submitButtonTopClosed = 50;
 // ==================== Component
 const HomeScreenBottomCard = props => {
 
-	console.log("bottom card rerender");
+	// console.log("bottom card rerender");
 
 	const [textInputValue, onChangeText] = useState("");
 	const [textInputHoldValue, setTextInputHoldValue] = useState("");
