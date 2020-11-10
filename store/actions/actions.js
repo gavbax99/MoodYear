@@ -141,7 +141,7 @@ export const updateData = (uid, year, data) => {
 
 		dispatch({
 			type: UPDATEDATA,
-			data: data
+			data: resData
 		});
 	};
 };

@@ -1,34 +1,42 @@
 // React
 import React, { 
 	useState, 
+	useEffect
 } from "react";
 import { 
 	StyleSheet, 
 	View, 
 	Text,
-	Image,
 	TextInput, 
 	KeyboardAvoidingView, 
+	TouchableOpacity
 } from "react-native";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { setKeyboardOpen } from "../store/actions/actions";
+import { setKeyboardOpen, updateData } from "../store/actions/actions";
 
 // Constants
 import Tools from '../constants/Tools';
 
 // Components
-import MySlider from "./MySlider";
-import Face from "./Face";
 import FaceSlider from "./FaceSlider";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 
 // Vars
 const characaterLimit = 150;
 const date = new Date();
+const yearNumber = date.getFullYear();
+const monthNumber = date.getMonth();
+const dayNumber = date.getDate();
 const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
 const day = daysOfWeek[date.getDay()];
-const dayDate = ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+
+const dayDate = ((monthNumber + 1) + '/' + dayNumber + '/' + yearNumber);
+
+// to get month: date.getMonth()
+// to get day: date.getDate() - 1
+// 
 
 const textboxHeightOpen = 96;
 const textboxHeightClosed = 38;
@@ -45,15 +53,14 @@ const HomeScreenBottomCard = props => {
 
 	const [textInputValue, onChangeText] = useState("");
 	const [textInputHoldValue, setTextInputHoldValue] = useState("");
+	const [sliderVal, setSliderVal] = useState(4);
 	
 	const dispatch = useDispatch();
 
-	// const sliderCheck = (val) => {
-	// 	console.log(val);
-	// }
-
-	// State of keyboard
+	// Redux variables
 	const keyboardIsOpen = useSelector(state => state.keyboardReducer.keyboardReducerState);
+	const data = useSelector(state => state.dataReducer.data);
+	const uid = useSelector(state => state.authReducer.userId);
 		
 	// Variables
 	const charactersLeft = textInputValue.length;
@@ -73,6 +80,30 @@ const HomeScreenBottomCard = props => {
 
 		dispatch(setKeyboardOpen(false));
 	};
+
+	// Slider value function
+	const handleSliderChange = (val) => {
+		setSliderVal(val);
+	};
+
+	function NewObj(obj) {
+		this.obj = obj;
+	}
+
+	// Submit data for day
+	const submitMessage = () => {
+		const newObj = new NewObj(data);
+		newObj.obj.months[monthNumber].days[dayNumber-1].message = textInputValue;
+		newObj.obj.months[monthNumber].days[dayNumber-1].color = sliderVal + 1;
+		// console.log("message: ", newObj.obj.months[monthNumber].days[dayNumber-1].message);
+		// console.log("slider: ", newObj.obj.months[monthNumber].days[dayNumber-1].color);
+
+		dispatch(updateData(uid, yearNumber, newObj.obj));
+	};
+
+	// useEffect(() => {
+	// 	console.log("monthzz: ", data.months[monthNumber].days[dayNumber-1].dayOfYear);
+	// }, [data]);
 	
 	return (
 		<KeyboardAvoidingView 
@@ -88,6 +119,8 @@ const HomeScreenBottomCard = props => {
 				<FaceSlider 
 					day={day} 
 					dayDate={dayDate} 
+					sliderValue={sliderVal}
+					sliderChange={handleSliderChange}
 					/>
 
 				{/* Input row */}
@@ -124,14 +157,19 @@ const HomeScreenBottomCard = props => {
 						{charactersLeft}/{characaterLimit}
 					</Text>
 
-					<View style={{ 
-						...styles.underInputSubmitButton, 
-						top: keyboardIsOpen ? submitButtonTopOpen : submitButtonTopClosed 
-						}}>
-						<Text style={styles.underInputSubmitButtonText}>
-							+
-						</Text>
-					</View>
+					<TouchableOpacity 
+						activeOpacity={Tools.activeOpacity} 
+						// style={styles.textContainer} 
+						onPress={submitMessage}>
+						<View style={{ 
+							...styles.underInputSubmitButton, 
+							top: keyboardIsOpen ? submitButtonTopOpen : submitButtonTopClosed 
+							}}>
+							<Text style={styles.underInputSubmitButtonText}>
+								+
+							</Text>
+						</View>
+					</TouchableOpacity>
 				</View>
 			</View>
 

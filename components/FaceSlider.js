@@ -59,18 +59,14 @@ const faceSvgPaths = {
 // ==================== Component
 const FaceSlider = props => {
 
-	// console.log("TestScreen rere");
-
-	const [sliderVal, setSliderVal] = useState(faceSvgPathsIndex.length - 1);
 	const [faceColor, setFaceColor] = useState(Tools.color5);
 
-	const [leftEyePath, setLeftEyePath] = useState(faceSvgPaths.leftEye[faceSvgPathsIndex[sliderVal]]);
-	const [mouthPath, setMouthPath] = useState(faceSvgPaths.mouth[faceSvgPathsIndex[sliderVal]]);
-	const [rightEyePath, setRightEyePath] = useState(faceSvgPaths.rightEye[faceSvgPathsIndex[sliderVal]]);
+	const [leftEyePath, setLeftEyePath] = useState(faceSvgPaths.leftEye[faceSvgPathsIndex[props.sliderValue]]);
+	const [mouthPath, setMouthPath] = useState(faceSvgPaths.mouth[faceSvgPathsIndex[props.sliderValue]]);
+	const [rightEyePath, setRightEyePath] = useState(faceSvgPaths.rightEye[faceSvgPathsIndex[props.sliderValue]]);
 
-
+	// Interpolates between two svg paths
 	const interpolatePaths = (val) => {
-		// Interpolates between two svg paths
 		const leftEyeInterpolator = interpolate(leftEyePath, faceSvgPaths.leftEye[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
 		const mouthInterpolator = interpolate(mouthPath, faceSvgPaths.mouth[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
 		const rightEyeInterpolator = interpolate(rightEyePath, faceSvgPaths.rightEye[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
@@ -136,8 +132,8 @@ const FaceSlider = props => {
 				maximumTrackTintColor={faceColor}
 
 				onSlidingComplete={ (val) => interpolatePaths(val) }
-				onValueChange={ (val) => setSliderVal(val) }
-				value={sliderVal}
+				onValueChange={ (val) => props.sliderChange(val) }
+				value={props.sliderValue}
 				/>
 		</View>
 	);

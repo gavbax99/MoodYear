@@ -31,14 +31,7 @@ const HomeScreenCalendar = props => {
 	const data = useSelector(state => state.dataReducer.data);
 	const uid = useSelector(state => state.authReducer.userId);
 	useEffect(() => {
-		dispatch(loadData(uid, getYear));
-
-		// if (data[getYear] !== undefined) {
-		// 	console.log(data[getYear].months[getMonth].name);
-		// 	console.log(data[getYear].months[getMonth].days[getDay-1]);
-		// 	console.log(getDay, data[getYear].months[getMonth].days[getDay-1].message);
-		// }
-		
+		dispatch(loadData(uid, getYear));		
 	}, [uid]);
 
 	// console.log("current homescreen data: ", data);
