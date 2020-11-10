@@ -43,8 +43,6 @@ const submitButtonTopClosed = 50;
 // ==================== Component
 const HomeScreenBottomCard = props => {
 
-	// console.log("bottom card rerender");
-
 	const [textInputValue, onChangeText] = useState("");
 	const [textInputHoldValue, setTextInputHoldValue] = useState("");
 	
@@ -87,7 +85,10 @@ const HomeScreenBottomCard = props => {
 				]}>
 
 				{/* Icon and slider */}
-				<FaceSlider day={day} dayDate={dayDate} />
+				<FaceSlider 
+					day={day} 
+					dayDate={dayDate} 
+					/>
 
 				{/* Input row */}
 				<View style={{
@@ -95,10 +96,7 @@ const HomeScreenBottomCard = props => {
 					height: keyboardIsOpen ? textboxHeightOpen : textboxHeightClosed,
 					}}>
 					<TextInput
-						style={{
-							...styles.textInput, 
-							// fontStyle: keyboardIsOpen ? null : "italic",
-						}}
+						style={styles.textInput}
 						onChangeText={text => onChangeText(text)}
 						multiline={true}
 						onFocus={() => onTextboxFocus()}

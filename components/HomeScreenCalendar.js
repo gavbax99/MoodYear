@@ -9,9 +9,6 @@ import {
 // Constants
 import Tools from '../constants/Tools';
 
-// Data
-// import Year2020 from "../data/Year2020";
-
 // Components
 import HomeScreenMonth from '../components/HomeScreenMonth';
 

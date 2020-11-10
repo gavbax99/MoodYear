@@ -135,8 +135,8 @@ const FaceSlider = props => {
 				minimumTrackTintColor={faceColor}
 				maximumTrackTintColor={faceColor}
 
-				onSlidingComplete={(val) => interpolatePaths(val) }
-				onValueChange={(val) => { setSliderVal(val) }}
+				onSlidingComplete={ (val) => interpolatePaths(val) }
+				onValueChange={ (val) => setSliderVal(val) }
 				value={sliderVal}
 				/>
 		</View>
