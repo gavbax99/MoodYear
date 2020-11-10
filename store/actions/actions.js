@@ -3,7 +3,9 @@ export const SET_KEYBOARD_OPEN = "SET_KEYBOARD_OPEN";
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
 export const LOADDATA = "LOADDATA";
-export const CREATE_NEW_ACCOUNT_DATA = "CREATE_NEW_ACCOUNT_DATA";
+export const UPDATEDATA = "UPDATEDATA";
+
+export const TEST_DATA = "TEST_DATA";
 
 // Keyboard open bool
 export const setKeyboardOpen = (openBool) => {
@@ -110,80 +112,85 @@ export const login = (email, password) => {
 };
 
 // Loading data (fetched from firebase)
-export const loadData = (data) => {
-// export const loadData = (userId) => {
+export const loadData = (uid, year) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`);
 
-	return {
-		type: LOADDATA,
-		data: data
+		const resData = await response.json(); 
+
+		dispatch({
+			type: LOADDATA,
+			data: resData
+		});
 	};
+};
 
-	// ====================================
-	// ====================================
-	// ====================================
-	// ====================================
-	// ====================================
-	// when login, first we load data from firebase, THEN goes to home
-	// when reg, we create and post a new user to firebse, then loads the info, THEN goes to home
-	// ====================================
-	// ====================================
-	// ====================================
-	// ====================================
-	// ====================================
+// Updating data (put to firebase)
+export const updateData = (uid, year, data) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(data)
+		});
+
+		const resData = await response.json(); 
+		console.log("actions.updateData resdata: ", resData);
+
+		dispatch({
+			type: UPDATEDATA,
+			data: data
+		});
+	};
+};
 
 
-	// return async dispatch => {
-	// 	const response = await fetch(`https://rn-health.firebaseio.com/users/${userId}.json`, {
-	// 		method: "POST",
-	// 		headers: {
-	// 			"Content-Type": "application/json"
-	// 		},
-	// 		body: JSON.stringify({
-	// 			userId: userId,
-	// 			data: emptyObj,
-	// 		})
-	// 	});
 
-	// 	const resData = await response.json(); 
 
-	// 	console.log(resData);
 
-	// 	dispatch({
-	// 		type: LOADDATA,
-	// 		data: resData
-	// 	});
-	// ;}
-}
 
-// Reducing new data
-// export const createNewAccountData = (userId, emptyObj) => {
-// 	return async dispatch => {
-// 		const response = await fetch(`https://rn-health.firebaseio.com/users/${userId}.json`, {
-// 			method: "POST",
-// 			headers: {
-// 				"Content-Type": "application/json"
-// 			},
-// 			body: JSON.stringify({
-// 				userId: userId,
-// 				data: emptyObj,
-// 			})
-// 		});
 
-// 		const resData = await response.json(); 
+// test data
+export const testData = (uid, data, year) => {
+	return async dispatch => {
+		// any async code before dispatching
+		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				data
+			})
+		});
 
-// 		console.log(resData);
+		if (!response.ok) {
+			let message = "Something went wrong. Please try again.";
+			// const errorResData = await response.json();
+			// const errorId = errorResData.error.message;
+			// switch (errorId) {
+			// 	case "EMAIL_NOT_FOUND": 
+			// 		message = "This email cannot be found.";
+			// 		break;
+			// 	case "INVALID_PASSWORD":
+			// 		message = "Invalid password.";
+			// 		break;
+			// 	default: break;
+			// }
+			throw new Error(message);
+		};
 
-// 		dispatch({
-// 			type: CREATE_NEW_ACCOUNT_DATA,
-// 			data: resData
-// 		});
-// 	}
-	
-// 	// {
-// 	// 	type: CREATE_NEW_ACCOUNT_DATA,
-// 	// 	data: accountObj
-// 	// }
-// }
+		const resData = await response.json();
+
+		// console.log(resData);
+
+		dispatch({ 
+			type: TEST_DATA,
+		});
+	};
+};
 
 
 // import { useDispatch } from "react-redux";

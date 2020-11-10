@@ -72,9 +72,6 @@ const AuthScreen = props => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLogin, setIsLogin] = useState(true);
 
-	// Keyboard open constant
-	const currentData = useSelector(state => state.dataReducer.data);
-
 	// Min keyboard
 	const handleTouchableWithoutFeedback = () => {
 		Keyboard.dismiss();
@@ -109,48 +106,11 @@ const AuthScreen = props => {
 			} else {
 				await dispatch(Actions.signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
 			}
-
-			// const currentData = useSelector(state => state.authReducer.userId);
-			console.log("current data: ", currentData);
 			props.navigation.replace("Home");
 		} catch (err) {
 			setError(err.message);
 			setIsLoading(false);
 		}
-		
-
-		// if (isLogin) {
-		// 	// Login logic
-		// 	console.log("login");
-
-		// 	try {
-		// 		await dispatch(Actions.login(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
-
-		// 		// const currentData = useSelector(state => state.authReducer.userId);
-		// 		console.log("current data: ", currentData);
-
-		// 		props.navigation.navigate("Home");
-		// 	} catch (err) {
-		// 		setError(err.message);
-		// 		setIsLoading(false);
-		// 	}
-		// } else {
-		// 	// Reg logic
-		// 	console.log("reg");
-
-		// 	try {
-		// 		// Fire signup action
-		// 		await dispatch(Actions.signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
-				
-		// 		// Get new signup state
-		// 		// const currentData = useSelector(state => state.authReducer.userId);
-		// 		console.log("current data: ", currentData);
-		// 		props.navigation.navigate("Home");
-		// 	} catch (err) {
-		// 		setError(err.message);
-		// 		setIsLoading(false);
-		// 	}
-		// }
 	};
 
 	// Error logging
@@ -184,10 +144,6 @@ const AuthScreen = props => {
 					<View style={{ width: "100%" }}>
 						<Text style={styles.titleText}>FeelBetter</Text>
 					</View>
-
-					<TextInput 
-
-						/>
 
 					{/* EMAIL */}
 					<Input
@@ -229,15 +185,22 @@ const AuthScreen = props => {
 						/>
 
 					<View style={styles.switchTextContainer}>
-						<Text style={styles.switchText}>{isLogin ? "Don't have an account?" : "Already have an account?"}</Text>
+						<Text style={styles.switchText}>
+							{ isLogin ? "Don't have an account?" : "Already have an account?" }
+						</Text>
 						<TouchableOpacity onPress={switchLogin}>
-							<Text style={{ ...styles.switchText, ...styles.switchTextButton }}>{isLogin ? "Register now." : "Login now."}</Text>
+							<Text style={{ ...styles.switchText, ...styles.switchTextButton }}>
+								{ isLogin ? "Register now." : "Login now." }
+							</Text>
 						</TouchableOpacity>
 					</View>
 
-					{isLoading ? <ActivityIndicator size="small" color={Tools.color1} /> : <TouchableOpacity style={{ ...styles.button, backgroundColor: isLogin ? Tools.color1 : Tools.color3 }} onPress={loginHandler}>
+					{/* If loading, show loading icon. Otherwise show login button */}
+					{ isLoading ? 
+					<ActivityIndicator size="small" color={Tools.color1} /> :
+					<TouchableOpacity style={{ ...styles.button, backgroundColor: isLogin ? Tools.color1 : Tools.color3 }} onPress={loginHandler}>
 						<Text style={{ color: "#fff", fontSize: 18 }}>
-							{isLogin ? "Login" : "Register"}
+							{ isLogin ? "Login" : "Register" }
 						</Text>
 
 						<Svg style={{ marginLeft: 10 }}
@@ -246,20 +209,7 @@ const AuthScreen = props => {
 							viewBox="0 0 14 16">
 							<Path fill={Tools.colorLight} d={Tools.arrowPath} />
 						</Svg>
-					</TouchableOpacity>}
-
-					{/* <TouchableOpacity style={{ ...styles.button, backgroundColor: isLogin ? Tools.color1 : Tools.color3 }} onPress={test}>
-						<Text style={{ color: "#fff", fontSize: 18 }}>
-							{isLogin ? "test" : "test"}
-						</Text>
-
-						<Svg style={{ marginLeft: 10 }}
-							width={8}
-							height={10}
-							viewBox="0 0 14 16">
-							<Path fill={Tools.colorLight} d={arrowPath} />
-						</Svg>
-					</TouchableOpacity> */}
+					</TouchableOpacity> }
 
 				</View>
 			</KeyboardAvoidingView>

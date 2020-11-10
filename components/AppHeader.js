@@ -10,7 +10,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight, loadData } from "../store/actions/actions";
+import { setHeaderHeight } from "../store/actions/actions";
 
 // Icons
 import { Ionicons } from '@expo/vector-icons';
@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Tools from '../constants/Tools';
 
 // Data
-import Year2020 from "../data/Year2020";
+import Year2020Hold from "../data/Year2020Hold";
 
 // Redux
 import { useSelector } from "react-redux";
@@ -35,20 +35,9 @@ const AppHeader = props => {
 		dispatch(setHeaderHeight(height));
 	};
 
-	// 
-	const changeData = () => {
-		const year = new Date().getFullYear();
-		dispatch(loadData({ [year]: Year2020[year] }));
-	}
-	// 
-
-	// 
-	const data = useSelector(state => state.dataReducer.data);
-	const auth = useSelector(state => state.authReducer.userId);
-	const test = () => {
-		console.log("uid from appheader", auth);
-	}
-	// 
+	const placeholder = () => {
+		console.log("ph");
+	};
 
 	const HeaderImage = () => {
 		if (props.backButton) {
@@ -83,8 +72,7 @@ const AppHeader = props => {
 			<TouchableOpacity 
 				activeOpacity={Tools.activeOpacity} 
 				style={{padding: Tools.paddingNormal}} 
-				// onPress={() => {props.navigation.goBack()}}>
-				onPress={test}>
+				onPress={() => {props.navigation.goBack()}}>
 				<HeaderImage />
 			</TouchableOpacity>
 
@@ -92,7 +80,7 @@ const AppHeader = props => {
 			<TouchableOpacity 
 				activeOpacity={Tools.activeOpacity} 
 				style={styles.textContainer} 
-				onPress={changeData}>
+				onPress={placeholder}>
 				<Ionicons style={{paddingHorizontal: 6}}name="ios-more" size={24} color="#ffffff" />
 			</TouchableOpacity>
 		</View>

@@ -16,10 +16,13 @@ import Tools from '../constants/Tools';
 import HomeScreenMonth from '../components/HomeScreenMonth';
 
 // Redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { loadData } from "../store/actions/actions";
 
 // ==================== Component
 const HomeScreenCalendar = props => {
+
+	const dispatch = useDispatch();
 
 	console.log("HomeScreenCalendar render");
 
@@ -29,19 +32,24 @@ const HomeScreenCalendar = props => {
 	const getDay = date.getDate();
 
 	const data = useSelector(state => state.dataReducer.data);
+	const uid = useSelector(state => state.authReducer.userId);
 	useEffect(() => {
-		// console.log(data);
-		if (data[getYear] !== undefined) {
-			console.log(data[getYear].months[getMonth].name);
-			console.log(data[getYear].months[getMonth].days[getDay-1]);
-			console.log(getDay, data[getYear].months[getMonth].days[getDay-1].message);
-		}
-	}, [data]);
+		dispatch(loadData(uid, getYear));
+
+		// if (data[getYear] !== undefined) {
+		// 	console.log(data[getYear].months[getMonth].name);
+		// 	console.log(data[getYear].months[getMonth].days[getDay-1]);
+		// 	console.log(getDay, data[getYear].months[getMonth].days[getDay-1].message);
+		// }
+		
+	}, [uid]);
+
+	// console.log("current homescreen data: ", data);
 
 	const Loading = () => {
 		return (
 			<View style={styles.loadingIconContainer}>
-				<ActivityIndicator size="large" color={Tools.color1} />
+				<ActivityIndicator size="large" color={Tools.colorLight} />
 			</View>
 		);
 	};
@@ -53,11 +61,11 @@ const HomeScreenCalendar = props => {
 			<View style={styles.calendarInner}>
 
 				{/* Render our months */}
-				{data[getYear] !== undefined ? 
-					data[getYear].months.map((monthObj, i) => {
+				{Object.keys(data).length !== 0 ? 
+					data.months.map((monthObj, i) => {
 						return (
 							<HomeScreenMonth 
-								year={data[getYear].yearInt}
+								year={data.yearInt}
 								monthObj={monthObj}
 								navigation={props.navigation}
 								key={monthObj.name} 
