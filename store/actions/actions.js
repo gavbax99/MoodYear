@@ -3,7 +3,7 @@ export const SET_KEYBOARD_OPEN = "SET_KEYBOARD_OPEN";
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
 export const LOADDATA = "LOADDATA";
-export const CREATE_NEW_ACCOUNT_DATA = "CREATE_NEW_ACCOUNT_DATA";
+export const UPDATEDATA = "UPDATEDATA";
 
 export const TEST_DATA = "TEST_DATA";
 
@@ -124,6 +124,29 @@ export const loadData = (uid, year) => {
 		});
 	};
 };
+
+// Updating data (put to firebase)
+export const updateData = (uid, year, data) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(data)
+		});
+
+		const resData = await response.json(); 
+		console.log("actions.updateData resdata: ", resData);
+
+		dispatch({
+			type: UPDATEDATA,
+			data: data
+		});
+	};
+};
+
+
 
 
 

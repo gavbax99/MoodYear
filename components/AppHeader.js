@@ -37,22 +37,7 @@ const AppHeader = props => {
 
 	const placeholder = () => {
 		console.log("ph");
-	}
-
-	// const ADD_NEW_YEAR = () => {
-	// 	async function setData() {
-	// 		const response = await fetch(`https://rn-health.firebaseio.com/emptyCalendar.json`, {
-	// 		method: "PUT",
-	// 		headers: {
-	// 			"Content-Type": "application/json"
-	// 		},
-	// 		body: JSON.stringify(Year2020Hold)
-	// 	});
-	// 		const resData = await response.json();
-	// 	};
-
-	// 	setData();
-	// };
+	};
 
 	const HeaderImage = () => {
 		if (props.backButton) {

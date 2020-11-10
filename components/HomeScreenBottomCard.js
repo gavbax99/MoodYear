@@ -54,17 +54,6 @@ const HomeScreenBottomCard = props => {
 	// 	console.log(val);
 	// }
 
-	// fetch('https://jsonplaceholder.typicode.com/posts/1', {
-	// 	method: 'GET'
-	// })
-	// .then((response) => response.json())
-	// .then((responseJson) => {
-	// 	console.log(responseJson);
-	// })
-	// .catch((error) => {
-	// 	console.error(error);
-	// });
-
 	// State of keyboard
 	const keyboardIsOpen = useSelector(state => state.keyboardReducer.keyboardReducerState);
 		
