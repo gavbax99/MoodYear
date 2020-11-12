@@ -2,9 +2,11 @@ export const SET_HEADER_HEIGHT = "SET_HEADER_HEIGHT";
 export const SET_KEYBOARD_OPEN = "SET_KEYBOARD_OPEN";
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
-export const LOADDATA = "LOADDATA";
-export const UPDATEDATA = "UPDATEDATA";
+export const LOAD_DATA = "LOAD_DATA";
+export const UPDATE_SINGLE_DAY = "UPDATE_SINGLE_DAY";
+export const LOAD_SINGLE_DAY = "LOAD_SINGLE_DAY";
 
+export const UPDATEDATA = "UPDATEDATA";
 export const TEST_DATA = "TEST_DATA";
 
 // Keyboard open bool
@@ -119,11 +121,63 @@ export const loadData = (uid, year) => {
 		const resData = await response.json(); 
 
 		dispatch({
-			type: LOADDATA,
+			type: LOAD_DATA,
 			data: resData
 		});
 	};
 };
+
+// Loading single day (fetched from firebase)
+export const loadSingleDay = (uid, year, monthNo, dayNo) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`);
+
+		const resData = await response.json(); 
+
+		console.log(resData);
+
+		dispatch({
+			type: LOAD_SINGLE_DAY,
+			data: resData
+		});
+	};
+};
+
+// Updating single day (put to firebase) WORKS
+export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(dayData)
+		});
+
+		const resData = await response.json(); 
+		console.log("actions.updateSingleDay resdata: ", resData);
+
+		dispatch({
+			type: UPDATE_SINGLE_DAY,
+			data: resData
+		});
+	};
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Updating data (put to firebase)
 export const updateData = (uid, year, data) => {
@@ -145,10 +199,6 @@ export const updateData = (uid, year, data) => {
 		});
 	};
 };
-
-
-
-
 
 
 

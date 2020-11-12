@@ -14,7 +14,7 @@ import {
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { setKeyboardOpen, updateData } from "../store/actions/actions";
+import { setKeyboardOpen, updateData, updateSingleDay, loadSingleDay } from "../store/actions/actions";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -92,13 +92,25 @@ const HomeScreenBottomCard = props => {
 
 	// Submit data for day
 	const submitMessage = () => {
-		const newObj = new NewObj(data);
-		newObj.obj.months[monthNumber].days[dayNumber-1].message = textInputValue;
-		newObj.obj.months[monthNumber].days[dayNumber-1].color = sliderVal + 1;
+
+		// WORKS FOR WHOLE BLOB
+		// const newObj = new NewObj(data);
+		// newObj.obj.months[monthNumber].days[dayNumber-1].message = textInputValue;
+		// newObj.obj.months[monthNumber].days[dayNumber-1].color = sliderVal + 1;
 		// console.log("message: ", newObj.obj.months[monthNumber].days[dayNumber-1].message);
 		// console.log("slider: ", newObj.obj.months[monthNumber].days[dayNumber-1].color);
+		// dispatch(updateData(uid, yearNumber, newObj.obj));
 
-		dispatch(updateData(uid, yearNumber, newObj.obj));
+		// WORKS FOR WHOLE SINGLE DAY
+		// const newDayObj = new NewObj(data.months[monthNumber].days[dayNumber-1]);
+		// console.log(newDayObj.obj);
+		// newDayObj.obj.message = textInputValue;
+		// newDayObj.obj.color = sliderVal + 1;
+		// dispatch(updateSingleDay(uid, yearNumber, monthNumber, dayNumber, newDayObj.obj));
+
+		dispatch(loadSingleDay(uid, yearNumber, monthNumber, dayNumber));
+
+
 	};
 
 	// useEffect(() => {

@@ -1,5 +1,5 @@
 import { 
-	LOADDATA,
+	LOAD_DATA,
 	UPDATEDATA,
  } from "../actions/actions";
 
@@ -9,7 +9,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case LOADDATA:
+		case LOAD_DATA:
 			return { 
 				...state, 
 				data: action.data 
