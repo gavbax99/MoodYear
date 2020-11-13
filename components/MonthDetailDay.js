@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { useState } from 'react';
 import { 
 	StyleSheet, 
 	View, 
@@ -14,13 +14,22 @@ import Tools from '../constants/Tools';
 // ==================== Component
 const MonthDetailDay = props => {
 
+	const handleDayClick = () => {
+		console.log("day click in MonthDetailDay: ", )
+		props.pressEvent(props.dayOfTheMonth, props.dayOfTheWeek);
+	}
+
 	return (
-		<TouchableOpacity activeOpacity={Tools.activeOpacity} style={{
-			...styles.day, 
-			backgroundColor: props.color,
-			// add margin left of the first day to represent calendar format
-			marginLeft: props.isFirstDay ? `${(14.25*(props.firstDayNo-1))+1.75}%` : "1.75%",
-			}}>
+		<TouchableOpacity 
+			activeOpacity={Tools.activeOpacity} 
+			style={{
+				...styles.day, 
+				backgroundColor: props.color,
+				// add margin left of the first day to represent calendar format
+				marginLeft: props.isFirstDay ? `${(14.25*(props.firstDayNo-1))+1.75}%` : "1.75%",
+				}}
+			onPress={handleDayClick}
+			>
 
 			<Text style={{
 				...styles.dayText,

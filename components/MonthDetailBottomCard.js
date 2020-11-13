@@ -26,14 +26,15 @@ import FaceSlider from "./FaceSlider";
 
 // Vars
 const characaterLimit = 150;
-const date = new Date();
-const yearNumber = date.getFullYear();
-const monthNumber = date.getMonth();
-const dayNumber = date.getDate();
-const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
-const day = daysOfWeek[date.getDay()];
 
-const dayDate = ((monthNumber + 1) + '/' + dayNumber + '/' + yearNumber);
+// const date = new Date();
+// const yearNumber = date.getFullYear();
+// const monthNumber = date.getMonth();
+// const dayNumber = date.getDate();
+// const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
+// const day = daysOfWeek[date.getDay()];
+
+// const dayDate = ((monthNumber + 1) + '/' + dayNumber + '/' + yearNumber);
 
 const textboxHeightOpen = 96;
 const textboxHeightClosed = 38;
@@ -46,21 +47,18 @@ const submitButtonTopClosed = 50;
 
 
 // ==================== Component
-const HomeScreenBottomCard = props => {
+const MonthDetailBottomCard = props => {
+
+	// Redux variables
+	const dispatch = useDispatch();
+	const uid = useSelector(state => state.authReducer.userId);
+	const data = useSelector(state => state.dataReducer.data);
+	const keyboardIsOpen = useSelector(state => state.keyboardReducer.keyboardReducerState);
+	// const startingSliderVal = data.months[props.monthNo].days[0].color;
 
 	const [textInputValue, setTextInputValue] = useState("");
 	const [textInputHoldValue, setTextInputHoldValue] = useState("");
-	const [sliderVal, setSliderVal] = useState(4);
-
-	// const [dayHasInformation, setDayHasInformation] = useState(false);
-	// const [dataColor, setDataColor] = useState(0);
-	
-	const dispatch = useDispatch();
-
-	// Redux variables
-	const keyboardIsOpen = useSelector(state => state.keyboardReducer.keyboardReducerState);
-	const data = useSelector(state => state.dataReducer.data);
-	const uid = useSelector(state => state.authReducer.userId);
+	const [sliderVal, setSliderVal] = useState(4);	
 		
 	// Variables
 	const charactersLeft = textInputValue.length;
@@ -93,38 +91,20 @@ const HomeScreenBottomCard = props => {
 	// Submit data for day
 	const submitMessage = () => {
 
-		// const colorArr = [Tools.color1, Tools.color2, Tools.color3, Tools.color4, Tools.color5]
-		// const checkDataDifference = data.months[monthNumber].days[dayNumber-1].message === textInputValue; 
-		// const checkColorDifference = data.months[monthNumber].days[dayNumber-1].color === colorArr[sliderVal]; 
-		// const sameDayData = checkDataDifference === checkColorDifference;
-
 		// WORKS FOR WHOLE SINGLE DAY
-		const newDayObj = new NewObj(data.months[monthNumber].days[dayNumber-1]);
+		const newDayObj = new NewObj(data.months[props.monthNo].days[props.dayNo - 1]);
 		// console.log(newDayObj.obj);
 		newDayObj.obj.message = textInputValue;
 		newDayObj.obj.color = sliderVal + 1;
-		dispatch(updateSingleDay(uid, yearNumber, monthNumber, (dayNumber-1), newDayObj.obj));
+		dispatch(updateSingleDay(uid, props.yearInt, props.monthNo, (props.dayNo - 1), newDayObj.obj));
 
 		// CHANGE SO ONLY ONE DAY IS LOADED
-		dispatch(loadData(uid, yearNumber));
+		dispatch(loadData(uid, props.yearInt));
 
 		dispatch(setKeyboardOpen(false));
 		setTextInputValue("");
 		Keyboard.dismiss();
 	};
-
-	// useEffect(() => {
-	// 	async function fetchData() {
-	// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${yearNumber}/months/${monthNumber}/days/${(dayNumber-1)}.json`);
-	// 		const resData = await response.json(); 
-	// 		console.log("useeffect in bottom card: ", resData);
-
-	// 		if (resData.color !== 0 && resData.color !== Tools.color0) {
-	// 			setDayHasInformation(true);
-	// 		}
-	// 	}
-	// 	fetchData();
-	// }, [data]);
 	
 	return (
 		<KeyboardAvoidingView 
@@ -138,8 +118,8 @@ const HomeScreenBottomCard = props => {
 
 				{/* Icon and slider */}
 				<FaceSlider 
-					day={day} 
-					dayDate={dayDate} 
+					day={props.dayOfWeek} 
+					dayDate={`${props.monthNo+1}/${props.dayNo}/${props.yearInt}`} 
 					sliderValue={sliderVal}
 					sliderChange={handleSliderChange}
 					/>
@@ -284,4 +264,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default HomeScreenBottomCard;
+export default MonthDetailBottomCard;

@@ -77,6 +77,11 @@ const MonthDetailCalendar = props => {
 		}
 	};
 
+	const monthDetailFindDay = (dayNo, dayOfTheWeek) => {
+		console.log("monthDetailCalendar: ", dayNo, currentMonth, currentYear);
+		props.detailScreenFindDay(dayNo, dayOfTheWeek, currentMonth, currentYear);
+	}
+
 	return (
 		<View style={styles.calendar}>
 
@@ -141,32 +146,32 @@ const MonthDetailCalendar = props => {
 				{/* Render our days */}
 				{monthData.days.map((dayObj, i) => {
 
-					
+					let color = "";
 					switch (dayObj.color) {
 						case 0:
-							dayObj.color = Tools.color0;
+							color = Tools.color0;
 							break;
 						case 1:
-							dayObj.color = Tools.color1;
+							color = Tools.color1;
 							break;
 						case 2:
-							dayObj.color = Tools.color2;
+							color = Tools.color2;
 							break;
 						case 3:
-							dayObj.color = Tools.color3;
+							color = Tools.color3;
 							break;
 						case 4:
-							dayObj.color = Tools.color4;
+							color = Tools.color4;
 							break;
 						case 5:
-							dayObj.color = Tools.color5;
+							color = Tools.color5;
 							break;
-						case 6:
-							dayObj.color = Tools.color6;
-							break;
-						case 7:
-							dayObj.color = Tools.color7;
-							break;
+						// case 6:
+						// 	dayObj.color = Tools.color6;
+						// 	break;
+						// case 7:
+						// 	dayObj.color = Tools.color7;
+						// 	break;
 						default: break;
 					}
 
@@ -175,11 +180,13 @@ const MonthDetailCalendar = props => {
 							isFirstDay={i===0}
 							firstDayNo={monthData.firstDayOfWeekNo}
 							dayObj={dayObj}
-							color={dayObj.color} 
+							color={color} 
 							currentDay={getDay}
 							dayOfTheMonth={dayObj.dayNo}
+							dayOfTheWeek={dayObj.dayOfWeek}
 							isCurrentMonth={isCurrentMonth}
-							key={dayObj.id} />
+							key={dayObj.id}
+							pressEvent={monthDetailFindDay} />
 					);
 				})}
 			</View>
