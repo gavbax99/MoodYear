@@ -142,6 +142,8 @@ const HomeScreenBottomCard = props => {
 					dayDate={dayDate} 
 					sliderValue={sliderVal}
 					sliderChange={handleSliderChange}
+					showSlider={true}
+					faceColor={Tools.color5}
 					/>
 
 				{/* Input row */}

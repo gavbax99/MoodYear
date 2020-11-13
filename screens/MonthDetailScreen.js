@@ -17,9 +17,6 @@ import Blackout from '../components/Blackout';
 // Constants
 import Tools from '../constants/Tools';
 
-// Data
-import Year2020 from "../data/Year2020";
-
 // Redux
 import { useSelector } from "react-redux";
 
@@ -27,59 +24,57 @@ import { useSelector } from "react-redux";
 // ==================== Component
 const MonthDetailScreen = props => {
 
+	const data = useSelector(state => state.dataReducer.data);
 	const yearInt = props.navigation.getParam("yearInt");
 	const monthNo = props.navigation.getParam("monthNo");
 
-	const data = useSelector(state => state.dataReducer.data);
-
-	// const date = new Date();
-	// const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
-	// const day = daysOfWeek[date.getDay()];
-
-	// const [yearInt, xx] = useState(props.navigation.getParam("yearInt"));
-	// const [monthNo, xxx] = useState(props.navigation.getParam("monthNo"));
+	// IN THE CASE OF -1, WILL BE RED/NO DATA
+	const startingFaceColor = data.months[monthNo].days[0].color-1;
+	let startingSliderColor = "";
+	switch (startingFaceColor) {
+		case 0:
+			startingSliderColor = Tools.color1;
+			break;
+		case 1:
+			startingSliderColor = Tools.color2;
+			break;
+		case 2:
+			startingSliderColor = Tools.color3;
+			break;
+		case 3:
+			startingSliderColor = Tools.color4;
+			break;
+		case 4:
+			startingSliderColor = Tools.color5;
+			break;
+		default: break;
+	};
 	
 	const [dayToFind, setDayToFind] = useState(1);
-	const [dayOfTheWeek, setDayOfTheWeek] = useState(data.months[props.navigation.getParam("monthNo")].firstDayOfWeek);
-	const [monthToFind, setMonthToFind] = useState(props.navigation.getParam("monthNo"));
-	const [yearToFind, setYearToFind] = useState(props.navigation.getParam("yearInt"));
-
-	// const [dayToFind, setDayToFind] = useState(0);
-	// const [monthToFind, setMonthToFind] = useState(0);
-	// const [yearToFind, setYearToFind] = useState(2020);
-
-
-	// const dayOfWeekOffset = daysOfWeek.indexOf(data.months[monthToFind].firstDayOfWeek);
-	// const dayModulo = (0 - dayOfWeekOffset) + (dayToFind % 7);
-	// const trueDayOfWeek = dayModulo >= 0 ? daysOfWeek[dayModulo] : data.months[monthToFind].firstDayOfWeek;
-
-
-	// const date = new Date();
-	// const yearNumber = date.getFullYear();
-	// const monthNumber = date.getMonth();
-	// const dayNumber = date.getDate();
-	// const day = daysOfWeek[date.getDay()];
-	// const dayDate = ((monthNumber + 1) + '/' + dayNumber + '/' + yearNumber);
-
+	const [dayOfTheWeek, setDayOfTheWeek] = useState(data.months[monthNo].firstDayOfWeek);
+	const [monthToFind, setMonthToFind] = useState(monthNo);
+	const [yearToFind, setYearToFind] = useState(yearInt);
+	const [faceColor, setFaceColor] = useState(startingSliderColor);
+	const [colorNumber, setColorNumber] = useState(startingFaceColor);
 
 	const handleTouchableWithoutFeedback = () => {
 		Keyboard.dismiss();
 	}
 
-	// const monthData = Year2020.months[monthNo-1];
-
-	const monthDetailScreenHandleDay = (dayNo, dayOfTheWeek, currentMonth, currentYear) => {
+	const monthDetailScreenHandleDay = (dayNo, dayOfTheWeek, currentMonth, currentYear, newFaceColor, colorNumber) => {
 		setDayToFind(dayNo);
 		setDayOfTheWeek(dayOfTheWeek);
 		setMonthToFind(currentMonth);
 		setYearToFind(currentYear);
+		setFaceColor(newFaceColor);
+		setColorNumber(colorNumber-1);
 	}
 
-	useEffect(() => {
-		console.log("monthdetailscreen MAIN INFO: ", dayToFind, dayOfTheWeek, monthToFind, yearToFind)
-		//               for correct number format:    good         good          +1         good
-		//               for correct array format:     -1           NA            good       good
-	});
+	// useEffect(() => {
+	// 	console.log("monthdetailscreen MAIN INFO: ", dayToFind, dayOfTheWeek, monthToFind, yearToFind)
+	// 	//               for correct number format:    good         good          +1         good
+	// 	//               for correct array format:     -1           NA            good       good
+	// });
 
 	return (
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
@@ -103,6 +98,8 @@ const MonthDetailScreen = props => {
 						monthNo={monthToFind}
 						dayNo={dayToFind}
 						dayOfWeek={dayOfTheWeek}
+						faceColor={faceColor}
+						colorNumber={colorNumber}
 						/>
 				</View>
 			</View>

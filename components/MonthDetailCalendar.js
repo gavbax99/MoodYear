@@ -77,9 +77,9 @@ const MonthDetailCalendar = props => {
 		}
 	};
 
-	const monthDetailFindDay = (dayNo, dayOfTheWeek) => {
-		console.log("monthDetailCalendar: ", dayNo, currentMonth, currentYear);
-		props.detailScreenFindDay(dayNo, dayOfTheWeek, currentMonth, currentYear);
+	const monthDetailFindDay = (dayNo, dayOfTheWeek, faceColor, colorNumber) => {
+		// console.log("monthDetailCalendar: ", dayNo, dayOfTheWeek, currentMonth, currentYear, faceColor);
+		props.detailScreenFindDay(dayNo, dayOfTheWeek, currentMonth, currentYear, faceColor, colorNumber);
 	}
 
 	return (
@@ -179,8 +179,9 @@ const MonthDetailCalendar = props => {
 						<MonthDetailDay 
 							isFirstDay={i===0}
 							firstDayNo={monthData.firstDayOfWeekNo}
-							dayObj={dayObj}
+							// dayObj={dayObj}
 							color={color} 
+							colorNumber={dayObj.color}
 							currentDay={getDay}
 							dayOfTheMonth={dayObj.dayNo}
 							dayOfTheWeek={dayObj.dayOfWeek}
