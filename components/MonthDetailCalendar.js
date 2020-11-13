@@ -11,8 +11,11 @@ import Svg, { Path } from 'react-native-svg';
 // Constants
 import Tools from '../constants/Tools';
 
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+
 // Data
-import Year2020 from "../data/Year2020";
+// import Year2020 from "../data/Year2020";
 
 // Components
 import MonthDetailDay from "../components/MonthDetailDay";
@@ -24,7 +27,9 @@ const MonthDetailCalendar = props => {
 	const [currentYear, setCurrentYear] = useState(props.yearInt);
 
 	// Data
-	const monthData = Year2020[2020].months[currentMonth];
+	// const monthData = Year2020[2020].months[currentMonth];
+	const data = useSelector(state => state.dataReducer.data);
+	const monthData = data.months[currentMonth];
 
 	// Time
 	const date = new Date();
@@ -177,8 +182,11 @@ const MonthDetailCalendar = props => {
 							key={dayObj.id} />
 					);
 				})}
-
 			</View>
+
+			{/* <View style={styles.test}>
+
+			</View> */}
 
 		</View>
 	);
@@ -237,6 +245,12 @@ const styles = StyleSheet.create({
 		width: "14.25%",
 		color: Tools.colorTextboxGrey,
 	},
+
+	// test: {
+	// 	width: "100%",
+	// 	height: 20,
+	// 	backgroundColor: "red",
+	// }
 });
 
 export default MonthDetailCalendar;

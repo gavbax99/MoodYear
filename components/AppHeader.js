@@ -35,8 +35,10 @@ const AppHeader = props => {
 		dispatch(setHeaderHeight(height));
 	};
 
+	const data = useSelector(state => state.dataReducer.data);
 	const placeholder = () => {
 		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2020", Year2020));
+		console.log(data);
 	};
 
 	const HeaderImage = () => {
@@ -81,7 +83,7 @@ const AppHeader = props => {
 				activeOpacity={Tools.activeOpacity} 
 				style={styles.textContainer} 
 				onPress={placeholder}>
-				<Ionicons style={{paddingHorizontal: 6}}name="ios-more" size={24} color="#ffffff" />
+				<Ionicons style={{paddingHorizontal: 6}} name="ios-more" size={24} color="#ffffff" />
 			</TouchableOpacity>
 		</View>
 	);

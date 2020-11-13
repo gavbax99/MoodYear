@@ -6,8 +6,7 @@ export const LOAD_DATA = "LOAD_DATA";
 export const UPDATE_SINGLE_DAY = "UPDATE_SINGLE_DAY";
 export const LOAD_SINGLE_DAY = "LOAD_SINGLE_DAY";
 
-export const UPDATEDATA = "UPDATEDATA";
-export const TEST_DATA = "TEST_DATA";
+// export const UPDATEDATA = "UPDATEDATA";
 
 // Keyboard open bool
 export const setKeyboardOpen = (openBool) => {
@@ -128,20 +127,21 @@ export const loadData = (uid, year) => {
 };
 
 // Loading single day (fetched from firebase)
-export const loadSingleDay = (uid, year, monthNo, dayNo) => {
-	return async dispatch => {
-		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`);
+// export const loadSingleDay = (uid, year, monthNo, dayNo) => {
+// 	return async dispatch => {
+// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`);
 
-		const resData = await response.json(); 
+// 		const resData = await response.json(); 
 
-		console.log(resData);
+// 		console.log(resData);
 
-		dispatch({
-			type: LOAD_SINGLE_DAY,
-			data: resData
-		});
-	};
-};
+// 		dispatch({
+// 			type: LOAD_SINGLE_DAY,
+// 			// data: resData
+// 			data:
+// 		});
+// 	};
+// };
 
 // Updating single day (put to firebase) WORKS
 export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
@@ -153,23 +153,19 @@ export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 			},
 			body: JSON.stringify(dayData)
 		});
+		// const resData = await response.json(); 
+		// console.log("actions.updateSingleDay resdata: ", resData);
 
-		const resData = await response.json(); 
-		console.log("actions.updateSingleDay resdata: ", resData);
+		const loadNewDataResponse = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`);
+		const newDataResData = await loadNewDataResponse.json(); 
+		// console.log("new res data: ", newDataResData.months[10].days[11]);
 
 		dispatch({
 			type: UPDATE_SINGLE_DAY,
-			data: resData
+			data: newDataResData
 		});
 	};
 };
-
-
-
-
-
-
-
 
 
 
@@ -180,67 +176,25 @@ export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 
 
 // Updating data (put to firebase)
-export const updateData = (uid, year, data) => {
-	return async dispatch => {
-		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(data)
-		});
+// export const updateData = (uid, year, data) => {
+// 	return async dispatch => {
+// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
+// 			method: "PUT",
+// 			headers: {
+// 				"Content-Type": "application/json"
+// 			},
+// 			body: JSON.stringify(data)
+// 		});
 
-		const resData = await response.json(); 
-		console.log("actions.updateData resdata: ", resData);
+// 		const resData = await response.json(); 
+// 		console.log("actions.updateData resdata: ", resData);
 
-		dispatch({
-			type: UPDATEDATA,
-			data: resData
-		});
-	};
-};
-
-
-
-// test data
-export const testData = (uid, data, year) => {
-	return async dispatch => {
-		// any async code before dispatching
-		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				data
-			})
-		});
-
-		if (!response.ok) {
-			let message = "Something went wrong. Please try again.";
-			// const errorResData = await response.json();
-			// const errorId = errorResData.error.message;
-			// switch (errorId) {
-			// 	case "EMAIL_NOT_FOUND": 
-			// 		message = "This email cannot be found.";
-			// 		break;
-			// 	case "INVALID_PASSWORD":
-			// 		message = "Invalid password.";
-			// 		break;
-			// 	default: break;
-			// }
-			throw new Error(message);
-		};
-
-		const resData = await response.json();
-
-		// console.log(resData);
-
-		dispatch({ 
-			type: TEST_DATA,
-		});
-	};
-};
+// 		dispatch({
+// 			type: UPDATEDATA,
+// 			data: resData
+// 		});
+// 	};
+// };
 
 
 // import { useDispatch } from "react-redux";

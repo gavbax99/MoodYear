@@ -1,6 +1,6 @@
 import { 
 	LOAD_DATA,
-	UPDATEDATA,
+	UPDATE_SINGLE_DAY
  } from "../actions/actions";
 
 const initialState = {
@@ -15,10 +15,10 @@ export default (state = initialState, action) => {
 				data: action.data 
 			};
 
-		case UPDATEDATA:
+		case UPDATE_SINGLE_DAY:
 			return { 
 				...state, 
-				data: action.data 
+				data: action.data
 			};
 	};
 	return state;

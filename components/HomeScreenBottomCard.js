@@ -9,19 +9,20 @@ import {
 	Text,
 	TextInput, 
 	KeyboardAvoidingView, 
-	TouchableOpacity
+	TouchableOpacity,
+	Keyboard,
+	Alert
 } from "react-native";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { setKeyboardOpen, updateData, updateSingleDay, loadSingleDay } from "../store/actions/actions";
+import { setKeyboardOpen, updateData, updateSingleDay, loadSingleDay, loadData } from "../store/actions/actions";
 
 // Constants
 import Tools from '../constants/Tools';
 
 // Components
 import FaceSlider from "./FaceSlider";
-// import { TouchableOpacity } from "react-native-gesture-handler";
 
 // Vars
 const characaterLimit = 150;
@@ -33,10 +34,6 @@ const daysOfWeek = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Fr
 const day = daysOfWeek[date.getDay()];
 
 const dayDate = ((monthNumber + 1) + '/' + dayNumber + '/' + yearNumber);
-
-// to get month: date.getMonth()
-// to get day: date.getDate() - 1
-// 
 
 const textboxHeightOpen = 96;
 const textboxHeightClosed = 38;
@@ -51,9 +48,12 @@ const submitButtonTopClosed = 50;
 // ==================== Component
 const HomeScreenBottomCard = props => {
 
-	const [textInputValue, onChangeText] = useState("");
+	const [textInputValue, setTextInputValue] = useState("");
 	const [textInputHoldValue, setTextInputHoldValue] = useState("");
 	const [sliderVal, setSliderVal] = useState(4);
+
+	const [dayHasInformation, setDayHasInformation] = useState(false);
+	// const [dataColor, setDataColor] = useState(0);
 	
 	const dispatch = useDispatch();
 
@@ -67,7 +67,7 @@ const HomeScreenBottomCard = props => {
 
 	// Textbox functions
 	const onTextboxFocus = () => {
-		onChangeText(textInputHoldValue);
+		setTextInputValue(textInputHoldValue);
 		setTextInputHoldValue("");
 		_textInput.setNativeProps({ selection: { start: textInputValue.length , end: textInputValue.length } })
 
@@ -76,7 +76,7 @@ const HomeScreenBottomCard = props => {
 
 	const onTextboxBlur = () => {
 		setTextInputHoldValue(textInputValue);
-		textInputValue.length > 0 ? onChangeText("Entry in progress...") : onChangeText("");
+		textInputValue.length > 0 ? setTextInputValue("Entry in progress...") : setTextInputValue("");
 
 		dispatch(setKeyboardOpen(false));
 	};
@@ -89,33 +89,42 @@ const HomeScreenBottomCard = props => {
 	function NewObj(obj) {
 		this.obj = obj;
 	}
-
+	
 	// Submit data for day
 	const submitMessage = () => {
 
-		// WORKS FOR WHOLE BLOB
-		// const newObj = new NewObj(data);
-		// newObj.obj.months[monthNumber].days[dayNumber-1].message = textInputValue;
-		// newObj.obj.months[monthNumber].days[dayNumber-1].color = sliderVal + 1;
-		// console.log("message: ", newObj.obj.months[monthNumber].days[dayNumber-1].message);
-		// console.log("slider: ", newObj.obj.months[monthNumber].days[dayNumber-1].color);
-		// dispatch(updateData(uid, yearNumber, newObj.obj));
+		// const colorArr = [Tools.color1, Tools.color2, Tools.color3, Tools.color4, Tools.color5]
+		// const checkDataDifference = data.months[monthNumber].days[dayNumber-1].message === textInputValue; 
+		// const checkColorDifference = data.months[monthNumber].days[dayNumber-1].color === colorArr[sliderVal]; 
+		// const sameDayData = checkDataDifference === checkColorDifference;
 
 		// WORKS FOR WHOLE SINGLE DAY
-		// const newDayObj = new NewObj(data.months[monthNumber].days[dayNumber-1]);
+		const newDayObj = new NewObj(data.months[monthNumber].days[dayNumber-1]);
 		// console.log(newDayObj.obj);
-		// newDayObj.obj.message = textInputValue;
-		// newDayObj.obj.color = sliderVal + 1;
-		// dispatch(updateSingleDay(uid, yearNumber, monthNumber, dayNumber, newDayObj.obj));
+		newDayObj.obj.message = textInputValue;
+		newDayObj.obj.color = sliderVal + 1;
+		dispatch(updateSingleDay(uid, yearNumber, monthNumber, (dayNumber-1), newDayObj.obj));
 
-		dispatch(loadSingleDay(uid, yearNumber, monthNumber, dayNumber));
+		// CHANGE SO ONLY ONE DAY IS LOADED
+		dispatch(loadData(uid, yearNumber));
 
-
+		dispatch(setKeyboardOpen(false));
+		setTextInputValue("");
+		Keyboard.dismiss();
 	};
 
-	// useEffect(() => {
-	// 	console.log("monthzz: ", data.months[monthNumber].days[dayNumber-1].dayOfYear);
-	// }, [data]);
+	useEffect(() => {
+		async function fetchData() {
+			const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${yearNumber}/months/${monthNumber}/days/${(dayNumber-1)}.json`);
+			const resData = await response.json(); 
+			console.log("useeffect in bottom card: ", resData);
+
+			if (resData.color !== 0 && resData.color !== Tools.color0) {
+				setDayHasInformation(true);
+			}
+		}
+		fetchData();
+	}, [data]);
 	
 	return (
 		<KeyboardAvoidingView 
@@ -142,7 +151,7 @@ const HomeScreenBottomCard = props => {
 					}}>
 					<TextInput
 						style={styles.textInput}
-						onChangeText={text => onChangeText(text)}
+						onChangeText={text => setTextInputValue(text)}
 						multiline={true}
 						onFocus={() => onTextboxFocus()}
 						onBlur={() => onTextboxBlur()}
@@ -171,7 +180,6 @@ const HomeScreenBottomCard = props => {
 
 					<TouchableOpacity 
 						activeOpacity={Tools.activeOpacity} 
-						// style={styles.textContainer} 
 						onPress={submitMessage}>
 						<View style={{ 
 							...styles.underInputSubmitButton, 
@@ -180,6 +188,7 @@ const HomeScreenBottomCard = props => {
 							<Text style={styles.underInputSubmitButtonText}>
 								+
 							</Text>
+
 						</View>
 					</TouchableOpacity>
 				</View>
