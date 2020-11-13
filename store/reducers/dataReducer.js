@@ -1,6 +1,6 @@
 import { 
-	LOADDATA,
-	CREATE_NEW_ACCOUNT_DATA,
+	LOAD_DATA,
+	UPDATE_SINGLE_DAY
  } from "../actions/actions";
 
 const initialState = {
@@ -9,16 +9,16 @@ const initialState = {
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case LOADDATA:
+		case LOAD_DATA:
 			return { 
 				...state, 
 				data: action.data 
 			};
 
-		case CREATE_NEW_ACCOUNT_DATA:
+		case UPDATE_SINGLE_DAY:
 			return { 
 				...state, 
-				data: action.data 
+				data: action.data
 			};
 	};
 	return state;

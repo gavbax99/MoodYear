@@ -11,10 +11,6 @@ import Tools from '../constants/Tools';
 
 // ==================== Component
 const HomeScreenDay = props => {
-	
-	// If today, highlight the day in accent color
-	// (props.dayNo === props.currentDay && props.isCurrentMonth) ? console.log("it is: " + props.dayNo) : null;
-
 	return (
 		<View style={{ 
 			...styles.day, 

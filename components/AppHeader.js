@@ -10,7 +10,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight } from "../store/actions/actions";
+import { setHeaderHeight, updateData } from "../store/actions/actions";
 
 // Icons
 import { Ionicons } from '@expo/vector-icons';
@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Tools from '../constants/Tools';
 
 // Data
-import Year2020Hold from "../data/Year2020Hold";
+import Year2020 from "../data/Year2020";
 
 // Redux
 import { useSelector } from "react-redux";
@@ -35,8 +35,10 @@ const AppHeader = props => {
 		dispatch(setHeaderHeight(height));
 	};
 
+	const data = useSelector(state => state.dataReducer.data);
 	const placeholder = () => {
-		console.log("ph");
+		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2020", Year2020));
+		console.log(data);
 	};
 
 	const HeaderImage = () => {
@@ -81,7 +83,7 @@ const AppHeader = props => {
 				activeOpacity={Tools.activeOpacity} 
 				style={styles.textContainer} 
 				onPress={placeholder}>
-				<Ionicons style={{paddingHorizontal: 6}}name="ios-more" size={24} color="#ffffff" />
+				<Ionicons style={{paddingHorizontal: 6}} name="ios-more" size={24} color="#ffffff" />
 			</TouchableOpacity>
 		</View>
 	);

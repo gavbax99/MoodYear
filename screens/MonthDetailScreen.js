@@ -49,7 +49,7 @@ const MonthDetailScreen = props => {
 					<Blackout />
 
 					{/* Bottom card */}
-					{/* <HomeScreenBottomCard /> */}
+					<HomeScreenBottomCard />
 				</View>
 			</View>
 		</TouchableWithoutFeedback>

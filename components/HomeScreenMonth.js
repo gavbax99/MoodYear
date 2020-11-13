@@ -60,12 +60,6 @@ const ComponentName = props => {
 					case 5:
 						dayObj.color = Tools.color5;
 						break;
-					// case 6:
-					// 	dayObj.color = Tools.color6;
-					// 	break;
-					// case 7:
-					// 	dayObj.color = Tools.color7;
-					// 	break;
 					default: break;
 				}
 
