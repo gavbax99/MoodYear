@@ -6,7 +6,7 @@ export const LOAD_DATA = "LOAD_DATA";
 export const UPDATE_SINGLE_DAY = "UPDATE_SINGLE_DAY";
 export const LOAD_SINGLE_DAY = "LOAD_SINGLE_DAY";
 
-// export const UPDATEDATA = "UPDATEDATA";
+export const UPDATEDATA = "UPDATEDATA";
 
 // Keyboard open bool
 export const setKeyboardOpen = (openBool) => {
@@ -176,25 +176,25 @@ export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 
 
 // Updating data (put to firebase)
-// export const updateData = (uid, year, data) => {
-// 	return async dispatch => {
-// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
-// 			method: "PUT",
-// 			headers: {
-// 				"Content-Type": "application/json"
-// 			},
-// 			body: JSON.stringify(data)
-// 		});
+export const updateData = (uid, year, data) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(data)
+		});
 
-// 		const resData = await response.json(); 
-// 		console.log("actions.updateData resdata: ", resData);
+		const resData = await response.json(); 
+		console.log("actions.updateData resdata: ", resData);
 
-// 		dispatch({
-// 			type: UPDATEDATA,
-// 			data: resData
-// 		});
-// 	};
-// };
+		dispatch({
+			type: UPDATEDATA,
+			data: resData
+		});
+	};
+};
 
 
 // import { useDispatch } from "react-redux";

@@ -59,7 +59,8 @@ const faceSvgPaths = {
 // ==================== Component
 const FaceSlider = props => {
 
-	const [faceColor, setFaceColor] = useState(Tools.color5);
+	const [faceColor, setFaceColor] = useState(props.faceColor);
+	// const [detailFaceColor, setDetailFaceColor] = useState();
 
 	const [leftEyePath, setLeftEyePath] = useState(faceSvgPaths.leftEye[faceSvgPathsIndex[props.sliderValue]]);
 	const [mouthPath, setMouthPath] = useState(faceSvgPaths.mouth[faceSvgPathsIndex[props.sliderValue]]);
@@ -101,7 +102,8 @@ const FaceSlider = props => {
 					<Text style={styles.dateDate}>{props.dayDate}</Text>
 				</View>
 
-				{/* Icon */}
+				{/* Icon for home screen & month detail */}
+				{props.showSlider === true ? 
 				<View style={{...styles.svgContainer, backgroundColor: faceColor }}>
 					<Svg width={58} height={58} viewBow="0 0 58 58">
 						<G>
@@ -110,31 +112,49 @@ const FaceSlider = props => {
 							<Path fill="white" d={rightEyePath} />
 						</G>
 					</Svg>
+				</View> 
+				:
+				props.colorNumber >= 0 ? 
+				<View style={{...styles.svgContainer, backgroundColor: props.faceColor }}>
+					<Svg width={58} height={58} viewBow="0 0 58 58">
+						<G>
+							<Path fill="white" d={faceSvgPaths.leftEye[faceSvgPathsIndex[props.colorNumber]]} />
+							<Path fill="white" d={faceSvgPaths.mouth[faceSvgPathsIndex[props.colorNumber]]} />
+							<Path fill="white" d={faceSvgPaths.rightEye[faceSvgPathsIndex[props.colorNumber]]} />
+						</G>
+					</Svg>
 				</View>
+				: <View style={{width: 64, height: 64, opacity: 0}}></View>
+				}
+
 			</View>
 
 			{/* Slider row */}
-			<Slider 
-				style={styles.slider}
+			{props.showSlider === true ? 
+				<Slider 
+					style={styles.slider}
 
-				minimumValue={0}
-				maximumValue={4}
-				step={1}
+					minimumValue={0}
+					maximumValue={4}
+					step={1}
 
-				// debugTouchArea={true}
-				
-				trackStyle={{ height: 10, borderRadius: 10 }}
-				thumbStyle={{ height: 30, width: 30, borderRadius: 30, shadowColor: "#000",	shadowOffset: {	width: 0, height: 2 }, shadowOpacity: 0.15,	shadowRadius: 3.5 }}
-				thumbTouchSize={{ width: 60, height: 60 }}
-				thumbTintColor={"#ffffff"}
+					// debugTouchArea={true}
+					
+					trackStyle={{ height: 10, borderRadius: 10 }}
+					thumbStyle={{ height: 30, width: 30, borderRadius: 30, shadowColor: "#000",	shadowOffset: {	width: 0, height: 2 }, shadowOpacity: 0.15,	shadowRadius: 3.5 }}
+					thumbTouchSize={{ width: 60, height: 60 }}
+					thumbTintColor={"#ffffff"}
 
-				minimumTrackTintColor={faceColor}
-				maximumTrackTintColor={faceColor}
+					minimumTrackTintColor={faceColor}
+					maximumTrackTintColor={faceColor}
 
-				onSlidingComplete={ (val) => interpolatePaths(val) }
-				onValueChange={ (val) => props.sliderChange(val) }
-				value={props.sliderValue}
-				/>
+					onSlidingComplete={ (val) => interpolatePaths(val) }
+					onValueChange={ (val) => props.sliderChange(val) }
+					value={props.sliderValue}
+					/> 
+				: null
+			}
+
 		</View>
 	);
 }

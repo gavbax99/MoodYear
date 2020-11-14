@@ -77,6 +77,10 @@ const MonthDetailCalendar = props => {
 		}
 	};
 
+	const monthDetailFindDay = (dayNo, dayOfTheWeek, faceColor, colorNumber, message) => {
+		props.detailScreenFindDay(dayNo, dayOfTheWeek, currentMonth, currentYear, faceColor, colorNumber, message);
+	};
+
 	return (
 		<View style={styles.calendar}>
 
@@ -126,7 +130,7 @@ const MonthDetailCalendar = props => {
 			</View>
 
 			{/* Week title header */}
-			<View style={{...styles.calendarDays, marginTop: Tools.paddingNormal }}>
+			<View style={{ ...styles.calendarDays, marginTop: Tools.paddingNormal }}>
 				<Text style={styles.dayLetter}>S</Text>
 				<Text style={styles.dayLetter}>M</Text>
 				<Text style={styles.dayLetter}>T</Text>
@@ -137,35 +141,29 @@ const MonthDetailCalendar = props => {
 			</View>
 			
 			{/* List of days */}
-			<View style={{...styles.calendarDays, marginTop: Tools.paddingHalf }}>
+			<View style={{ ...styles.calendarDays, marginTop: Tools.paddingHalf }}>
 				{/* Render our days */}
 				{monthData.days.map((dayObj, i) => {
 
-					
+					let color = "";
 					switch (dayObj.color) {
 						case 0:
-							dayObj.color = Tools.color0;
+							color = Tools.color0;
 							break;
 						case 1:
-							dayObj.color = Tools.color1;
+							color = Tools.color1;
 							break;
 						case 2:
-							dayObj.color = Tools.color2;
+							color = Tools.color2;
 							break;
 						case 3:
-							dayObj.color = Tools.color3;
+							color = Tools.color3;
 							break;
 						case 4:
-							dayObj.color = Tools.color4;
+							color = Tools.color4;
 							break;
 						case 5:
-							dayObj.color = Tools.color5;
-							break;
-						case 6:
-							dayObj.color = Tools.color6;
-							break;
-						case 7:
-							dayObj.color = Tools.color7;
+							color = Tools.color5;
 							break;
 						default: break;
 					}
@@ -174,20 +172,18 @@ const MonthDetailCalendar = props => {
 						<MonthDetailDay 
 							isFirstDay={i===0}
 							firstDayNo={monthData.firstDayOfWeekNo}
-							dayObj={dayObj}
-							color={dayObj.color} 
+							color={color} 
+							colorNumber={dayObj.color}
+							message={dayObj.message}
 							currentDay={getDay}
 							dayOfTheMonth={dayObj.dayNo}
+							dayOfTheWeek={dayObj.dayOfWeek}
 							isCurrentMonth={isCurrentMonth}
-							key={dayObj.id} />
+							key={dayObj.id}
+							pressEvent={monthDetailFindDay} />
 					);
 				})}
 			</View>
-
-			{/* <View style={styles.test}>
-
-			</View> */}
-
 		</View>
 	);
 }
@@ -245,12 +241,6 @@ const styles = StyleSheet.create({
 		width: "14.25%",
 		color: Tools.colorTextboxGrey,
 	},
-
-	// test: {
-	// 	width: "100%",
-	// 	height: 20,
-	// 	backgroundColor: "red",
-	// }
 });
 
 export default MonthDetailCalendar;

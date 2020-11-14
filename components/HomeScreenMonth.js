@@ -41,24 +41,25 @@ const ComponentName = props => {
 			{/* Render our days */}
 			{props.monthObj.days.map((dayObj, i) => {
 
+				let color = "";
 				switch (dayObj.color) {
 					case 0:
-						dayObj.color = Tools.color0;
+						color = Tools.color0;
 						break;
 					case 1:
-						dayObj.color = Tools.color1;
+						color = Tools.color1;
 						break;
 					case 2:
-						dayObj.color = Tools.color2;
+						color = Tools.color2;
 						break;
 					case 3:
-						dayObj.color = Tools.color3;
+						color = Tools.color3;
 						break;
 					case 4:
-						dayObj.color = Tools.color4;
+						color = Tools.color4;
 						break;
 					case 5:
-						dayObj.color = Tools.color5;
+						color = Tools.color5;
 						break;
 					default: break;
 				}
@@ -67,7 +68,7 @@ const ComponentName = props => {
 					<HomeScreenDay 
 						isFirstDay={i===0}
 						firstDayNo={props.monthObj.firstDayOfWeekNo}
-						color={dayObj.color}
+						color={color}
 						dayNo={dayObj.dayNo}
 						currentDay={getDay}
 						isCurrentMonth={isCurrentMonth}

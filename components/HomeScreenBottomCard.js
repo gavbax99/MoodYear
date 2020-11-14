@@ -52,7 +52,7 @@ const HomeScreenBottomCard = props => {
 	const [textInputHoldValue, setTextInputHoldValue] = useState("");
 	const [sliderVal, setSliderVal] = useState(4);
 
-	const [dayHasInformation, setDayHasInformation] = useState(false);
+	// const [dayHasInformation, setDayHasInformation] = useState(false);
 	// const [dataColor, setDataColor] = useState(0);
 	
 	const dispatch = useDispatch();
@@ -113,18 +113,18 @@ const HomeScreenBottomCard = props => {
 		Keyboard.dismiss();
 	};
 
-	useEffect(() => {
-		async function fetchData() {
-			const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${yearNumber}/months/${monthNumber}/days/${(dayNumber-1)}.json`);
-			const resData = await response.json(); 
-			console.log("useeffect in bottom card: ", resData);
+	// useEffect(() => {
+	// 	async function fetchData() {
+	// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${yearNumber}/months/${monthNumber}/days/${(dayNumber-1)}.json`);
+	// 		const resData = await response.json(); 
+	// 		console.log("useeffect in bottom card: ", resData);
 
-			if (resData.color !== 0 && resData.color !== Tools.color0) {
-				setDayHasInformation(true);
-			}
-		}
-		fetchData();
-	}, [data]);
+	// 		if (resData.color !== 0 && resData.color !== Tools.color0) {
+	// 			setDayHasInformation(true);
+	// 		}
+	// 	}
+	// 	fetchData();
+	// }, [data]);
 	
 	return (
 		<KeyboardAvoidingView 
@@ -142,6 +142,8 @@ const HomeScreenBottomCard = props => {
 					dayDate={dayDate} 
 					sliderValue={sliderVal}
 					sliderChange={handleSliderChange}
+					showSlider={true}
+					faceColor={Tools.color5}
 					/>
 
 				{/* Input row */}
