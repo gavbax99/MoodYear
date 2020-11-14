@@ -78,12 +78,13 @@ const MonthDetailScreen = props => {
 	}
 
 	const handleMonthSwitch = (newMonthNo) => {
+		const newMonthData = data.months[newMonthNo];
 		setDayToFind(1);
 		setMonthToFind(newMonthNo);
-		setDayOfTheWeek(data.months[newMonthNo].firstDayOfWeek);
-		setFaceColor(returnColor(data.months[newMonthNo].days[0].color-1));
-		setColorNumber(data.months[newMonthNo].days[0].color-1);
-		setMessage(data.months[newMonthNo].days[0].message);
+		setDayOfTheWeek(newMonthData.firstDayOfWeek);
+		setFaceColor(returnColor(newMonthData.days[0].color-1));
+		setColorNumber(newMonthData.days[0].color-1);
+		setMessage(newMonthData.days[0].message);
 	}
 
 	return (
@@ -105,13 +106,13 @@ const MonthDetailScreen = props => {
 
 					{/* Bottom card */}
 					<MonthDetailBottomCard 
-						yearInt={yearToFind} //************
-						monthNo={monthToFind} //************
-						dayNo={dayToFind} //************
-						dayOfWeek={dayOfTheWeek} //************
-						faceColor={faceColor} //************
-						colorNumber={colorNumber} //************
-						message={message} //************
+						yearInt={yearToFind}
+						monthNo={monthToFind}
+						dayNo={dayToFind}
+						dayOfWeek={dayOfTheWeek}
+						faceColor={faceColor}
+						colorNumber={colorNumber}
+						message={message}
 						/>
 				</View>
 			</View>

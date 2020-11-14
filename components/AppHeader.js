@@ -4,6 +4,7 @@ import {
 	StyleSheet, 
 	View, 
 	Image,
+	Text,
 	TouchableOpacity
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
@@ -71,12 +72,18 @@ const AppHeader = props => {
 	return (
 		<View style={styles.header} onLayout={findHeaderHeight}>
 			{/* Logo */}
-			<TouchableOpacity 
-				activeOpacity={Tools.activeOpacity} 
-				style={{padding: Tools.paddingNormal}} 
-				onPress={() => {props.navigation.goBack()}}>
-				<HeaderImage />
-			</TouchableOpacity>
+			<View style={styles.leftGroup}>
+				<TouchableOpacity 
+					activeOpacity={Tools.activeOpacity} 
+					style={{padding: Tools.paddingNormal}} 
+					onPress={() => {props.navigation.goBack()}}>
+					<HeaderImage />
+				</TouchableOpacity>
+				<Text style={styles.yearText}>
+					{data.yearInt}
+				</Text>
+			</View>
+
 
 			{/* Text */}
 			<TouchableOpacity 
@@ -119,6 +126,18 @@ const styles = StyleSheet.create({
 		height: 20, 
 		justifyContent: "center",
 		alignItems: "center",
+	},
+
+	leftGroup: {
+		flexDirection: "row",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	yearText: {
+		color: Tools.colorLight,
+		fontSize: 22,
+		fontWeight: "200",
+		paddingLeft: Tools.paddingHalf,
 	}
 });
 
