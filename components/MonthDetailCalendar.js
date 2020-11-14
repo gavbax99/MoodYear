@@ -1,5 +1,5 @@
 // React
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
 	StyleSheet, 
 	View, 
@@ -12,10 +12,7 @@ import Svg, { Path } from 'react-native-svg';
 import Tools from '../constants/Tools';
 
 // Redux
-import { useSelector, useDispatch } from "react-redux";
-
-// Data
-// import Year2020 from "../data/Year2020";
+import { useSelector } from "react-redux";
 
 // Components
 import MonthDetailDay from "../components/MonthDetailDay";
@@ -27,7 +24,6 @@ const MonthDetailCalendar = props => {
 	const [currentYear, setCurrentYear] = useState(props.yearInt);
 
 	// Data
-	// const monthData = Year2020[2020].months[currentMonth];
 	const data = useSelector(state => state.dataReducer.data);
 	const monthData = data.months[currentMonth];
 
@@ -52,30 +48,18 @@ const MonthDetailCalendar = props => {
 	];
 
 	const prevMonth = () => {
-		// Cant go before 2020
-		if (currentYear === 2020 && currentMonth === 0) return;
-
-		if (currentMonth === 0) {
-			// If January change year too
-			setCurrentMonth(11);
-			setCurrentYear(currentYear - 1);
-		} else {
-			setCurrentMonth(currentMonth - 1);
-		}
+		if (currentMonth === 0) return;
+		setCurrentMonth(currentMonth - 1);
 	};
 
 	const nextMonth = () => {
-		// Cant go past 2020
-		if (currentYear === 2020 && currentMonth === 11) return;
-
-		if (currentMonth === 11) {
-			// If December change year too
-			setCurrentMonth(0);
-			setCurrentYear(currentYear + 1);
-		} else {
-			setCurrentMonth(currentMonth + 1);
-		}
+		if (currentMonth === 11) return;
+		setCurrentMonth(currentMonth + 1);
 	};
+
+	useEffect(() => {
+		props.switchMonths(currentMonth);
+	}, [currentMonth])
 
 	const monthDetailFindDay = (dayNo, dayOfTheWeek, faceColor, colorNumber, message) => {
 		props.detailScreenFindDay(dayNo, dayOfTheWeek, currentMonth, currentYear, faceColor, colorNumber, message);
@@ -92,7 +76,7 @@ const MonthDetailCalendar = props => {
 					onPress={prevMonth}
 					style={{ padding: 12 }}>
 						<Svg style={{ 
-							opacity: (currentYear === 2020 && currentMonth === 0) ? 0.3 : 1,
+							opacity: (currentMonth === 0) ? 0 : 1,
 							transform: [{ rotateZ: "180deg" }], 
 							shadowColor: '#000',
 							shadowOffset: { width: 0, height: -3 },
@@ -116,7 +100,7 @@ const MonthDetailCalendar = props => {
 					onPress={nextMonth}
 					style={{ marginLeft: "auto", padding: 12 }}>
 						<Svg style={{ 
-							opacity: (currentYear === 2020 && currentMonth === 11) ? 0.3 : 1,
+							opacity: (currentMonth === 11) ? 0 : 1,
 							shadowColor: '#000',
 							shadowOffset: { width: 0, height: 3 },
 							shadowRadius: 2,

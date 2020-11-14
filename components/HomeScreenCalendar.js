@@ -30,6 +30,7 @@ const HomeScreenCalendar = props => {
 
 	const data = useSelector(state => state.dataReducer.data);
 	const uid = useSelector(state => state.authReducer.userId);
+	// const token = useSelector(state => state.authReducer.token); <- USE THIS INSTEAD OF UID?
 	useEffect(() => {
 		dispatch(loadData(uid, getYear));		
 	}, [uid]);

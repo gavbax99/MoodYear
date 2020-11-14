@@ -38,7 +38,7 @@ const AppHeader = props => {
 	const data = useSelector(state => state.dataReducer.data);
 	const placeholder = () => {
 		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2020", Year2020));
-		console.log(data);
+		console.log("placeholder");
 	};
 
 	const HeaderImage = () => {
