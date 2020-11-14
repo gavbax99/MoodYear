@@ -77,10 +77,9 @@ const MonthDetailCalendar = props => {
 		}
 	};
 
-	const monthDetailFindDay = (dayNo, dayOfTheWeek, faceColor, colorNumber) => {
-		// console.log("monthDetailCalendar: ", dayNo, dayOfTheWeek, currentMonth, currentYear, faceColor);
-		props.detailScreenFindDay(dayNo, dayOfTheWeek, currentMonth, currentYear, faceColor, colorNumber);
-	}
+	const monthDetailFindDay = (dayNo, dayOfTheWeek, faceColor, colorNumber, message) => {
+		props.detailScreenFindDay(dayNo, dayOfTheWeek, currentMonth, currentYear, faceColor, colorNumber, message);
+	};
 
 	return (
 		<View style={styles.calendar}>
@@ -131,7 +130,7 @@ const MonthDetailCalendar = props => {
 			</View>
 
 			{/* Week title header */}
-			<View style={{...styles.calendarDays, marginTop: Tools.paddingNormal }}>
+			<View style={{ ...styles.calendarDays, marginTop: Tools.paddingNormal }}>
 				<Text style={styles.dayLetter}>S</Text>
 				<Text style={styles.dayLetter}>M</Text>
 				<Text style={styles.dayLetter}>T</Text>
@@ -142,7 +141,7 @@ const MonthDetailCalendar = props => {
 			</View>
 			
 			{/* List of days */}
-			<View style={{...styles.calendarDays, marginTop: Tools.paddingHalf }}>
+			<View style={{ ...styles.calendarDays, marginTop: Tools.paddingHalf }}>
 				{/* Render our days */}
 				{monthData.days.map((dayObj, i) => {
 
@@ -166,12 +165,6 @@ const MonthDetailCalendar = props => {
 						case 5:
 							color = Tools.color5;
 							break;
-						// case 6:
-						// 	dayObj.color = Tools.color6;
-						// 	break;
-						// case 7:
-						// 	dayObj.color = Tools.color7;
-						// 	break;
 						default: break;
 					}
 
@@ -179,9 +172,9 @@ const MonthDetailCalendar = props => {
 						<MonthDetailDay 
 							isFirstDay={i===0}
 							firstDayNo={monthData.firstDayOfWeekNo}
-							// dayObj={dayObj}
 							color={color} 
 							colorNumber={dayObj.color}
+							message={dayObj.message}
 							currentDay={getDay}
 							dayOfTheMonth={dayObj.dayNo}
 							dayOfTheWeek={dayObj.dayOfWeek}
@@ -191,11 +184,6 @@ const MonthDetailCalendar = props => {
 					);
 				})}
 			</View>
-
-			{/* <View style={styles.test}>
-
-			</View> */}
-
 		</View>
 	);
 }
@@ -253,12 +241,6 @@ const styles = StyleSheet.create({
 		width: "14.25%",
 		color: Tools.colorTextboxGrey,
 	},
-
-	// test: {
-	// 	width: "100%",
-	// 	height: 20,
-	// 	backgroundColor: "red",
-	// }
 });
 
 export default MonthDetailCalendar;

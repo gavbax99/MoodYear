@@ -49,6 +49,7 @@ const MonthDetailScreen = props => {
 			break;
 		default: break;
 	};
+	const startingMessage = data.months[monthNo].days[0].message;
 	
 	const [dayToFind, setDayToFind] = useState(1);
 	const [dayOfTheWeek, setDayOfTheWeek] = useState(data.months[monthNo].firstDayOfWeek);
@@ -56,18 +57,20 @@ const MonthDetailScreen = props => {
 	const [yearToFind, setYearToFind] = useState(yearInt);
 	const [faceColor, setFaceColor] = useState(startingSliderColor);
 	const [colorNumber, setColorNumber] = useState(startingFaceColor);
+	const [message, setMessage] = useState(startingMessage);
 
 	const handleTouchableWithoutFeedback = () => {
 		Keyboard.dismiss();
 	}
 
-	const monthDetailScreenHandleDay = (dayNo, dayOfTheWeek, currentMonth, currentYear, newFaceColor, colorNumber) => {
+	const monthDetailScreenHandleDay = (dayNo, dayOfTheWeek, currentMonth, currentYear, newFaceColor, colorNumber, message) => {
 		setDayToFind(dayNo);
 		setDayOfTheWeek(dayOfTheWeek);
 		setMonthToFind(currentMonth);
 		setYearToFind(currentYear);
 		setFaceColor(newFaceColor);
 		setColorNumber(colorNumber-1);
+		setMessage(message);
 	}
 
 	// useEffect(() => {
@@ -100,6 +103,7 @@ const MonthDetailScreen = props => {
 						dayOfWeek={dayOfTheWeek}
 						faceColor={faceColor}
 						colorNumber={colorNumber}
+						message={message}
 						/>
 				</View>
 			</View>

@@ -19,8 +19,6 @@ import FaceSlider from "./FaceSlider";
 // ==================== Component
 const MonthDetailBottomCard = props => {
 
-
-	
 	return (
 		<KeyboardAvoidingView 
 			behavior="padding" 
@@ -32,8 +30,6 @@ const MonthDetailBottomCard = props => {
 				<FaceSlider 
 					day={props.dayOfWeek} 
 					dayDate={`${props.monthNo+1}/${props.dayNo}/${props.yearInt}`} 
-					// sliderValue={sliderVal}
-					// sliderChange={handleSliderChange}
 					showSlider={false}
 					faceColor={props.faceColor}
 					colorNumber={props.colorNumber}
@@ -42,7 +38,7 @@ const MonthDetailBottomCard = props => {
 				{/* Text row */}
 				<View style={styles.bottomTextView}>
 					<Text style={styles.bottomText}>
-						{}
+						{props.message.length > 0 ? props.message : "No message." }
 					</Text>
 				</View>
 

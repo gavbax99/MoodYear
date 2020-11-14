@@ -16,7 +16,7 @@ const MonthDetailDay = props => {
 
 	const handleDayClick = () => {
 		// console.log("day click in MonthDetailDay: ", )
-		props.pressEvent(props.dayOfTheMonth, props.dayOfTheWeek, props.color, props.colorNumber);
+		props.pressEvent(props.dayOfTheMonth, props.dayOfTheWeek, props.color, props.colorNumber, props.message);
 	}
 
 	return (

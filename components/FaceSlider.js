@@ -102,7 +102,7 @@ const FaceSlider = props => {
 					<Text style={styles.dateDate}>{props.dayDate}</Text>
 				</View>
 
-				{/* Icon */}
+				{/* Icon for home screen & month detail */}
 				{props.showSlider === true ? 
 				<View style={{...styles.svgContainer, backgroundColor: faceColor }}>
 					<Svg width={58} height={58} viewBow="0 0 58 58">
@@ -124,7 +124,7 @@ const FaceSlider = props => {
 						</G>
 					</Svg>
 				</View>
-				: null
+				: <View style={{width: 64, height: 64, opacity: 0}}></View>
 				}
 
 			</View>
