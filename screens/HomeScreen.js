@@ -20,6 +20,7 @@ import Blackout from '../components/Blackout';
 
 // ==================== Functional component 
 const HomeScreen = props => {
+
 	const handleTouchableWithoutFeedback = () => {
 		Keyboard.dismiss();
 	};
@@ -37,6 +38,7 @@ const HomeScreen = props => {
 					<Blackout />
 
 					{/* Bottom card */}
+
 					<HomeScreenBottomCard />
 				</View>
 

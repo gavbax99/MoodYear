@@ -28,34 +28,38 @@ const MonthDetailScreen = props => {
 	const yearInt = props.navigation.getParam("yearInt");
 	const monthNo = props.navigation.getParam("monthNo");
 
-	// IN THE CASE OF -1, WILL BE RED/NO DATA
-	const startingFaceColor = data.months[monthNo].days[0].color-1;
-	let startingSliderColor = "";
-	switch (startingFaceColor) {
-		case 0:
-			startingSliderColor = Tools.color1;
-			break;
-		case 1:
-			startingSliderColor = Tools.color2;
-			break;
-		case 2:
-			startingSliderColor = Tools.color3;
-			break;
-		case 3:
-			startingSliderColor = Tools.color4;
-			break;
-		case 4:
-			startingSliderColor = Tools.color5;
-			break;
-		default: break;
-	};
 	const startingMessage = data.months[monthNo].days[0].message;
+	const startingFaceColor = data.months[monthNo].days[0].color-1;
+
+	// color are 0-4; -1 will return no data and hide face
+	const returnColor = (colorInt) => {
+		let startingSliderColor = "";
+		switch (colorInt) {
+			case 0:
+				startingSliderColor = Tools.color1;
+				break;
+			case 1:
+				startingSliderColor = Tools.color2;
+				break;
+			case 2:
+				startingSliderColor = Tools.color3;
+				break;
+			case 3:
+				startingSliderColor = Tools.color4;
+				break;
+			case 4:
+				startingSliderColor = Tools.color5;
+				break;
+			default: break;
+		};
+		return startingSliderColor;
+	};
 	
 	const [dayToFind, setDayToFind] = useState(1);
 	const [dayOfTheWeek, setDayOfTheWeek] = useState(data.months[monthNo].firstDayOfWeek);
 	const [monthToFind, setMonthToFind] = useState(monthNo);
 	const [yearToFind, setYearToFind] = useState(yearInt);
-	const [faceColor, setFaceColor] = useState(startingSliderColor);
+	const [faceColor, setFaceColor] = useState(returnColor(startingFaceColor));
 	const [colorNumber, setColorNumber] = useState(startingFaceColor);
 	const [message, setMessage] = useState(startingMessage);
 
@@ -73,11 +77,15 @@ const MonthDetailScreen = props => {
 		setMessage(message);
 	}
 
-	// useEffect(() => {
-	// 	console.log("monthdetailscreen MAIN INFO: ", dayToFind, dayOfTheWeek, monthToFind, yearToFind)
-	// 	//               for correct number format:    good         good          +1         good
-	// 	//               for correct array format:     -1           NA            good       good
-	// });
+	const handleMonthSwitch = (newMonthNo) => {
+		const newMonthData = data.months[newMonthNo];
+		setDayToFind(1);
+		setMonthToFind(newMonthNo);
+		setDayOfTheWeek(newMonthData.firstDayOfWeek);
+		setFaceColor(returnColor(newMonthData.days[0].color-1));
+		setColorNumber(newMonthData.days[0].color-1);
+		setMessage(newMonthData.days[0].message);
+	}
 
 	return (
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
@@ -91,6 +99,7 @@ const MonthDetailScreen = props => {
 					<MonthDetailCalendar 
 						yearInt={yearToFind} 
 						monthNo={monthToFind} 
+						switchMonths={handleMonthSwitch}
 						detailScreenFindDay={monthDetailScreenHandleDay}
 						/>
 					<Blackout />

@@ -48,14 +48,11 @@ const submitButtonTopClosed = 50;
 // ==================== Component
 const HomeScreenBottomCard = props => {
 
+	const dispatch = useDispatch();
+
 	const [textInputValue, setTextInputValue] = useState("");
 	const [textInputHoldValue, setTextInputHoldValue] = useState("");
 	const [sliderVal, setSliderVal] = useState(4);
-
-	// const [dayHasInformation, setDayHasInformation] = useState(false);
-	// const [dataColor, setDataColor] = useState(0);
-	
-	const dispatch = useDispatch();
 
 	// Redux variables
 	const keyboardIsOpen = useSelector(state => state.keyboardReducer.keyboardReducerState);
@@ -92,110 +89,97 @@ const HomeScreenBottomCard = props => {
 	
 	// Submit data for day
 	const submitMessage = () => {
-
-		// const colorArr = [Tools.color1, Tools.color2, Tools.color3, Tools.color4, Tools.color5]
-		// const checkDataDifference = data.months[monthNumber].days[dayNumber-1].message === textInputValue; 
-		// const checkColorDifference = data.months[monthNumber].days[dayNumber-1].color === colorArr[sliderVal]; 
-		// const sameDayData = checkDataDifference === checkColorDifference;
-
 		// WORKS FOR WHOLE SINGLE DAY
 		const newDayObj = new NewObj(data.months[monthNumber].days[dayNumber-1]);
-		// console.log(newDayObj.obj);
 		newDayObj.obj.message = textInputValue;
 		newDayObj.obj.color = sliderVal + 1;
 		dispatch(updateSingleDay(uid, yearNumber, monthNumber, (dayNumber-1), newDayObj.obj));
 
-		// CHANGE SO ONLY ONE DAY IS LOADED
+		// RELOAD DATA (could be refactored into single day load if i can figure out redux)
 		dispatch(loadData(uid, yearNumber));
 
 		dispatch(setKeyboardOpen(false));
 		setTextInputValue("");
 		Keyboard.dismiss();
 	};
-
-	// useEffect(() => {
-	// 	async function fetchData() {
-	// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${yearNumber}/months/${monthNumber}/days/${(dayNumber-1)}.json`);
-	// 		const resData = await response.json(); 
-	// 		console.log("useeffect in bottom card: ", resData);
-
-	// 		if (resData.color !== 0 && resData.color !== Tools.color0) {
-	// 			setDayHasInformation(true);
-	// 		}
-	// 	}
-	// 	fetchData();
-	// }, [data]);
 	
 	return (
 		<KeyboardAvoidingView 
 			behavior="padding" 
 			keyboardVerticalOffset={useSelector(state => state.navReducer.headerHeightState)}
 			>
-			<View style={[
-				styles.screen, 
-				keyboardIsOpen ? styles.screenKeyboardOpen : null 
-				]}>
+			{ yearNumber !== data.yearInt ? 
+				<View style={[
+					styles.screen, 
+					keyboardIsOpen ? styles.screenKeyboardOpen : null 
+					]}>
 
-				{/* Icon and slider */}
-				<FaceSlider 
-					day={day} 
-					dayDate={dayDate} 
-					sliderValue={sliderVal}
-					sliderChange={handleSliderChange}
-					showSlider={true}
-					faceColor={Tools.color5}
-					/>
-
-				{/* Input row */}
-				<View style={{
-					...styles.inputRow,
-					height: keyboardIsOpen ? textboxHeightOpen : textboxHeightClosed,
-					}}>
-					<TextInput
-						style={styles.textInput}
-						onChangeText={text => setTextInputValue(text)}
-						multiline={true}
-						onFocus={() => onTextboxFocus()}
-						onBlur={() => onTextboxBlur()}
-						maxLength={characaterLimit}
-						placeholder={"How are you today?"}
-						selectionColor={Tools.colorLight}
-						keyboardAppearance={"dark"}
-						spellCheck={false}
-						ref={component => _textInput = component}
-						value={textInputValue}
+					{/* Icon and slider */}
+					<FaceSlider 
+						day={day} 
+						dayDate={dayDate} 
+						sliderValue={sliderVal}
+						sliderChange={handleSliderChange}
+						showSlider={true}
+						faceColor={Tools.color5}
 						/>
-				</View>
 
-				{/* Under nput row */}
-				<View style={{ 
-					...styles.underInputRow, 
-					maxHeight: keyboardIsOpen ? underTextboxHeightOpen : underTextboxHeightClosed, 
-					overflow: keyboardIsOpen ? "visible" : "hidden" 
-					}}>
-					<Text style={{
-						...styles.underInputText,
-						color: charactersLeft === 150 ? Tools.accentColor : Tools.colorLight, 
+					{/* Input row */}
+					<View style={{
+						...styles.inputRow,
+						height: keyboardIsOpen ? textboxHeightOpen : textboxHeightClosed,
 						}}>
-						{charactersLeft}/{characaterLimit}
-					</Text>
+						<TextInput
+							style={styles.textInput}
+							onChangeText={text => setTextInputValue(text)}
+							multiline={true}
+							onFocus={() => onTextboxFocus()}
+							onBlur={() => onTextboxBlur()}
+							maxLength={characaterLimit}
+							placeholder={"How are you today?"}
+							selectionColor={Tools.colorLight}
+							keyboardAppearance={"dark"}
+							spellCheck={false}
+							ref={component => _textInput = component}
+							value={textInputValue}
+							/>
+					</View>
 
-					<TouchableOpacity 
-						activeOpacity={Tools.activeOpacity} 
-						onPress={submitMessage}>
-						<View style={{ 
-							...styles.underInputSubmitButton, 
-							top: keyboardIsOpen ? submitButtonTopOpen : submitButtonTopClosed 
+					{/* Under nput row */}
+					<View style={{ 
+						...styles.underInputRow, 
+						maxHeight: keyboardIsOpen ? underTextboxHeightOpen : underTextboxHeightClosed, 
+						overflow: keyboardIsOpen ? "visible" : "hidden" 
+						}}>
+						<Text style={{
+							...styles.underInputText,
+							color: charactersLeft === 150 ? Tools.accentColor : Tools.colorLight, 
 							}}>
-							<Text style={styles.underInputSubmitButtonText}>
-								+
-							</Text>
+							{charactersLeft}/{characaterLimit}
+						</Text>
 
-						</View>
-					</TouchableOpacity>
+						<TouchableOpacity 
+							activeOpacity={Tools.activeOpacity} 
+							onPress={submitMessage}>
+							<View style={{ 
+								...styles.underInputSubmitButton, 
+								top: keyboardIsOpen ? submitButtonTopOpen : submitButtonTopClosed 
+								}}>
+								<Text style={styles.underInputSubmitButtonText}>
+									+
+								</Text>
+
+							</View>
+						</TouchableOpacity>
+					</View>
 				</View>
-			</View>
-
+				: 
+				<View style={styles.screen}>
+					<Text>You're viewing a previous year.</Text>
+					<Text>Click here to view the current year.</Text>
+				</View>
+			}
+			
 		</KeyboardAvoidingView>
 	);
 };
