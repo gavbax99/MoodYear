@@ -5,6 +5,7 @@ export const LOGIN = "LOGIN";
 export const LOAD_DATA = "LOAD_DATA";
 export const UPDATE_SINGLE_DAY = "UPDATE_SINGLE_DAY";
 export const LOAD_SINGLE_DAY = "LOAD_SINGLE_DAY";
+export const LOAD_ACTIVE_YEARS = "LOAD_ACTIVE_YEARS";
 
 export const UPDATEDATA = "UPDATEDATA";
 
@@ -122,6 +123,23 @@ export const loadData = (uid, year) => {
 		dispatch({
 			type: LOAD_DATA,
 			data: resData
+		});
+	};
+};
+
+// Loading data (fetched from firebase)
+export const loadActiveYears = (uid) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}.json`);
+
+		const resData = await response.json(); 
+
+		// console.log(typeof resData);
+		// console.log(Object.keys(resData))
+
+		dispatch({
+			type: LOAD_ACTIVE_YEARS,
+			years: Object.keys(resData)
 		});
 	};
 };

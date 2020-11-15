@@ -11,7 +11,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight, updateData } from "../store/actions/actions";
+import { setHeaderHeight, updateData, loadActiveYears } from "../store/actions/actions";
 
 // Icons
 import { Ionicons } from '@expo/vector-icons';
@@ -39,7 +39,9 @@ const AppHeader = props => {
 	const data = useSelector(state => state.dataReducer.data);
 	const placeholder = () => {
 		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2020", Year2020));
-		console.log("placeholder");
+		// dispatch(loadActiveYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
+		// console.log("placeholder");
+		props.navigation.navigate("Settings");
 	};
 
 	const HeaderImage = () => {
@@ -79,19 +81,34 @@ const AppHeader = props => {
 					onPress={() => {props.navigation.goBack()}}>
 					<HeaderImage />
 				</TouchableOpacity>
-				<Text style={styles.yearText}>
-					{data.yearInt}
-				</Text>
+				{props.isSettings === false ?
+					<Text style={styles.yearText}>
+						{data.yearInt}
+					</Text>
+					: null
+				}
+
 			</View>
 
 
+
 			{/* Text */}
-			<TouchableOpacity 
-				activeOpacity={Tools.activeOpacity} 
-				style={styles.textContainer} 
-				onPress={placeholder}>
-				<Ionicons style={{paddingHorizontal: 6}} name="ios-more" size={24} color="#ffffff" />
-			</TouchableOpacity>
+			{props.isSettings === false ?
+				<TouchableOpacity 
+					activeOpacity={Tools.activeOpacity} 
+					style={styles.textContainer} 
+					onPress={placeholder}>
+					<Ionicons style={{paddingHorizontal: 6}} name="ios-more" size={24} color="#ffffff" />
+				</TouchableOpacity>
+				: 
+				<View style={styles.settingsTextContainer}>
+					<Text style={styles.yearText}>
+						Settings
+					</Text>
+					{/* <Ionicons style={{paddingLeft: 12}} name="ios-more" size={24} color="#ffffff" /> */}
+				</View>
+			}
+
 		</View>
 	);
 }
@@ -120,6 +137,13 @@ const styles = StyleSheet.create({
 		padding: Tools.paddingNormal,
 		flexDirection: "row",
 	},
+	settingsTextContainer: {
+		flexDirection: "row",
+		justifyContent: "center",
+		alignItems: "center",
+		padding: Tools.paddingNormal,
+		paddingHorizontal: Tools.paddingLarge,
+	},
 
 	svgContainer: {
 		paddingHorizontal: 12, 
@@ -135,7 +159,7 @@ const styles = StyleSheet.create({
 	},
 	yearText: {
 		color: Tools.colorLight,
-		fontSize: 22,
+		fontSize: 24,
 		fontWeight: "200",
 		paddingLeft: Tools.paddingHalf,
 	}

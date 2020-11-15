@@ -108,7 +108,7 @@ const HomeScreenBottomCard = props => {
 			behavior="padding" 
 			keyboardVerticalOffset={useSelector(state => state.navReducer.headerHeightState)}
 			>
-			{ yearNumber !== data.yearInt ? 
+			{ yearNumber === data.yearInt ? 
 				<View style={[
 					styles.screen, 
 					keyboardIsOpen ? styles.screenKeyboardOpen : null 
@@ -173,11 +173,12 @@ const HomeScreenBottomCard = props => {
 						</TouchableOpacity>
 					</View>
 				</View>
-				: 
+				: Object.keys(data).length !== 0 ?
 				<View style={styles.screen}>
 					<Text>You're viewing a previous year.</Text>
 					<Text>Click here to view the current year.</Text>
 				</View>
+				: null
 			}
 			
 		</KeyboardAvoidingView>

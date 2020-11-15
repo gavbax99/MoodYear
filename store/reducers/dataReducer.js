@@ -1,11 +1,13 @@
 import { 
 	LOAD_DATA,
 	UPDATE_SINGLE_DAY,
-	UPDATEDATA
+	UPDATEDATA,
+	LOAD_ACTIVE_YEARS
  } from "../actions/actions";
 
 const initialState = {
 	data: {},
+	years: [],
 };
 
 export default (state = initialState, action) => {
@@ -27,6 +29,13 @@ export default (state = initialState, action) => {
 				...state, 
 				data: action.data
 			};
+
+		case LOAD_ACTIVE_YEARS:
+			return { 
+				...state, 
+				years: action.years
+			};
+
 	};
 	return state;
 };

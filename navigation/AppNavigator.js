@@ -6,6 +6,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import HomeScreen from "../screens/HomeScreen";
 import MonthDetailScreen from "../screens/MonthDetailScreen";
 import AuthScreen from "../screens/AuthScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 
 // Tools
 import Tools from "../constants/Tools";
@@ -31,6 +32,9 @@ const HomeNavigator = createStackNavigator({
 	}, 
 	MonthDetail: {
 		screen: MonthDetailScreen
+	},
+	Settings: {
+		screen: SettingsScreen
 	}
 }, {
 	defaultNavigationOptions: defaultStackNavOptions,
