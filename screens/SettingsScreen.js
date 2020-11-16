@@ -7,13 +7,14 @@ import {
 	TouchableOpacity
 } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
-import { loadActiveYears } from "../store/actions/actions";
+import { loadActiveYears, loadData, removeData } from "../store/actions/actions";
 
 // Constants
 import Tools from '../constants/Tools';
 
 // Components
 import AppHeader from '../components/AppHeader';
+import dataReducer from '../store/reducers/dataReducer';
 
 
 // ==================== Component
@@ -23,13 +24,18 @@ const SettingsScreen = props => {
 
 	const dispatch = useDispatch();
 	const activeYears = useSelector(state => state.dataReducer.years);
+	const data = useSelector(state => state.dataReducer.data);
 	const uid = useSelector(state => state.authReducer.userId);
 
 	useEffect(() => {
 		dispatch(loadActiveYears(uid))
 	}, [useEffect])
 
-	const 
+	const switchYear = (year) => {
+		dispatch(removeData());
+		dispatch(loadData(uid, year));
+		props.navigation.navigate("Home");
+	}
 
 	return (
 		<View style={styles.screen}>
@@ -40,14 +46,18 @@ const SettingsScreen = props => {
 
 				{/* Year selection */}
 				<View style={styles.selectYearContainer}>
-					<Text style={styles.buttonText}>Change Year:</Text>
+					<Text style={styles.buttonText}>View Previous Years:</Text>
 					{activeYears.map((val, i) => {
 						return (
 							<TouchableOpacity
-								style={styles.yearButton}
+								style={(data.year === val) ? 
+									{...styles.yearButton, borderWidth: 2, borderColor: Tools.accentColor}
+									: 
+									styles.yearButton
+								}
 								key={val}
 								activeOpacity={Tools.activeOpacity}
-								onPress={() => {}}
+								onPress={() => switchYear(val)}
 								>
 								<Text style={styles.yearText}>{val}</Text>
 							</TouchableOpacity>

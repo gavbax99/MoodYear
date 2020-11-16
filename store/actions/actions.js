@@ -5,7 +5,8 @@ export const LOGIN = "LOGIN";
 export const LOAD_DATA = "LOAD_DATA";
 export const UPDATE_SINGLE_DAY = "UPDATE_SINGLE_DAY";
 export const LOAD_SINGLE_DAY = "LOAD_SINGLE_DAY";
-export const LOAD_ACTIVE_YEARS = "LOAD_ACTIVE_YEARS";
+export const LOAD_ACTIVE_YEARS = "LOAD_ACTIVE_YEARS"; 
+export const REMOVE_DATA = "REMOVE_DATA"; 
 
 export const UPDATEDATA = "UPDATEDATA";
 
@@ -124,6 +125,14 @@ export const loadData = (uid, year) => {
 			type: LOAD_DATA,
 			data: resData
 		});
+	};
+};
+
+// Remove data
+export const removeData = () => {
+	return {
+		type: REMOVE_DATA,
+		data: {}
 	};
 };
 

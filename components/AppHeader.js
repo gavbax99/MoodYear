@@ -21,6 +21,7 @@ import Tools from '../constants/Tools';
 
 // Data
 import Year2020 from "../data/Year2020";
+import Year2021 from "../data/Year2021";
 
 // Redux
 import { useSelector } from "react-redux";
@@ -38,7 +39,7 @@ const AppHeader = props => {
 
 	const data = useSelector(state => state.dataReducer.data);
 	const placeholder = () => {
-		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2020", Year2020));
+		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2021", Year2021));
 		// dispatch(loadActiveYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
 		// console.log("placeholder");
 		props.navigation.navigate("Settings");
