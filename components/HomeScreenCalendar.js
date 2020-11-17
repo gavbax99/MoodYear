@@ -14,7 +14,7 @@ import HomeScreenMonth from '../components/HomeScreenMonth';
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { loadData } from "../store/actions/actions";
+import { loadData, loadActiveYears, updateEmptyYear } from "../store/actions/actions";
 
 // ==================== Component
 const HomeScreenCalendar = props => {
@@ -29,18 +29,34 @@ const HomeScreenCalendar = props => {
 	const getDay = date.getDate();
 
 	const data = useSelector(state => state.dataReducer.data);
+	const years = useSelector(state => state.dataReducer.years);
 	const uid = useSelector(state => state.authReducer.userId);
+
+	// ON HOME SCREEN, FIRST LOAD THE USER'S ACTIVE YEARS (only re-loads when uid/token is refreshed)
 	// const token = useSelector(state => state.authReducer.token); <- USE THIS INSTEAD OF UID?
 	useEffect(() => {
-		dispatch(loadData(uid, getYear));		
+		dispatch(loadActiveYears(uid));
+
 	}, [uid]);
 
-	// console.log("current homescreen data: ", data);
+	// CONDITIONAL YEAR LOADING/YEAR CREATION:
+	// If the user doesn't have the active year in their currentYears, load that empty data from FB and push into their account
+	useEffect(() => {
+		// console.log(years.includes(getYear.toString()))
+		if (years.includes(getYear.toString())) {
+			if (years.includes(getYear.toString())) {
+				dispatch(loadData(uid, getYear));
+			} else if (years.includes(getYear.toString()) === false) {
+				// should only fire once per year or when they first login
+				dispatch(updateEmptyYear(uid, getYear));
+			}
+		}
+	}, [years])
 
 	const Loading = () => {
 		return (
 			<View style={styles.loadingIconContainer}>
-				<ActivityIndicator size="large" color={Tools.colorLight} />
+				<ActivityIndicator size="large" color={Tools.color5} />
 			</View>
 		);
 	};

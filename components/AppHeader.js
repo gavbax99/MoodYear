@@ -11,7 +11,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight, updateData, loadActiveYears } from "../store/actions/actions";
+import { setHeaderHeight, updateData, loadActiveYears, loadYearsArray } from "../store/actions/actions";
 
 // Icons
 import { Ionicons } from '@expo/vector-icons';
@@ -41,8 +41,9 @@ const AppHeader = props => {
 	const placeholder = () => {
 		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2021", Year2021));
 		// dispatch(loadActiveYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
+		dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
 		// console.log("placeholder");
-		props.navigation.navigate("Settings");
+		// props.navigation.navigate("Settings");
 	};
 
 	const HeaderImage = () => {

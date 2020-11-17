@@ -9,6 +9,9 @@ export const LOAD_ACTIVE_YEARS = "LOAD_ACTIVE_YEARS";
 export const REMOVE_DATA = "REMOVE_DATA"; 
 
 export const UPDATEDATA = "UPDATEDATA";
+export const UPDATE_EMPTY_YEAR = "UPDATE_EMPTY_YEAR";
+
+export const LOAD_YEARS_ARRAY = "LOAD_YEARS_ARRAY";
 
 // Keyboard open bool
 export const setKeyboardOpen = (openBool) => {
@@ -153,23 +156,6 @@ export const loadActiveYears = (uid) => {
 	};
 };
 
-// Loading single day (fetched from firebase)
-// export const loadSingleDay = (uid, year, monthNo, dayNo) => {
-// 	return async dispatch => {
-// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`);
-
-// 		const resData = await response.json(); 
-
-// 		console.log(resData);
-
-// 		dispatch({
-// 			type: LOAD_SINGLE_DAY,
-// 			// data: resData
-// 			data:
-// 		});
-// 	};
-// };
-
 // Updating single day (put to firebase) WORKS
 export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 	return async dispatch => {
@@ -194,15 +180,7 @@ export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 	};
 };
 
-
-
-
-
-
-
-
-
-// Updating data (put to firebase)
+// Updating ENTIRE data (put to firebase)
 export const updateData = (uid, year, data) => {
 	return async dispatch => {
 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
@@ -222,6 +200,80 @@ export const updateData = (uid, year, data) => {
 		});
 	};
 };
+
+// Updating ENTIRE year from empty calendar (put to firebase)
+export const updateEmptyYear = (uid, year) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/emptyCalendar/${year}.json`);
+		const resData = await response.json(); 
+
+		const loadNewYear = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(resData)
+		});
+
+		// const loadNewYearResponse = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`);
+		// const newDataResData = await loadNewDataResponse.json(); 
+		// console.log("new res data: ", newDataResData.months[10].days[11]);
+
+		dispatch({
+			type: UPDATE_EMPTY_YEAR,
+			data: resData
+		});
+	};
+};
+
+
+
+
+
+
+// Updating single day (put to firebase) WORKS
+export const loadYearsArray = (uid) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears.json`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({})
+		});
+
+
+		dispatch({
+			type: LOAD_YEARS_ARRAY,
+		});
+	};
+};
+
+
+
+
+
+
+
+
+
+
+// Loading single day (fetched from firebase)
+// export const loadSingleDay = (uid, year, monthNo, dayNo) => {
+// 	return async dispatch => {
+// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`);
+
+// 		const resData = await response.json(); 
+
+// 		console.log(resData);
+
+// 		dispatch({
+// 			type: LOAD_SINGLE_DAY,
+// 			// data: resData
+// 			data:
+// 		});
+// 	};
+// };
 
 
 // import { useDispatch } from "react-redux";

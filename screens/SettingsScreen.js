@@ -27,9 +27,9 @@ const SettingsScreen = props => {
 	const data = useSelector(state => state.dataReducer.data);
 	const uid = useSelector(state => state.authReducer.userId);
 
-	useEffect(() => {
-		dispatch(loadActiveYears(uid))
-	}, [useEffect])
+	// useEffect(() => {
+	// 	dispatch(loadActiveYears(uid))
+	// }, [useEffect])
 
 	const switchYear = (year) => {
 		dispatch(removeData());
