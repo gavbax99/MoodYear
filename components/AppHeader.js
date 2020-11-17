@@ -42,6 +42,7 @@ const AppHeader = props => {
 
 	const data = useSelector(state => state.dataReducer.data);
 	const years = useSelector(state => state.dataReducer.years);
+	const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
 	const placeholder = () => {
 		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2021", Year2021));
 
@@ -50,7 +51,9 @@ const AppHeader = props => {
 		// dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", 2021));
 		// dispatch(findYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
 		// console.log("placeholder");
-		props.navigation.navigate("Settings");
+		// props.navigation.navigate("Settings");
+
+		console.log(years, yearsLoaded);
 	};
 
 	// useEffect(() => {

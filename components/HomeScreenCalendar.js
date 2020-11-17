@@ -25,11 +25,10 @@ const HomeScreenCalendar = props => {
 
 	const date = new Date();
 	const getYear = date.getFullYear();
-	// const getMonth = date.getMonth();
-	// const getDay = date.getDate();
 
 	const data = useSelector(state => state.dataReducer.data);
 	const years = useSelector(state => state.dataReducer.years);
+	const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
 	const uid = useSelector(state => state.authReducer.userId);
 
 	// ASYNC: load the active years of the user (not year data)
@@ -37,34 +36,38 @@ const HomeScreenCalendar = props => {
 		dispatch(loadActiveYears(uid));
 	}
 
-	// ASYNC: loads the year data of the current year (first time page load; year can change in settings)
+	// // ASYNC: loads the year data of the current year (first time page load; year can change in settings)
 	const loadYearData = async () => {
 		dispatch(loadData(uid, getYear));
 	}
 
-	// ASYNC: adds a new active year to the user's active years based on current year if they have none
+	// // ASYNC: adds a new active year to the user's active years based on current year if they have none
 	const loadNewActiveYear = async () => {
 		dispatch(loadYearsArray(uid, getYear));
 	}
 
-	// ASYNC: if they don't have the active year, grab it from FB and put it into their data
+	// // ASYNC: if they don't have the active year, grab it from FB and put it into their data
 	const loadNewEmptyYearFromCalendar = async () => {
 		dispatch(updateEmptyYear(uid, getYear));
 	}
 
 	// the fucking thing works? what?
+	// const token = useSelector(state => state.authReducer.token); <- USE THIS INSTEAD OF UID?
 	useEffect(() => {
-		console.log("THIS SHOULD ONLY HAPPEN ONCE")
-		loadActiveYear().then(() => {
-			if (years !== null) {
-				loadYearData();
-			} else {
-				loadNewActiveYear().then(() => {
-					loadNewEmptyYearFromCalendar()
-				})
-			}
-		})
+		loadActiveYear();
 	}, [uid]);
+
+	useEffect(() => {
+		if (yearsLoaded === false) return;
+
+		if (years !== null) {
+			loadYearData();
+		} else if (years === null) {
+			loadNewActiveYear().then(() => {
+				loadNewEmptyYearFromCalendar()
+			})
+		}
+	}, [yearsLoaded, years]);	
 
 	// Loading componenet
 	const Loading = () => {
@@ -130,51 +133,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreenCalendar;
-
-
-			// GRAIL
-	// useEffect(() => {
-	// 	dispatch(loadData(uid, getYear));
-	// }, [uid]);
-
-
-	// CONDITIONAL YEAR LOADING/YEAR CREATION:
-	// If the user doesn't have the active year in their currentYears, load that empty data from FB and push into their account
-	// useEffect(() => {
-	// 	// console.log(years.includes(getYear.toString()))
-	// 	if (years.includes(getYear.toString())) {
-	// 		if (years.includes(getYear.toString())) {
-	// 			dispatch(loadData(uid, getYear));
-	// 		} else if (years.includes(getYear.toString()) === false) {
-	// 			// should only fire once per year or when they first login
-	// 			dispatch(updateEmptyYear(uid, getYear));
-	// 		}
-	// 	}
-	// }, [years])
-
-
-
-	// useEffect(() => {
-	// 	dispatch(loadActiveYears(uid));
-	// }, [uid]);
-
-	// useEffect(() => {
-	// 	console.log("USEEFFECT temporary to check years in homescreen calendar: ", years);
-	// 	console.log("checking null value of years in homescreen: ", years === null);
-	// 	if (years !== null) {
-	// 		console.log("loading data")
-	// 		dispatch(loadData(uid, getYear));
-	// 	} else {
-	// 		console.log("init data")
-	// 		// should only fire once per year or when they first login
-	// 		dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", getYear));
-	// 		dispatch(updateEmptyYear(uid, getYear));
-	// 	}
-	// }, [years])
-
-
-	// ON HOME SCREEN, FIRST LOAD THE USER'S ACTIVE YEARS (only re-loads when uid/token is refreshed)
-	// const token = useSelector(state => state.authReducer.token); <- USE THIS INSTEAD OF UID?
-	// useEffect(() => {
-	// 	dispatch(loadData(uid, getYear));
-	// }, [uid]);

@@ -159,12 +159,9 @@ export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 			},
 			body: JSON.stringify(dayData)
 		});
-		// const resData = await response.json(); 
-		// console.log("actions.updateSingleDay resdata: ", resData);
 
 		const loadNewDataResponse = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`);
 		const newDataResData = await loadNewDataResponse.json(); 
-		// console.log("new res data: ", newDataResData.months[10].days[11]);
 
 		dispatch({
 			type: UPDATE_SINGLE_DAY,
@@ -186,7 +183,6 @@ export const updateData = (uid, year, data) => {
 		});
 
 		const resData = await response.json(); 
-		// console.log("actions.updateData resdata: ", resData);
 
 		dispatch({
 			type: UPDATEDATA,
@@ -201,16 +197,18 @@ export const updateData = (uid, year, data) => {
 // Loading data (fetched from firebase)
 export const loadActiveYears = (uid) => {
 	return async dispatch => {
+		// const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears/20202020.json`);
 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears.json`);
 
 		const resData = await response.json(); 
-		// console.log("loadactiveyears in actions: ", resData);
 
-		// console.log("loadactiveyears in actions, IS DATA NULL? ", resData === null);
+		// console.log("activeyears data", resData);
+		// console.log("is null?", Object.keys(resData).length > 0);
 
 		dispatch({
 			type: LOAD_ACTIVE_YEARS,
-			years: resData
+			years: resData,
+			yearsLoaded: Object.keys(resData).length > 0 ? true : false,
 		});
 	};
 };
@@ -258,33 +256,26 @@ export const updateEmptyYear = (uid, year) => {
 	};
 };
 
+
+
+
+
+
+
+
 // ???
-export const findYears = (uid) => {
-	return async dispatch => {
-		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears.json`);
+// export const findYears = (uid) => {
+// 	return async dispatch => {
+// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears.json`);
 
-		const resData = await response.json(); 
-		// console.log("DATA: ", typeof resData, resData);
+// 		const resData = await response.json(); 
+// 		// console.log("DATA: ", typeof resData, resData);
 
-		dispatch({
-			type: FIND_YEARS,
-		});
-	};
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// 		dispatch({
+// 			type: FIND_YEARS,
+// 		});
+// 	};
+// };
 
 
 

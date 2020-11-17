@@ -9,8 +9,8 @@ import {
 
 const initialState = {
 	data: {},
-	// years: [],
 	years: null,
+	yearsLoaded: false,
 };
 
 export default (state = initialState, action) => {
@@ -42,7 +42,8 @@ export default (state = initialState, action) => {
 		case LOAD_ACTIVE_YEARS:
 			return { 
 				...state, 
-				years: action.years
+				years: action.years,
+				yearsLoaded: action.yearsLoaded
 			};
 
 		case UPDATE_EMPTY_YEAR:
