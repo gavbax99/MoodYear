@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
 	StyleSheet, 
 	View, 
@@ -11,7 +11,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight, updateData, loadActiveYears, loadYearsArray } from "../store/actions/actions";
+import { setHeaderHeight, updateData, loadActiveYears, findYears, loadYearsArray } from "../store/actions/actions";
 
 // Icons
 import { Ionicons } from '@expo/vector-icons';
@@ -32,19 +32,30 @@ const AppHeader = props => {
 
 	const dispatch = useDispatch();
 
+	// const tempDate = new Date().getFullYear();
+	// const [yearInt, setYearInt] = useState(tempDate);
+
 	const findHeaderHeight = (event) => {
 		const { height } = event.nativeEvent.layout;
 		dispatch(setHeaderHeight(height));
 	};
 
 	const data = useSelector(state => state.dataReducer.data);
+	const years = useSelector(state => state.dataReducer.years);
 	const placeholder = () => {
 		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2021", Year2021));
+
 		// dispatch(loadActiveYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
-		dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
+		// dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", 2020));
+		// dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", 2021));
+		// dispatch(findYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
 		// console.log("placeholder");
-		// props.navigation.navigate("Settings");
+		props.navigation.navigate("Settings");
 	};
+
+	// useEffect(() => {
+	// 	setYearInt(yearInt);
+	// }, [data.yearInt])
 
 	const HeaderImage = () => {
 		if (props.backButton) {

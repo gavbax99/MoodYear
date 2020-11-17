@@ -9,7 +9,8 @@ import {
 
 const initialState = {
 	data: {},
-	years: [],
+	// years: [],
+	years: null,
 };
 
 export default (state = initialState, action) => {

@@ -27,9 +27,9 @@ const SettingsScreen = props => {
 	const data = useSelector(state => state.dataReducer.data);
 	const uid = useSelector(state => state.authReducer.userId);
 
-	// useEffect(() => {
-	// 	dispatch(loadActiveYears(uid))
-	// }, [useEffect])
+	useEffect(() => {
+		dispatch(loadActiveYears(uid));
+	}, [activeYears])
 
 	const switchYear = (year) => {
 		dispatch(removeData());
@@ -47,7 +47,7 @@ const SettingsScreen = props => {
 				{/* Year selection */}
 				<View style={styles.selectYearContainer}>
 					<Text style={styles.buttonText}>View Previous Years:</Text>
-					{activeYears.map((val, i) => {
+					{Object.keys(activeYears).map((val) => {
 						return (
 							<TouchableOpacity
 								style={(data.year === val) ? 
