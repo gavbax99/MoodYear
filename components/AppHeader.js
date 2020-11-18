@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
 	StyleSheet, 
 	View, 
@@ -11,7 +11,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight, updateData } from "../store/actions/actions";
+import { setHeaderHeight, updateData, loadActiveYears, findYears, loadYearsArray } from "../store/actions/actions";
 
 // Icons
 import { Ionicons } from '@expo/vector-icons';
@@ -21,6 +21,7 @@ import Tools from '../constants/Tools';
 
 // Data
 import Year2020 from "../data/Year2020";
+import Year2021 from "../data/Year2021";
 
 // Redux
 import { useSelector } from "react-redux";
@@ -31,16 +32,33 @@ const AppHeader = props => {
 
 	const dispatch = useDispatch();
 
+	// const tempDate = new Date().getFullYear();
+	// const [yearInt, setYearInt] = useState(tempDate);
+
 	const findHeaderHeight = (event) => {
 		const { height } = event.nativeEvent.layout;
 		dispatch(setHeaderHeight(height));
 	};
 
 	const data = useSelector(state => state.dataReducer.data);
+	const years = useSelector(state => state.dataReducer.years);
+	const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
 	const placeholder = () => {
-		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2020", Year2020));
-		console.log("placeholder");
+		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2021", Year2021));
+
+		// dispatch(loadActiveYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
+		// dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", 2020));
+		// dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", 2021));
+		// dispatch(findYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
+		// console.log("placeholder");
+		// props.navigation.navigate("Settings");
+
+		console.log(years, yearsLoaded);
 	};
+
+	// useEffect(() => {
+	// 	setYearInt(yearInt);
+	// }, [data.yearInt])
 
 	const HeaderImage = () => {
 		if (props.backButton) {
@@ -79,19 +97,34 @@ const AppHeader = props => {
 					onPress={() => {props.navigation.goBack()}}>
 					<HeaderImage />
 				</TouchableOpacity>
-				<Text style={styles.yearText}>
-					{data.yearInt}
-				</Text>
+				{props.isSettings === false ?
+					<Text style={styles.yearText}>
+						{data.yearInt}
+					</Text>
+					: null
+				}
+
 			</View>
 
 
+
 			{/* Text */}
-			<TouchableOpacity 
-				activeOpacity={Tools.activeOpacity} 
-				style={styles.textContainer} 
-				onPress={placeholder}>
-				<Ionicons style={{paddingHorizontal: 6}} name="ios-more" size={24} color="#ffffff" />
-			</TouchableOpacity>
+			{props.isSettings === false ?
+				<TouchableOpacity 
+					activeOpacity={Tools.activeOpacity} 
+					style={styles.textContainer} 
+					onPress={placeholder}>
+					<Ionicons style={{paddingHorizontal: 6}} name="ios-more" size={24} color="#ffffff" />
+				</TouchableOpacity>
+				: 
+				<View style={styles.settingsTextContainer}>
+					<Text style={styles.yearText}>
+						Settings
+					</Text>
+					{/* <Ionicons style={{paddingLeft: 12}} name="ios-more" size={24} color="#ffffff" /> */}
+				</View>
+			}
+
 		</View>
 	);
 }
@@ -120,6 +153,13 @@ const styles = StyleSheet.create({
 		padding: Tools.paddingNormal,
 		flexDirection: "row",
 	},
+	settingsTextContainer: {
+		flexDirection: "row",
+		justifyContent: "center",
+		alignItems: "center",
+		padding: Tools.paddingNormal,
+		paddingHorizontal: Tools.paddingLarge,
+	},
 
 	svgContainer: {
 		paddingHorizontal: 12, 
@@ -135,7 +175,7 @@ const styles = StyleSheet.create({
 	},
 	yearText: {
 		color: Tools.colorLight,
-		fontSize: 22,
+		fontSize: 24,
 		fontWeight: "200",
 		paddingLeft: Tools.paddingHalf,
 	}

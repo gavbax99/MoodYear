@@ -1,5 +1,5 @@
 // React
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
 	StyleSheet, 
 	View,
@@ -14,33 +14,66 @@ import HomeScreenMonth from '../components/HomeScreenMonth';
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { loadData } from "../store/actions/actions";
+import { loadData, loadActiveYears, updateEmptyYear, loadYearsArray } from "../store/actions/actions";
 
 // ==================== Component
 const HomeScreenCalendar = props => {
 
 	const dispatch = useDispatch();
 
-	console.log("HomeScreenCalendar render");
+	console.log("homescreen calendar rere");
 
 	const date = new Date();
 	const getYear = date.getFullYear();
-	const getMonth = date.getMonth();
-	const getDay = date.getDate();
 
 	const data = useSelector(state => state.dataReducer.data);
+	const years = useSelector(state => state.dataReducer.years);
+	const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
 	const uid = useSelector(state => state.authReducer.userId);
+
+	// ASYNC: load the active years of the user (not year data)
+	const loadActiveYear = async () => {
+		dispatch(loadActiveYears(uid));
+	}
+
+	// // ASYNC: loads the year data of the current year (first time page load; year can change in settings)
+	const loadYearData = async () => {
+		dispatch(loadData(uid, getYear));
+	}
+
+	// // ASYNC: adds a new active year to the user's active years based on current year if they have none
+	const loadNewActiveYear = async () => {
+		dispatch(loadYearsArray(uid, getYear));
+	}
+
+	// // ASYNC: if they don't have the active year, grab it from FB and put it into their data
+	const loadNewEmptyYearFromCalendar = async () => {
+		dispatch(updateEmptyYear(uid, getYear));
+	}
+
+	// the fucking thing works? what?
 	// const token = useSelector(state => state.authReducer.token); <- USE THIS INSTEAD OF UID?
 	useEffect(() => {
-		dispatch(loadData(uid, getYear));		
+		loadActiveYear();
 	}, [uid]);
 
-	// console.log("current homescreen data: ", data);
+	useEffect(() => {
+		if (yearsLoaded === false) return;
 
+		if (years !== null) {
+			loadYearData();
+		} else if (years === null) {
+			loadNewActiveYear().then(() => {
+				loadNewEmptyYearFromCalendar()
+			})
+		}
+	}, [yearsLoaded, years]);	
+
+	// Loading componenet
 	const Loading = () => {
 		return (
 			<View style={styles.loadingIconContainer}>
-				<ActivityIndicator size="large" color={Tools.colorLight} />
+				<ActivityIndicator size="large" color={Tools.color5} />
 			</View>
 		);
 	};
@@ -53,7 +86,7 @@ const HomeScreenCalendar = props => {
 
 				{/* Render our months */}
 				{Object.keys(data).length !== 0 ? 
-					data.months.map((monthObj, i) => {
+					data.months.map((monthObj) => {
 						return (
 							<HomeScreenMonth 
 								year={data.yearInt}
@@ -89,8 +122,13 @@ const styles = StyleSheet.create({
 		padding: Tools.paddingHalf,
 	},
 	loadingIconContainer: {
-		width: "100%",
-		marginTop: 20,
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		alignItems: "center",
+		justifyContent: "center",
 	},
 });
 

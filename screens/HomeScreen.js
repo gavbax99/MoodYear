@@ -29,7 +29,7 @@ const HomeScreen = props => {
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
 			<View style={styles.screen}>
 				{/* Header */}
-				<AppHeader navigation={props.navigation} backButton={false} />
+				<AppHeader navigation={props.navigation} backButton={false} isSettings={false} />
 
 				{/* Inner screen */}
 				<View style={styles.innerScreen}>
