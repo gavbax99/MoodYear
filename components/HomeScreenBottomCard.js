@@ -91,7 +91,8 @@ const HomeScreenBottomCard = props => {
 	const submitMessage = () => {
 		// WORKS FOR WHOLE SINGLE DAY
 		const newDayObj = new NewObj(data.months[monthNumber].days[dayNumber-1]);
-		newDayObj.obj.message = textInputValue;
+		// remove regex if can figure out scrollview in MonthDetailScreen bottom card
+		newDayObj.obj.message = textInputValue.replace(/\n/gi, " ");
 		newDayObj.obj.color = sliderVal + 1;
 		dispatch(updateSingleDay(uid, yearNumber, monthNumber, (dayNumber-1), newDayObj.obj));
 

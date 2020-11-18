@@ -1,14 +1,18 @@
 // React
 import React, { useEffect, useState } from 'react';
-import { 
-	StyleSheet, 
-	View, 
-	Text
+import {
+	StyleSheet,
+	View,
+	Text,
+	ScrollView
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // Constants
 import Tools from '../constants/Tools';
+
+// Components
+import OtherPagesHeader from '../components/OtherPagesHeader';
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -65,12 +69,31 @@ const FtueScreen = props => {
 				loadNewEmptyYearFromCalendar()
 			})
 		})
-		
+
 	}, [newUser]);
 
 	return (
-			<View style={styles.screen}>
-				<TouchableOpacity 
+		<View style={styles.screen}>
+				{/* Header */}
+				{newUserNavProp === false ? 
+					<OtherPagesHeader navigation={props.navigation} title={"How to Use"}/>
+					: 
+					<View style={styles.welcomeView}>
+						<Text style={styles.welcomeText}>Welcome</Text>
+						<Text style={styles.welcomeText}>X</Text>
+					</View>
+				}
+
+				{/* <AppHeader navigation={props.navigation} backButton={false} isSettings={false} /> */}
+
+				{/* Inner screen */}
+				<View style={styles.innerScreen}>
+					<View style={{flex: 1, width: "100%", borderWidth: 1,
+					borderColor: 'red'}}>						
+					</View>
+				</View>
+
+			{/* <TouchableOpacity 
 					activeOpacity={Tools.activeOpacity} 
 					style={styles.to} 
 					onPress={navToHome}
@@ -78,8 +101,8 @@ const FtueScreen = props => {
 					<View style={styles.box}>
 						<Text>ftue boi</Text>
 					</View>
-				</TouchableOpacity>
-			</View>
+				</TouchableOpacity> */}
+		</View>
 
 	);
 };
@@ -100,8 +123,25 @@ const styles = StyleSheet.create({
 		width: "100%",
 		flex: 1,
 		flexDirection: "column",
-		justifyContent: "flex-end",
-		alignItems: "center",
+		justifyContent: "flex-start",
+		alignItems: "flex-start",
+		padding: Tools.paddingNormal,
+	},
+
+	welcomeView: {
+		width: "100%",
+		backgroundColor: Tools.colorHeaderGrey,
+		justifyContent: "space-between",
+		flexDirection: "row",
+		alignItems: 'center',
+		zIndex: 999,
+	},
+
+	welcomeText: {
+		color: Tools.color5,
+		fontSize: 24,
+		fontWeight: "700",
+		paddingLeft: Tools.paddingHalf,
 	},
 
 	to: {

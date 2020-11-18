@@ -42,6 +42,19 @@ const MonthDetailBottomCard = props => {
 				</ScrollView>
 			</View>
 
+			{/* <ScrollView
+				style={{flex: 1}}
+				contentContainerStyle={{flexGrow: 1}}
+				scrollEnabled={true}>
+
+				<View style={{flexGrow: 1}}>
+					<Text>
+						this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text 
+					</Text>
+				</View>
+			</ScrollView> */}
+
+
 
 			{/* <ScrollView 
 				style={styles.scrollView} 
@@ -96,7 +109,7 @@ const styles = StyleSheet.create({
 		padding: Tools.paddingNormal,
 		backgroundColor: Tools.colorBackground,
 		paddingBottom: Tools.paddingLarge,
-		zIndex: 999,
+		// zIndex: 999,
 		// borderWidth: 1,
 		// borderColor: 'green'
 	},

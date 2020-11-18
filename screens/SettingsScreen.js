@@ -72,11 +72,11 @@ const SettingsScreen = props => {
 					activeOpacity={Tools.activeOpacity} 
 					style={styles.settingsButton} 
 					onPress={() => {
-							props.navigation.navigate({
-								routeName: "Ftue",
-								params: { newUser: false },
-							});
-						}}>
+						props.navigation.navigate({
+							routeName: "Ftue",
+							params: { newUser: false },
+						});
+					}}>
 					<Text style={styles.buttonText}>How to Use</Text>
 				</TouchableOpacity>
 
@@ -84,7 +84,7 @@ const SettingsScreen = props => {
 				<TouchableOpacity 
 					activeOpacity={Tools.activeOpacity} 
 					style={styles.settingsButton} 
-					onPress={() => {props.navigation.goBack()}}>
+					onPress={() => {props.navigation.navigate("About")}}>
 					<Text style={styles.buttonText}>About</Text>
 				</TouchableOpacity>
 

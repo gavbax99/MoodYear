@@ -113,11 +113,18 @@ const AppHeader = props => {
 					activeOpacity={Tools.activeOpacity} 
 					style={styles.textContainer} 
 					onPress={placeholder}>
-					<Ionicons style={{paddingHorizontal: 6}} name="ios-more" size={24} color="#ffffff" />
+
+					<Image 
+						style={{...styles.logoImage, paddingHorizontal: 6}}
+						source={require("../assets/images/settings-kog.png")}
+						/>
+
+					{/* <Ionicons style={{paddingHorizontal: 6}} name="ios-more" size={24} color="#ffffff" /> */}
+
 				</TouchableOpacity>
 				: 
 				<View style={styles.settingsTextContainer}>
-					<Text style={styles.yearText}>
+					<Text style={{...styles.yearText, color: Tools.color5, fontWeight: "500"}}>
 						Settings
 					</Text>
 					{/* <Ionicons style={{paddingLeft: 12}} name="ios-more" size={24} color="#ffffff" /> */}
@@ -131,6 +138,7 @@ const AppHeader = props => {
 // ==================== Styles
 const styles = StyleSheet.create({
 	header: {
+		height: 65,
 		width: "100%",
 		backgroundColor: Tools.colorHeaderGrey,
 		justifyContent: "space-between",

@@ -102,7 +102,6 @@ const MonthDetailScreen = props => {
 						switchMonths={handleMonthSwitch}
 						detailScreenFindDay={monthDetailScreenHandleDay}
 						/>
-					<Blackout />
 
 					{/* Bottom card */}
 					<MonthDetailBottomCard 
