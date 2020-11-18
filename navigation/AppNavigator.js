@@ -7,6 +7,7 @@ import HomeScreen from "../screens/HomeScreen";
 import MonthDetailScreen from "../screens/MonthDetailScreen";
 import AuthScreen from "../screens/AuthScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import FtueScreen from "../screens/FtueScreen";
 
 // Tools
 import Tools from "../constants/Tools";
@@ -35,6 +36,9 @@ const HomeNavigator = createStackNavigator({
 	},
 	Settings: {
 		screen: SettingsScreen
+	},
+	Ftue: {
+		screen: FtueScreen
 	}
 }, {
 	defaultNavigationOptions: defaultStackNavOptions,

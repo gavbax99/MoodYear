@@ -11,7 +11,7 @@ export const REMOVE_DATA = "REMOVE_DATA";
 export const UPDATEDATA = "UPDATEDATA";
 export const UPDATE_EMPTY_YEAR = "UPDATE_EMPTY_YEAR";
 
-export const LOAD_YEARS_ARRAY = "LOAD_YEARS_ARRAY";
+export const PUT_NEW_ACTIVE_YEAR = "PUT_NEW_ACTIVE_YEAR";
 export const FIND_YEARS = "FIND_YEARS";
 
 
@@ -70,12 +70,19 @@ export const signup = (email, password) => {
 
 		const resData = await response.json();
 
-		console.log(resData);
+		const newUid = await fetch(`https://rn-health.firebaseio.com/userData/${resData.localId}.json`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({active: true})
+		});
+
 
 		dispatch({ 
 			type: SIGNUP,
 			token: resData.idToken,
-			userId: resData.loaclId,
+			userId: resData.localId,
 		});
 	};
 };
@@ -142,6 +149,8 @@ export const loadData = (uid, year) => {
 
 		const resData = await response.json(); 
 
+		console.log("loaddata in action: ", resData)
+
 		dispatch({
 			type: LOAD_DATA,
 			data: resData
@@ -197,24 +206,53 @@ export const updateData = (uid, year, data) => {
 // Loading data (fetched from firebase)
 export const loadActiveYears = (uid) => {
 	return async dispatch => {
-		// const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears/20202020.json`);
 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears.json`);
-
 		const resData = await response.json(); 
-
-		// console.log("activeyears data", resData);
-		// console.log("is null?", Object.keys(resData).length > 0);
 
 		dispatch({
 			type: LOAD_ACTIVE_YEARS,
 			years: resData,
-			yearsLoaded: Object.keys(resData).length > 0 ? true : false,
+			yearsLoaded: true,
 		});
 	};
 };
 
-// Updating single day (put to firebase) WORKS
-export const loadYearsArray = (uid, year) => {
+
+// export const loadActiveYears = (uid) => {
+// 	return async dispatch => {
+// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears.json`);
+// 		const resData = await response.json(); 
+
+// 		// if no data for active years, create the current active year
+// 		// PROBLEM: assigns active year but not empty calendar data so logic breaks down in HomeScreenCalendar
+// 		let jsonHold;
+// 		if (resData === null) {
+// 			const date = new Date().getFullYear();
+// 			const putNewDate = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears/${date}.json`, {
+// 				method: "PUT",
+// 				headers: {
+// 					"Content-Type": "application/json"
+// 				},
+// 				body: JSON.stringify(date)
+// 			});
+// 			jsonHold = await putNewDate.json(); 
+// 		}
+
+// 		// let loaded = false;
+// 		// if (jsonHold !== null || resData !== null) loaded = true;
+
+// 		dispatch({
+// 			type: LOAD_ACTIVE_YEARS,
+// 			years: resData === null ? {[jsonHold]: jsonHold} : resData,
+// 			// yearsLoaded: loaded,
+// 			yearsLoaded: true,
+// 		});
+// 	};
+// };
+
+// Put new year into /activeyears
+// loadYearsArray
+export const putNewActiveYear = (uid, year) => {
 	return async dispatch => {
 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears/${year}.json`, {
 			method: "PUT",
@@ -225,7 +263,7 @@ export const loadYearsArray = (uid, year) => {
 		});
 
 		dispatch({
-			type: LOAD_YEARS_ARRAY,
+			type: PUT_NEW_ACTIVE_YEAR,
 		});
 	};
 };
@@ -245,10 +283,6 @@ export const updateEmptyYear = (uid, year) => {
 		});
 		const resLoadNewYearData = await loadNewYear.json(); 
 
-		// const loadNewYearResponse = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`);
-		// const newDataResData = await loadNewDataResponse.json(); 
-		// console.log("new res data: ", newDataResData.months[10].days[11]);
-
 		dispatch({
 			type: UPDATE_EMPTY_YEAR,
 			data: resLoadNewYearData
@@ -258,29 +292,7 @@ export const updateEmptyYear = (uid, year) => {
 
 
 
-
-
-
-
-
-// ???
-// export const findYears = (uid) => {
-// 	return async dispatch => {
-// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears.json`);
-
-// 		const resData = await response.json(); 
-// 		// console.log("DATA: ", typeof resData, resData);
-
-// 		dispatch({
-// 			type: FIND_YEARS,
-// 		});
-// 	};
-// };
-
-
-
-
-// Loading single day (fetched from firebase)
+// Loading single day (fetched from firebase) maybe works someday
 // export const loadSingleDay = (uid, year, monthNo, dayNo) => {
 // 	return async dispatch => {
 // 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`);
@@ -296,6 +308,7 @@ export const updateEmptyYear = (uid, year) => {
 // 		});
 // 	};
 // };
+
 
 
 // import { useDispatch } from "react-redux";

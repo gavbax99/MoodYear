@@ -14,18 +14,18 @@ import HomeScreenMonth from '../components/HomeScreenMonth';
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { loadData, loadActiveYears, updateEmptyYear, loadYearsArray } from "../store/actions/actions";
+import { loadData, loadActiveYears, updateEmptyYear, putNewActiveYear } from "../store/actions/actions";
 
 // ==================== Component
 const HomeScreenCalendar = props => {
-
-	const dispatch = useDispatch();
-
 	console.log("homescreen calendar rere");
 
+	const dispatch = useDispatch();
 	const date = new Date();
 	const getYear = date.getFullYear();
+	// const [currentYear, setCurrentYear] = useState(getYear);
 
+	// Redux variables
 	const data = useSelector(state => state.dataReducer.data);
 	const years = useSelector(state => state.dataReducer.years);
 	const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
@@ -38,12 +38,13 @@ const HomeScreenCalendar = props => {
 
 	// // ASYNC: loads the year data of the current year (first time page load; year can change in settings)
 	const loadYearData = async () => {
+		console.log("LOADING DATA FROM HOME SCREEN CALENDAR");
 		dispatch(loadData(uid, getYear));
 	}
 
 	// // ASYNC: adds a new active year to the user's active years based on current year if they have none
 	const loadNewActiveYear = async () => {
-		dispatch(loadYearsArray(uid, getYear));
+		dispatch(putNewActiveYear(uid, getYear));
 	}
 
 	// // ASYNC: if they don't have the active year, grab it from FB and put it into their data
@@ -56,9 +57,15 @@ const HomeScreenCalendar = props => {
 	useEffect(() => {
 		loadActiveYear();
 	}, [uid]);
+	// }, [currentYear]);   MAYBE?
 
 	useEffect(() => {
 		if (yearsLoaded === false) return;
+
+
+		// BREAKDOWN: if active year exists, load the data.
+		// when reging new account, years exists but year data doesnt.
+		// makes it to "attemptint to load..." but will render data null.
 
 		if (years !== null) {
 			loadYearData();
@@ -67,7 +74,7 @@ const HomeScreenCalendar = props => {
 				loadNewEmptyYearFromCalendar()
 			})
 		}
-	}, [yearsLoaded, years]);	
+	}, [yearsLoaded]);	
 
 	// Loading componenet
 	const Loading = () => {
@@ -86,6 +93,7 @@ const HomeScreenCalendar = props => {
 
 				{/* Render our months */}
 				{Object.keys(data).length !== 0 ? 
+				// {data !== null ? 
 					data.months.map((monthObj) => {
 						return (
 							<HomeScreenMonth 

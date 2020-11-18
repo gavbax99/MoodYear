@@ -29,9 +29,11 @@ const SettingsScreen = props => {
 
 	useEffect(() => {
 		dispatch(loadActiveYears(uid));
-	}, [activeYears])
+	}, [uid])
 
 	const switchYear = (year) => {
+		if (data.year === year) return;
+
 		dispatch(removeData());
 		dispatch(loadData(uid, year));
 		props.navigation.navigate("Home");
@@ -57,7 +59,7 @@ const SettingsScreen = props => {
 								}
 								key={val}
 								activeOpacity={Tools.activeOpacity}
-								onPress={() => switchYear(val)}
+								onPress={() => {switchYear(val)}}
 								>
 								<Text style={styles.yearText}>{val}</Text>
 							</TouchableOpacity>
@@ -69,7 +71,12 @@ const SettingsScreen = props => {
 				<TouchableOpacity 
 					activeOpacity={Tools.activeOpacity} 
 					style={styles.settingsButton} 
-					onPress={() => {props.navigation.goBack()}}>
+					onPress={() => {
+							props.navigation.navigate({
+								routeName: "Ftue",
+								params: { newUser: false },
+							});
+						}}>
 					<Text style={styles.buttonText}>How to Use</Text>
 				</TouchableOpacity>
 

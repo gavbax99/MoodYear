@@ -96,6 +96,7 @@ const HomeScreenBottomCard = props => {
 		dispatch(updateSingleDay(uid, yearNumber, monthNumber, (dayNumber-1), newDayObj.obj));
 
 		// RELOAD DATA (could be refactored into single day load if i can figure out redux)
+		console.log("LOADING DATA FROM HOME SCREEN BOTTOM CARD");
 		dispatch(loadData(uid, yearNumber));
 
 		dispatch(setKeyboardOpen(false));
@@ -109,6 +110,7 @@ const HomeScreenBottomCard = props => {
 			keyboardVerticalOffset={useSelector(state => state.navReducer.headerHeightState)}
 			>
 			{ yearNumber === data.yearInt ? 
+			// { 1 === 1 ? 
 				<View style={[
 					styles.screen, 
 					keyboardIsOpen ? styles.screenKeyboardOpen : null 
