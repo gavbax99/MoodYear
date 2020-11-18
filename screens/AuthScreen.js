@@ -84,8 +84,6 @@ const AuthScreen = props => {
 
 	// Handle login/reg
 	const loginHandler = async () => {
-		console.log("loginHandler");
-
 		setError(null);
 		setIsLoading(true);
 
@@ -102,11 +100,18 @@ const AuthScreen = props => {
 
 		try {
 			if (isLogin) {
+				console.log("loginHandler");
 				await dispatch(Actions.login(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+				props.navigation.replace("Home");
 			} else {
+				console.log("signupHandler");
 				await dispatch(Actions.signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+				// props.navigation.replace("Home");
+				props.navigation.replace({
+					routeName: "Ftue",
+					params: { newUser: true },
+				});
 			}
-			props.navigation.replace("Home");
 		} catch (err) {
 			setError(err.message);
 			setIsLoading(false);
