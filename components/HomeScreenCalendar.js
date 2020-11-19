@@ -31,50 +31,49 @@ const HomeScreenCalendar = props => {
 	const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
 	const uid = useSelector(state => state.authReducer.userId);
 
-	// ASYNC: load the active years of the user (not year data)
+	// ASYNC #1: load the active years of the user (not year data)
 	const loadActiveYear = async () => {
 		dispatch(loadActiveYears(uid));
 	}
 
-	// // ASYNC: loads the year data of the current year (first time page load; year can change in settings)
+	// ASYNC #2 (primary load): loads the year data of the current year (first time page load; year can change in settings)
 	const loadYearData = async () => {
-		console.log("LOADING DATA FROM HOME SCREEN CALENDAR");
 		dispatch(loadData(uid, getYear));
 	}
 
-	// // ASYNC: adds a new active year to the user's active years based on current year if they have none
+	// ASYNC #3 (pairs with #4): adds a new active year to the user's active years based on current year if they have none
 	const loadNewActiveYear = async () => {
 		dispatch(putNewActiveYear(uid, getYear));
 	}
 
-	// // ASYNC: if they don't have the active year, grab it from FB and put it into their data
+	// ASYNC #4: if #3 fired, grab that year from the database and put it into their data
 	const loadNewEmptyYearFromCalendar = async () => {
 		dispatch(updateEmptyYear(uid, getYear));
 	}
 
-	// the fucking thing works? what?
-	// const token = useSelector(state => state.authReducer.token); <- USE THIS INSTEAD OF UID?
+
+	// FIRST call to database; loads active years
 	useEffect(() => {
+		if (uid === null) return;
+		
 		loadActiveYear();
+		// const token = useSelector(state => state.authReducer.token); <- USE THIS INSTEAD OF UID?
 	}, [uid]);
-	// }, [currentYear]);   MAYBE?
 
+	// SECOND call to database; once active years are loaded, either loads current year or creats new calendar if year not found
 	useEffect(() => {
-		if (yearsLoaded === false) return;
+		if (yearsLoaded === false || years === null) return;
 
-
-		// BREAKDOWN: if active year exists, load the data.
-		// when reging new account, years exists but year data doesnt.
-		// makes it to "attemptint to load..." but will render data null.
-
-		if (years !== null) {
-			loadYearData();
-		} else if (years === null) {
+		if (years[getYear] === getYear) {
+			if (Object.keys(data).length == 0) {
+				loadYearData();
+			}
+		} else if (years[getYear] === undefined) {
 			loadNewActiveYear().then(() => {
 				loadNewEmptyYearFromCalendar()
 			})
 		}
-	}, [yearsLoaded]);	
+	}, [yearsLoaded, years]);	
 
 	// Loading componenet
 	const Loading = () => {
@@ -93,7 +92,6 @@ const HomeScreenCalendar = props => {
 
 				{/* Render our months */}
 				{Object.keys(data).length !== 0 ? 
-				// {data !== null ? 
 					data.months.map((monthObj) => {
 						return (
 							<HomeScreenMonth 

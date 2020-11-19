@@ -4,7 +4,8 @@ import {
 	UPDATEDATA,
 	LOAD_ACTIVE_YEARS,
 	REMOVE_DATA,
-	UPDATE_EMPTY_YEAR
+	UPDATE_EMPTY_YEAR,
+	LOGOUT_DATA
  } from "../actions/actions";
 
 const initialState = {
@@ -51,6 +52,9 @@ export default (state = initialState, action) => {
 				...state, 
 				data: action.data
 			};
+
+		case LOGOUT_DATA:
+			return initialState;
 
 	};
 	return state;

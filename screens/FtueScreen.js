@@ -41,11 +41,6 @@ const FtueScreen = props => {
 		dispatch(loadActiveYears(uid));
 	}
 
-	// // ASYNC: loads the year data of the current year (first time page load; year can change in settings)
-	// const loadYearData = async () => {
-	// 	dispatch(loadData(uid, getYear));
-	// }
-
 	// // ASYNC: adds a new active year to the user's active years based on current year if they have none
 	const loadNewActiveYear = async () => {
 		dispatch(putNewActiveYear(uid, getYear));
@@ -63,13 +58,11 @@ const FtueScreen = props => {
 	useEffect(() => {
 		if (newUser === false) return;
 
-		console.log("newuser = true", newUser);
 		loadNewActiveYear().then(() => {
 			loadActiveYear().then(() => {
 				loadNewEmptyYearFromCalendar()
 			})
 		})
-
 	}, [newUser]);
 
 	return (
@@ -93,7 +86,7 @@ const FtueScreen = props => {
 					</View>
 				</View>
 
-			{/* <TouchableOpacity 
+			<TouchableOpacity 
 					activeOpacity={Tools.activeOpacity} 
 					style={styles.to} 
 					onPress={navToHome}
@@ -101,7 +94,7 @@ const FtueScreen = props => {
 					<View style={styles.box}>
 						<Text>ftue boi</Text>
 					</View>
-				</TouchableOpacity> */}
+				</TouchableOpacity>
 		</View>
 
 	);

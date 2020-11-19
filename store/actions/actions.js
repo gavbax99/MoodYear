@@ -1,7 +1,13 @@
 export const SET_HEADER_HEIGHT = "SET_HEADER_HEIGHT";
 export const SET_KEYBOARD_OPEN = "SET_KEYBOARD_OPEN";
+
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
+export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
+
+export const LOGOUT_AUTH = "LOGOUT_AUTH";
+export const LOGOUT_DATA = "LOGOUT_DATA";
+
 export const LOAD_DATA = "LOAD_DATA";
 export const UPDATE_SINGLE_DAY = "UPDATE_SINGLE_DAY";
 export const LOAD_SINGLE_DAY = "LOAD_SINGLE_DAY";
@@ -69,13 +75,20 @@ export const signup = (email, password) => {
 		};
 
 		const resData = await response.json();
+		// console.log("res in actions", resData)
+
+		const date = new Date();
+		const yearNumber = date.getFullYear();
+		const monthNumber = date.getMonth();
+		const dayNumber = date.getDate();
+		const dayDate = ((monthNumber + 1) + '/' + dayNumber + '/' + yearNumber);
 
 		const newUid = await fetch(`https://rn-health.firebaseio.com/userData/${resData.localId}.json`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({active: true})
+			body: JSON.stringify({accountInfo: {email: resData.email, registeredDate: dayDate}})
 		});
 
 
@@ -83,6 +96,8 @@ export const signup = (email, password) => {
 			type: SIGNUP,
 			token: resData.idToken,
 			userId: resData.localId,
+			email: resData.email,
+			registeredDate: dayDate
 		});
 	};
 };
@@ -90,7 +105,7 @@ export const signup = (email, password) => {
 // Login
 export const login = (email, password) => {
 	return async dispatch => {
-		// any async code before dispatching
+		// Login with email and password
 		const response = await fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBSmR6DzYUNSsWlaaeyqyMTP2etMA01sOU", {
 			method: "POST",
 			headers: {
@@ -103,6 +118,7 @@ export const login = (email, password) => {
 			})
 		});
 
+		// Error handling
 		if (!response.ok) {
 			const errorResData = await response.json();
 			const errorId = errorResData.error.message;
@@ -119,18 +135,58 @@ export const login = (email, password) => {
 			throw new Error(message);
 		};
 
+		// Grabs auth creds
 		const resData = await response.json();
+		// console.log(resData);
 
-		console.log(resData);
+		// Grabs account info 
+		const accountInfo = await fetch(`https://rn-health.firebaseio.com/userData/${resData.localId}/accountInfo.json`);
+		const resAccountInfo = await accountInfo.json();
 
 		dispatch({ 
 			type: LOGIN,
 			token: resData.idToken,
 			userId: resData.localId,
+			email:  resAccountInfo.email,
+			registeredDate: resAccountInfo.registeredDate
 		});
 	};
 };
 
+// Logout AUTH
+export const logoutAuth = () => {
+	return {
+		type: LOGOUT_AUTH,
+	};
+};
+
+// Logout DATA
+export const logoutData = () => {
+	return {
+		type: LOGOUT_DATA,
+	};
+};
+
+// DELETE ACCOUNT
+export const deleteAccount = (uid) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}.json`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({})
+		});
+
+		const resData = await response.json(); 
+
+		console.log("delete data: ", resData)
+
+		dispatch({
+			type: DELETE_ACCOUNT,
+		});
+	};
+};
 
 // ==================== LOADING/UPDATING/DELETING DATA ====================
 
@@ -149,7 +205,7 @@ export const loadData = (uid, year) => {
 
 		const resData = await response.json(); 
 
-		console.log("loaddata in action: ", resData)
+		// console.log("loaddata in action: ", resData)
 
 		dispatch({
 			type: LOAD_DATA,

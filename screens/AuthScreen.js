@@ -121,7 +121,7 @@ const AuthScreen = props => {
 	// Error logging
 	useEffect(() => {
 		if (error) {
-			Alert.alert("An error occurred!", error, [{ test: "Okay" }]);
+			Alert.alert("An error occurred!", error, [{ text: "Okay" }]);
 		}
 	}, [error]);
 
@@ -217,6 +217,19 @@ const AuthScreen = props => {
 					</TouchableOpacity> }
 
 				</View>
+
+				{/*  */}
+				<TouchableOpacity 
+					style={{width: 100, height: 100, backgroundColor: "red"}} 
+					 onPress={() => {props.navigation.navigate({
+							routeName: "About", 
+							params: { display: "Account" },
+						})
+					}}>
+					<Text>About</Text>
+				</TouchableOpacity>
+				{/*  */}
+
 			</KeyboardAvoidingView>
 		</TouchableWithoutFeedback>
 	);

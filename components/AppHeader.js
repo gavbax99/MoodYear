@@ -55,6 +55,7 @@ const AppHeader = props => {
 		
 		// console.log("years", years);
 		// console.log("yearsLoaded", yearsLoaded);
+		// console.log("uid", uid);
 		
 		props.navigation.navigate("Settings");
 	};
@@ -91,7 +92,7 @@ const AppHeader = props => {
 			{/* Logo */}
 			<View style={styles.leftGroup}>
 				<TouchableOpacity 
-					activeOpacity={Tools.activeOpacity} 
+					activeOpacity={props.backButton ? Tools.activeOpacity : 1} 
 					style={{padding: Tools.paddingNormal}} 
 					onPress={() => {props.navigation.goBack()}}>
 					<HeaderImage />
