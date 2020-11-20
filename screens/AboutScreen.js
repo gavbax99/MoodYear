@@ -6,7 +6,8 @@ import {
 	Text,
 	ScrollView,
 	TouchableOpacity,
-	Alert
+	Alert,
+	Linking
 } from 'react-native';
 
 // Constants
@@ -137,7 +138,7 @@ const AboutScreen = props => {
 							activeOpacity={Tools.activeOpacity} 
 							style={styles.accountButton} 
 							onPress={() => {
-								props.navigation.goBack();
+								Linking.openURL("https://gavinbaxter.com");
 							}}>
 							<Text style={styles.buttonText}>Privacy Policy</Text>
 						</TouchableOpacity>
@@ -184,7 +185,7 @@ const AboutScreen = props => {
 
 					</ScrollView>
 				</View>
-				
+
 		</View>
 	);
 };
