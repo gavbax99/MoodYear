@@ -8,6 +8,7 @@ import MonthDetailScreen from "../screens/MonthDetailScreen";
 import AuthScreen from "../screens/AuthScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import FtueScreen from "../screens/FtueScreen";
+import AboutScreen from "../screens/AboutScreen";
 
 // Tools
 import Tools from "../constants/Tools";
@@ -39,6 +40,9 @@ const HomeNavigator = createStackNavigator({
 	},
 	Ftue: {
 		screen: FtueScreen
+	},
+	About: {
+		screen: AboutScreen
 	}
 }, {
 	defaultNavigationOptions: defaultStackNavOptions,

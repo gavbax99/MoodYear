@@ -49,7 +49,7 @@ const SettingsScreen = props => {
 				{/* Year selection */}
 				<View style={styles.selectYearContainer}>
 					<Text style={styles.buttonText}>View Previous Years:</Text>
-					{Object.keys(activeYears).map((val) => {
+					{activeYears !== null ? Object.keys(activeYears).map((val) => {
 						return (
 							<TouchableOpacity
 								style={(data.year === val) ? 
@@ -64,36 +64,44 @@ const SettingsScreen = props => {
 								<Text style={styles.yearText}>{val}</Text>
 							</TouchableOpacity>
 						)
-					})}
+					}) : null}
 				</View>
 
-				{/* Help button */}
+				{/* Account button */}
 				<TouchableOpacity 
 					activeOpacity={Tools.activeOpacity} 
 					style={styles.settingsButton} 
-					onPress={() => {
-							props.navigation.navigate({
-								routeName: "Ftue",
-								params: { newUser: false },
-							});
-						}}>
-					<Text style={styles.buttonText}>How to Use</Text>
+					 onPress={() => {props.navigation.navigate({
+							routeName: "About", 
+							params: { display: "Account" },
+						})
+					}}>
+					<Text style={styles.buttonText}>Account</Text>
 				</TouchableOpacity>
 
 				{/* About button */}
 				<TouchableOpacity 
 					activeOpacity={Tools.activeOpacity} 
 					style={styles.settingsButton} 
-					onPress={() => {props.navigation.goBack()}}>
+					 onPress={() => {props.navigation.navigate({
+							routeName: "About", 
+							params: { display: "About" },
+						})
+					}}>
 					<Text style={styles.buttonText}>About</Text>
 				</TouchableOpacity>
 
-				{/* Logout button */}
+				{/* Hot to use button */}
 				<TouchableOpacity 
 					activeOpacity={Tools.activeOpacity} 
 					style={styles.settingsButton} 
-					onPress={() => {props.navigation.goBack()}}>
-					<Text style={styles.buttonText}>Logout</Text>
+					onPress={() => {
+						props.navigation.navigate({
+							routeName: "Ftue",
+							params: { newUser: false },
+						});
+					}}>
+					<Text style={styles.buttonText}>How to Use</Text>
 				</TouchableOpacity>
 
 			</View>
