@@ -223,7 +223,7 @@ const AuthScreen = props => {
 					style={{width: 100, height: 100, backgroundColor: "red"}} 
 					 onPress={() => {props.navigation.navigate({
 							routeName: "About", 
-							params: { display: "Account" },
+							params: { display: "About" },
 						})
 					}}>
 					<Text>About</Text>

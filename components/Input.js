@@ -70,7 +70,8 @@ const Input = props => {
         style={{...props.style, ...styles.input}}
         value={inputState.value}
         onChangeText={textChangeHandler}
-        onBlur={lostFocusHandler}
+		onBlur={lostFocusHandler}
+		secureTextEntry={props.label === "Password" ? true : false}
       />
       {!inputState.isValid && inputState.touched && (
         <View style={styles.errorContainer}>

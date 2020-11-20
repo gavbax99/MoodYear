@@ -32,11 +32,12 @@ const AboutScreen = props => {
 	const email = useSelector(state => state.authReducer.email);
 	const registeredDate = useSelector(state => state.authReducer.registeredDate);
 	const uid = useSelector(state => state.authReducer.userId);
+	const token = useSelector(state => state.authReducer.token);
 
-	const test = () => {
+	const handleDeleteAccount = () => {
 		Alert.alert(
 			"Are you sure?", 
-			"This will completely delete your account and personal data from out records.",
+			"This will completely delete your account, all personal data, and journal entries from our server. This acction cannot be undone.",
 			[
 				{
 					text: "Cancel",
@@ -45,18 +46,17 @@ const AboutScreen = props => {
 				{
 					text: "Delete",
 					onPress: () => {
-						console.log("deleted bitch")
 						dispatch(logoutAuth());
 						dispatch(logoutData());
-						dispatch(deleteAccount(uid));
+						dispatch(deleteAccount(uid, token));
 						props.navigation.replace("Login");
 					},
 					style: "destructive"
 				}
 			],
 			{ cancelable: false }
-			)
-	}
+		);
+	};
 
 	// DYNAMIC CONTENT
 	const ScreenContent = () => {
@@ -70,7 +70,7 @@ const AboutScreen = props => {
 								<Text style={styles.infoTitleText}>Email:</Text>
 								<Text style={styles.infoText}>{email}</Text>
 							</View>
-							<View style={{...styles.infoTextContainer, marginTop: 10}}>
+							<View style={{...styles.infoTextContainer, marginTop: Tools.paddingHalf}}>
 								<Text style={styles.infoTitleText}>Registered:</Text>
 								<Text style={styles.infoText}>{registeredDate}</Text>
 							</View>
@@ -88,34 +88,75 @@ const AboutScreen = props => {
 							<Text style={styles.buttonText}>Logout</Text>
 						</TouchableOpacity>
 
-						{/* Logout button */}
+						{/* Delete account button */}
 						<TouchableOpacity 
 							activeOpacity={Tools.activeOpacity} 
 							style={{...styles.accountButton, backgroundColor: Tools.color3}} 
-							onPress={test}>
+							onPress={handleDeleteAccount}>
 							<Text style={styles.buttonText}>Delete Account</Text>
 						</TouchableOpacity>
 
 					</View>)
 
-
-
-
-
-
-
-
-
-
-
-
-
 			case "About":
 				return (
 					<View style={styles.dynamicContentContainer}>
-						<Text>
-							This is about.
+
+						<Text style={{...styles.infoTextHeadline, marginTop: 0}}>
+							The App
 						</Text>
+
+						<Text style={styles.aboutText}>
+							FeelGood is a mood tracking and journaling tool designed to see how you've been feeling over time and to identify trends that make you feel better.
+						</Text>
+
+						<Text style={styles.aboutText}>
+							If you like FeelGood, please consider leaving a positive review on the App Store:
+						</Text>
+
+						{/* Review button */}
+						<TouchableOpacity 
+							activeOpacity={Tools.activeOpacity} 
+							style={{...styles.accountButton, backgroundColor: Tools.color3}} 
+							onPress={() => {
+								props.navigation.goBack();
+							}}>
+							<Text style={styles.buttonText}>Leave a Review</Text>
+						</TouchableOpacity>
+
+						<Text style={styles.infoTextHeadline}>
+							Data &amp; Privacy
+						</Text>
+
+						<Text style={styles.aboutText}>
+							FeelGood believes in personal privacy, period. Your data will <Text style={{fontWeight: "500"}}>never</Text> be sold, transferred, or otherwise used outside of the FeelGood app. To learn more, read our Privacy Policy.
+						</Text>
+
+						{/* PP button */}
+						<TouchableOpacity 
+							activeOpacity={Tools.activeOpacity} 
+							style={styles.accountButton} 
+							onPress={() => {
+								props.navigation.goBack();
+							}}>
+							<Text style={styles.buttonText}>Privacy Policy</Text>
+						</TouchableOpacity>
+
+						{/* Year selection */}
+						<View style={{...styles.accountInfoContainer, marginTop: Tools.paddingNormal}}>
+							<View style={styles.infoTextContainer}>
+								<Text style={styles.infoTitleText}>Version:</Text>
+								<Text style={styles.infoText}>1.0.0</Text>
+							</View>
+							<View style={{...styles.infoTextContainer, marginTop: Tools.paddingHalf}}>
+								<Text style={styles.infoTitleText}>Built With:</Text>
+								<Text style={styles.infoText}>React Native for iOS</Text>
+							</View>
+							<View style={{...styles.infoTextContainer, marginTop: Tools.paddingHalf}}>
+								<Text style={styles.infoTitleText}>Developed By:</Text>
+								<Text style={styles.infoText}>Gavin Baxter</Text>
+							</View>
+						</View>
 					</View>)
 
 			default: return (
@@ -126,37 +167,25 @@ const AboutScreen = props => {
 
 	return (
 		<View style={styles.screen}>
+
 				{/* Header */}
 				<OtherPagesHeader navigation={props.navigation} title={displayContentIdentifier}/>
 
-
 				{/* Inner screen */}
 				<View style={styles.innerScreen}>
-
 					<ScrollView
 						style={{flex: 1, width: "100%"}}
 						contentContainerStyle={{flexGrow: 1}}
-						scrollEnabled={false}>
+						scrollEnabled={true}
+						showsVerticalScrollIndicator={false}>
 
 						{/* Dynamic content */}
 						<ScreenContent/>
 
 					</ScrollView>
-
-					{/* <TouchableOpacity 
-						activeOpacity={Tools.activeOpacity} 
-						style={{width: 100, height: 100, backgroundColor: "red"}} 
-						onPress={() => {props.navigation.navigate({
-							routeName: "Ftue",
-							params: { newUser: false },
-						})}}>
-
-					</TouchableOpacity> */}
-
 				</View>
-
+				
 		</View>
-
 	);
 };
 
@@ -230,8 +259,20 @@ const styles = StyleSheet.create({
 		borderRadius: 3,
 	},
 
-
-
+	// ABOUT
+	infoTextHeadline: {
+		color: Tools.color5,
+		fontSize: 20,
+		fontWeight: "500",
+		marginTop: Tools.paddingNormal
+	},
+	aboutText: {
+		flex: 1, 
+		marginTop: Tools.paddingNormal,
+		fontSize: 20,
+		fontWeight: "100", 
+		color: Tools.colorLight,
+	},
 
 
 

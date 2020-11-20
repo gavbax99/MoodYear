@@ -1,28 +1,34 @@
-export const SET_HEADER_HEIGHT = "SET_HEADER_HEIGHT";
+// #################### UI ####################
 export const SET_KEYBOARD_OPEN = "SET_KEYBOARD_OPEN";
+export const SET_HEADER_HEIGHT = "SET_HEADER_HEIGHT";
 
+// #################### AUTH ####################
 export const SIGNUP = "SIGNUP";
 export const LOGIN = "LOGIN";
-export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
-
 export const LOGOUT_AUTH = "LOGOUT_AUTH";
 export const LOGOUT_DATA = "LOGOUT_DATA";
+export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
 
+// #################### DATA ####################
 export const LOAD_DATA = "LOAD_DATA";
 export const UPDATE_SINGLE_DAY = "UPDATE_SINGLE_DAY";
-export const LOAD_SINGLE_DAY = "LOAD_SINGLE_DAY";
-export const LOAD_ACTIVE_YEARS = "LOAD_ACTIVE_YEARS"; 
 export const REMOVE_DATA = "REMOVE_DATA"; 
 
-export const UPDATEDATA = "UPDATEDATA";
+// #################### YEARS ####################
+export const LOAD_ACTIVE_YEARS = "LOAD_ACTIVE_YEARS"; 
+export const PUT_NEW_ACTIVE_YEAR = "PUT_NEW_ACTIVE_YEAR";
 export const UPDATE_EMPTY_YEAR = "UPDATE_EMPTY_YEAR";
 
-export const PUT_NEW_ACTIVE_YEAR = "PUT_NEW_ACTIVE_YEAR";
-export const FIND_YEARS = "FIND_YEARS";
+// #################### DEV ####################
+export const UPDATEDATA = "UPDATEDATA";
+export const ADD_EMPTY_YEAR = "ADD_EMPTY_YEAR";
+
+// #################### MISC ####################
+// export const FIND_YEARS = "FIND_YEARS";
+// export const LOAD_SINGLE_DAY = "LOAD_SINGLE_DAY";
 
 
 // ==================== UI ====================
-
 // Keyboard open bool
 export const setKeyboardOpen = (openBool) => {
 	return {
@@ -41,7 +47,6 @@ export const setHeaderHeight = (heightInt) => {
 
 
 // ==================== AUTH ====================
-
 // Sign up
 export const signup = (email, password) => {
 	return async dispatch => {
@@ -66,9 +71,7 @@ export const signup = (email, password) => {
 				case "EMAIL_EXISTS": 
 					message = "This email already has an account.";
 					break;
-				// case "INVALID_PASSWORD":
-				// 	message = "Invalid password.";
-				// 	break;
+
 				default: break;
 			}
 			throw new Error(message);
@@ -90,7 +93,6 @@ export const signup = (email, password) => {
 			},
 			body: JSON.stringify({accountInfo: {email: resData.email, registeredDate: dayDate}})
 		});
-
 
 		dispatch({ 
 			type: SIGNUP,
@@ -168,8 +170,9 @@ export const logoutData = () => {
 };
 
 // DELETE ACCOUNT
-export const deleteAccount = (uid) => {
+export const deleteAccount = (uid, token) => {
 	return async dispatch => {
+		// Deletes user data
 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}.json`, {
 			method: "DELETE",
 			headers: {
@@ -178,9 +181,14 @@ export const deleteAccount = (uid) => {
 			body: JSON.stringify({})
 		});
 
-		const resData = await response.json(); 
-
-		console.log("delete data: ", resData)
+		// Deletes associated account
+		const deleteAccount = await fetch("https://identitytoolkit.googleapis.com/v1/accounts:delete?key=AIzaSyBSmR6DzYUNSsWlaaeyqyMTP2etMA01sOU", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({idToken: token})
+		});
 
 		dispatch({
 			type: DELETE_ACCOUNT,
@@ -188,23 +196,14 @@ export const deleteAccount = (uid) => {
 	};
 };
 
-// ==================== LOADING/UPDATING/DELETING DATA ====================
 
-// Remove data (primarily for loading ui)
-export const removeData = () => {
-	return {
-		type: REMOVE_DATA,
-		data: {}
-	};
-};
-
+// ==================== DATA ====================
 // Loading a yea'rs data (fetched from firebase) for login and changing year
 export const loadData = (uid, year) => {
 	return async dispatch => {
 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`);
 
 		const resData = await response.json(); 
-
 		// console.log("loaddata in action: ", resData)
 
 		dispatch({
@@ -214,7 +213,7 @@ export const loadData = (uid, year) => {
 	};
 };
 
-// Updating single day (put to firebase) WORKS
+// Updating single day (put to firebase)
 export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 	return async dispatch => {
 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`, {
@@ -235,30 +234,16 @@ export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 	};
 };
 
-
-// Updating ENTIRE data (put to firebase) ***FOR DEV USE ONLY***
-export const updateData = (uid, year, data) => {
-	return async dispatch => {
-		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(data)
-		});
-
-		const resData = await response.json(); 
-
-		dispatch({
-			type: UPDATEDATA,
-			data: resData
-		});
+// Remove data (primarily for loading ui after changing years)
+export const removeData = () => {
+	return {
+		type: REMOVE_DATA,
+		data: {}
 	};
 };
 
 
 // ==================== YEARS =========================
-
 // Loading data (fetched from firebase)
 export const loadActiveYears = (uid) => {
 	return async dispatch => {
@@ -273,41 +258,7 @@ export const loadActiveYears = (uid) => {
 	};
 };
 
-
-// export const loadActiveYears = (uid) => {
-// 	return async dispatch => {
-// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears.json`);
-// 		const resData = await response.json(); 
-
-// 		// if no data for active years, create the current active year
-// 		// PROBLEM: assigns active year but not empty calendar data so logic breaks down in HomeScreenCalendar
-// 		let jsonHold;
-// 		if (resData === null) {
-// 			const date = new Date().getFullYear();
-// 			const putNewDate = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears/${date}.json`, {
-// 				method: "PUT",
-// 				headers: {
-// 					"Content-Type": "application/json"
-// 				},
-// 				body: JSON.stringify(date)
-// 			});
-// 			jsonHold = await putNewDate.json(); 
-// 		}
-
-// 		// let loaded = false;
-// 		// if (jsonHold !== null || resData !== null) loaded = true;
-
-// 		dispatch({
-// 			type: LOAD_ACTIVE_YEARS,
-// 			years: resData === null ? {[jsonHold]: jsonHold} : resData,
-// 			// yearsLoaded: loaded,
-// 			yearsLoaded: true,
-// 		});
-// 	};
-// };
-
 // Put new year into /activeyears
-// loadYearsArray
 export const putNewActiveYear = (uid, year) => {
 	return async dispatch => {
 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears/${year}.json`, {
@@ -345,6 +296,65 @@ export const updateEmptyYear = (uid, year) => {
 		});
 	};
 };
+
+
+// ============================= DEV =================================
+// Updating ENTIRE data (put to firebase) ***FOR DEV USE ONLY***
+export const updateData = (uid, year, data) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(data)
+		});
+
+		const resData = await response.json(); 
+
+		dispatch({
+			type: UPDATEDATA,
+			data: resData
+		});
+	};
+};
+
+// Add new empty year to emptyCalendar  ***FOR DEV USE ONLY***
+export const addEmptyYear = (year, data) => {
+	return async dispatch => {
+		const response = await fetch(`https://rn-health.firebaseio.com/emptyCalendar/${year}.json`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(data)
+		});
+
+		dispatch({
+			type: ADD_EMPTY_YEAR,
+		});
+	};
+};
+
+
+
+// ADD THIS METHOD SOMEWHERE TO PUSH A NEW YEAR
+
+// const ADD_NEW_YEAR = () => {
+// 	async function setData() {
+// 		const response = await fetch(`https://rn-health.firebaseio.com/emptyCalendar.json`, {
+// 		method: "PUT",
+// 		headers: {
+// 			"Content-Type": "application/json"
+// 		},
+// 		body: JSON.stringify(Year2020Hold)
+// 	});
+// 		const resData = await response.json();
+// 	};
+
+// 	setData();
+// };
+
 
 
 

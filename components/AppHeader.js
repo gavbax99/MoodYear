@@ -11,7 +11,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight, updateData, loadActiveYears, findYears, loadYearsArray } from "../store/actions/actions";
+import { setHeaderHeight, updateData, loadActiveYears, findYears, loadYearsArray, addEmptyYear } from "../store/actions/actions";
 
 // Icons
 import { Ionicons } from '@expo/vector-icons';
@@ -22,6 +22,7 @@ import Tools from '../constants/Tools';
 // Data
 import Year2020 from "../data/Year2020";
 import Year2021 from "../data/Year2021";
+import Year2020Blank from "../data/Year2020Blank";
 
 // Redux
 import { useSelector } from "react-redux";
@@ -44,18 +45,22 @@ const AppHeader = props => {
 	const years = useSelector(state => state.dataReducer.years);
 	const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
 	const uid = useSelector(state => state.authReducer.userId);
+	const token = useSelector(state => state.authReducer.token);
 	const placeholder = () => {
+		// console.log("placeholder");
+		
 		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2021", Year2021));
-
 		// dispatch(loadActiveYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
 		// dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", 2020));
 		// dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", 2021));
 		// dispatch(findYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
-		// console.log("placeholder");
+		
+		// dispatch(addEmptyYear(2021, Year2021));
 		
 		// console.log("years", years);
 		// console.log("yearsLoaded", yearsLoaded);
 		// console.log("uid", uid);
+		console.log("token", token);
 		
 		props.navigation.navigate("Settings");
 	};
@@ -101,7 +106,8 @@ const AppHeader = props => {
 					<Text style={styles.yearText}>
 						{data.yearInt}
 					</Text>
-					: null
+					: 
+					null
 				}
 
 			</View>
@@ -119,16 +125,12 @@ const AppHeader = props => {
 						style={{...styles.logoImage, paddingHorizontal: 6}}
 						source={require("../assets/images/settings-kog.png")}
 						/>
-
-					{/* <Ionicons style={{paddingHorizontal: 6}} name="ios-more" size={24} color="#ffffff" /> */}
-
 				</TouchableOpacity>
 				: 
 				<View style={styles.settingsTextContainer}>
 					<Text style={{...styles.yearText, color: Tools.color5, fontWeight: "500"}}>
 						Settings
 					</Text>
-					{/* <Ionicons style={{paddingLeft: 12}} name="ios-more" size={24} color="#ffffff" /> */}
 				</View>
 			}
 
@@ -168,14 +170,12 @@ const styles = StyleSheet.create({
 		padding: Tools.paddingNormal,
 		paddingHorizontal: Tools.paddingLarge,
 	},
-
 	svgContainer: {
 		paddingHorizontal: 12, 
 		height: 20, 
 		justifyContent: "center",
 		alignItems: "center",
 	},
-
 	leftGroup: {
 		flexDirection: "row",
 		justifyContent: "center",
