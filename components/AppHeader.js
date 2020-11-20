@@ -116,16 +116,19 @@ const AppHeader = props => {
 
 			{/* Text */}
 			{props.isSettings === false ?
-				<TouchableOpacity 
-					activeOpacity={Tools.activeOpacity} 
-					style={styles.textContainer} 
-					onPress={placeholder}>
+				Object.keys(data).length !== 0 ?
+					<TouchableOpacity 
+						activeOpacity={Tools.activeOpacity} 
+						style={styles.textContainer} 
+						onPress={placeholder}>
 
-					<Image 
-						style={{...styles.logoImage, paddingHorizontal: 6}}
-						source={require("../assets/images/settings-kog.png")}
-						/>
-				</TouchableOpacity>
+						<Image 
+							style={{...styles.logoImage, paddingHorizontal: 6}}
+							source={require("../assets/images/settings-kog.png")}
+							/>
+					</TouchableOpacity>
+					: 
+					null
 				: 
 				<View style={styles.settingsTextContainer}>
 					<Text style={{...styles.yearText, color: Tools.color5, fontWeight: "500"}}>

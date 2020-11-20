@@ -140,6 +140,7 @@ const HomeScreenBottomCard = props => {
 							onBlur={() => onTextboxBlur()}
 							maxLength={characaterLimit}
 							placeholder={"How are you today?"}
+							placeholderTextColor={Tools.colorBackground}
 							selectionColor={Tools.colorLight}
 							keyboardAppearance={"dark"}
 							spellCheck={false}

@@ -222,8 +222,9 @@ const AuthScreen = props => {
 				<TouchableOpacity 
 					style={{width: 100, height: 100, backgroundColor: "red"}} 
 					 onPress={() => {props.navigation.navigate({
-							routeName: "About", 
-							params: { display: "About" },
+							routeName: "Ftue", 
+							params: { newUser: true },
+							// params: { display: "About" },
 						})
 					}}>
 					<Text>About</Text>

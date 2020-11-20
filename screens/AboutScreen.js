@@ -66,7 +66,7 @@ const AboutScreen = props => {
 				return (
 					<View style={styles.dynamicContentContainer}>
 						{/* Year selection */}
-						<View style={styles.accountInfoContainer}>
+						<View style={{...styles.accountInfoContainer, marginTop: Tools.paddingLarge}}>
 							<View style={styles.infoTextContainer}>
 								<Text style={styles.infoTitleText}>Email:</Text>
 								<Text style={styles.infoText}>{email}</Text>
@@ -103,7 +103,7 @@ const AboutScreen = props => {
 				return (
 					<View style={styles.dynamicContentContainer}>
 
-						<Text style={{...styles.infoTextHeadline, marginTop: 0}}>
+						<Text style={styles.infoTextHeadline}>
 							The App
 						</Text>
 
@@ -130,7 +130,7 @@ const AboutScreen = props => {
 						</Text>
 
 						<Text style={styles.aboutText}>
-							FeelGood believes in personal privacy, period. Your data will <Text style={{fontWeight: "500"}}>never</Text> be sold, transferred, or otherwise used outside of the FeelGood app. To learn more, read our Privacy Policy.
+							FeelGood believes in privacy. The only data we store on our secure database is the email you registered with, the registration date, and your journal entries. Your data will <Text style={{fontWeight: "500"}}>never</Text> be sold, transferred, or otherwise used outside of the FeelGood app. To learn more, read our Privacy Policy.
 						</Text>
 
 						{/* PP button */}
@@ -144,7 +144,7 @@ const AboutScreen = props => {
 						</TouchableOpacity>
 
 						{/* Year selection */}
-						<View style={{...styles.accountInfoContainer, marginTop: Tools.paddingNormal}}>
+						<View style={{...styles.accountInfoContainer, marginTop: Tools.paddingLarge, marginBottom: Tools.paddingLarge}}>
 							<View style={styles.infoTextContainer}>
 								<Text style={styles.infoTitleText}>Version:</Text>
 								<Text style={styles.infoText}>1.0.0</Text>
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		justifyContent: "flex-start",
 		alignItems: "flex-start",
-		padding: Tools.paddingNormal,
+		paddingHorizontal: Tools.paddingNormal,
 	},
 
 	// DYNAMIC
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		borderColor: Tools.colorTextboxGrey,
 		padding: Tools.paddingNormal,
+		// marginTop: Tools.paddingHalf,
 	},
 	infoTextContainer: {
 		width: "100%", 
@@ -256,23 +257,28 @@ const styles = StyleSheet.create({
 		backgroundColor: Tools.colorTextboxGrey,
 		paddingHorizontal: Tools.paddingLarge,
 		paddingVertical: Tools.paddingNormal,
-		marginTop: Tools.paddingNormal,
+		marginTop: Tools.paddingLarge,
 		borderRadius: 3,
 	},
 
 	// ABOUT
 	infoTextHeadline: {
+		width: "100%",
+		paddingHorizontal: Tools.paddingHalf,
 		color: Tools.color5,
-		fontSize: 20,
+		fontSize: 24,
 		fontWeight: "500",
-		marginTop: Tools.paddingNormal
+		marginTop: Tools.paddingLarge,
 	},
 	aboutText: {
-		flex: 1, 
+		// flex: 1, 
+		width: "100%",
+		paddingHorizontal: Tools.paddingHalf,
 		marginTop: Tools.paddingNormal,
 		fontSize: 20,
 		fontWeight: "100", 
 		color: Tools.colorLight,
+		letterSpacing: 0.75,
 	},
 
 
