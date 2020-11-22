@@ -1,110 +1,122 @@
 // React
-import React, { useEffect, useState } from 'react';
-import { 
-	StyleSheet, 
-	View, 
-	Text,
+import React, { useState } from 'react';
+import {
+	StyleSheet,
+	View,
 	TouchableWithoutFeedback,
-	Keyboard 
+	Keyboard
 } from 'react-native';
+
+// Redux
+import { useSelector } from "react-redux";
+
+// Constants
+import Tools from '../constants/Tools';
 
 // Components
 import AppHeader from '../components/AppHeader';
 import MonthDetailBottomCard from '../components/MonthDetailBottomCard';
 import MonthDetailCalendar from '../components/MonthDetailCalendar';
-import Blackout from '../components/Blackout';
 
-// Constants
-import Tools from '../constants/Tools';
+// Static functions
+const handleTouchableWithoutFeedback = () => {
+	Keyboard.dismiss();
+};
 
-// Redux
-import { useSelector } from "react-redux";
+const returnFaceColorHex = (colorInt) => {
+	// color are 0-4 changed to hex string; -1 will return no data and hide face
+	let startingFaceColor = "";
+	switch (colorInt) {
+		case 0:
+			startingFaceColor = Tools.color1;
+			break;
+		case 1:
+			startingFaceColor = Tools.color2;
+			break;
+		case 2:
+			startingFaceColor = Tools.color3;
+			break;
+		case 3:
+			startingFaceColor = Tools.color4;
+			break;
+		case 4:
+			startingFaceColor = Tools.color5;
+			break;
+		default: break;
+	};
+	return startingFaceColor;
+};
 
-
-// ==================== Component
+// ==================== Component ====================
 const MonthDetailScreen = props => {
 
-	const data = useSelector(state => state.dataReducer.data);
+	// Nav params
 	const yearInt = props.navigation.getParam("yearInt");
 	const monthNo = props.navigation.getParam("monthNo");
 
-	const startingMessage = data.months[monthNo].days[0].message;
-	const startingFaceColor = data.months[monthNo].days[0].color-1;
+	// Redux
+	const data = useSelector(state => state.dataReducer.data);
 
-	// color are 0-4; -1 will return no data and hide face
-	const returnColor = (colorInt) => {
-		let startingSliderColor = "";
-		switch (colorInt) {
-			case 0:
-				startingSliderColor = Tools.color1;
-				break;
-			case 1:
-				startingSliderColor = Tools.color2;
-				break;
-			case 2:
-				startingSliderColor = Tools.color3;
-				break;
-			case 3:
-				startingSliderColor = Tools.color4;
-				break;
-			case 4:
-				startingSliderColor = Tools.color5;
-				break;
-			default: break;
-		};
-		return startingSliderColor;
-	};
-	
+	// Data variables
+	const startingMessage = data.months[monthNo].days[0].message;
+	const startingFaceColor = data.months[monthNo].days[0].color - 1;
+	const startingFirstDayOfWeek = data.months[monthNo].firstDayOfWeek;
+
+	// State
 	const [dayToFind, setDayToFind] = useState(1);
-	const [dayOfTheWeek, setDayOfTheWeek] = useState(data.months[monthNo].firstDayOfWeek);
+	const [dayOfTheWeek, setDayOfTheWeek] = useState(startingFirstDayOfWeek);
 	const [monthToFind, setMonthToFind] = useState(monthNo);
 	const [yearToFind, setYearToFind] = useState(yearInt);
-	const [faceColor, setFaceColor] = useState(returnColor(startingFaceColor));
+	const [faceColor, setFaceColor] = useState(returnFaceColorHex(startingFaceColor));
 	const [colorNumber, setColorNumber] = useState(startingFaceColor);
 	const [message, setMessage] = useState(startingMessage);
 
-	const handleTouchableWithoutFeedback = () => {
-		Keyboard.dismiss();
-	}
-
+	// Change month data
 	const monthDetailScreenHandleDay = (dayNo, dayOfTheWeek, currentMonth, currentYear, newFaceColor, colorNumber, message) => {
 		setDayToFind(dayNo);
 		setDayOfTheWeek(dayOfTheWeek);
 		setMonthToFind(currentMonth);
 		setYearToFind(currentYear);
 		setFaceColor(newFaceColor);
-		setColorNumber(colorNumber-1);
+		setColorNumber(colorNumber - 1);
 		setMessage(message);
-	}
+	};
 
+	// Handle change month
 	const handleMonthSwitch = (newMonthNo) => {
 		const newMonthData = data.months[newMonthNo];
 		setDayToFind(1);
 		setMonthToFind(newMonthNo);
 		setDayOfTheWeek(newMonthData.firstDayOfWeek);
-		setFaceColor(returnColor(newMonthData.days[0].color-1));
-		setColorNumber(newMonthData.days[0].color-1);
+		setFaceColor(returnFaceColorHex(newMonthData.days[0].color - 1));
+		setColorNumber(newMonthData.days[0].color - 1);
 		setMessage(newMonthData.days[0].message);
-	}
+	};
 
 	return (
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
 			<View style={styles.screen}>
+
 				{/* Header */}
-				<AppHeader navigation={props.navigation} backButton={true} isSettings={false} />
+				<AppHeader
+					navigation={props.navigation}
+					backButton={true}
+					isSettings={false}
+				/>
 
 				{/* Inner screen */}
 				<View style={styles.innerScreen}>
+
 					{/* Calendar */}
-					<MonthDetailCalendar 
-						yearInt={yearToFind} 
-						monthNo={monthToFind} 
+					<MonthDetailCalendar
+						yearInt={yearToFind}
+						monthNo={monthToFind}
 						switchMonths={handleMonthSwitch}
 						detailScreenFindDay={monthDetailScreenHandleDay}
-						/>
+					/>
 
 					{/* Bottom card */}
-					<MonthDetailBottomCard 
+					<MonthDetailBottomCard
 						yearInt={yearToFind}
 						monthNo={monthToFind}
 						dayNo={dayToFind}
@@ -112,14 +124,14 @@ const MonthDetailScreen = props => {
 						faceColor={faceColor}
 						colorNumber={colorNumber}
 						message={message}
-						/>
+					/>
 				</View>
 			</View>
 		</TouchableWithoutFeedback>
 	);
-}
+};
 
-// ==================== Styles
+// ==================== Styles ====================
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,

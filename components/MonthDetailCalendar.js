@@ -8,18 +8,65 @@ import {
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
-// Constants
-import Tools from '../constants/Tools';
-
 // Redux
 import { useSelector } from "react-redux";
+
+// Constants
+import Tools from '../constants/Tools';
 
 // Components
 import MonthDetailDay from "../components/MonthDetailDay";
 
-// ==================== Component
+// Static vars
+const date = new Date();
+const getMonth = date.getMonth() + 1;
+const getDay = date.getDate();
+const monthList = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December",
+];
+
+// Static functions
+const returnFaceColorHex = (colorInt) => {
+	let color = "";
+	switch (colorInt) {
+		case 0:
+			color = Tools.color0;
+			break;
+		case 1:
+			color = Tools.color1;
+			break;
+		case 2:
+			color = Tools.color2;
+			break;
+		case 3:
+			color = Tools.color3;
+			break;
+		case 4:
+			color = Tools.color4;
+			break;
+		case 5:
+			color = Tools.color5;
+			break;
+		default: break;
+	}
+	return color;
+};
+
+// ==================== Component ====================
 const MonthDetailCalendar = props => {
 
+	// Redux
 	const [currentMonth, setCurrentMonth] = useState(props.monthNo);
 	const [currentYear, setCurrentYear] = useState(props.yearInt);
 
@@ -27,25 +74,8 @@ const MonthDetailCalendar = props => {
 	const data = useSelector(state => state.dataReducer.data);
 	const monthData = data.months[currentMonth];
 
-	// Time
-	const date = new Date();
-	const getMonth = date.getMonth() + 1;
-	const getDay = date.getDate();
+	// Check for current month
 	const isCurrentMonth = getMonth === monthData.monthNo ? true : false;
-	const monthList = [
-		"January",
-		"February",
-		"March",
-		"April",
-		"May",
-		"June",
-		"July",
-		"August",
-		"September",
-		"October",
-		"November",
-		"December",
-	];
 
 	const prevMonth = () => {
 		if (currentMonth === 0) return;
@@ -57,13 +87,13 @@ const MonthDetailCalendar = props => {
 		setCurrentMonth(currentMonth + 1);
 	};
 
-	useEffect(() => {
-		props.switchMonths(currentMonth);
-	}, [currentMonth])
-
 	const monthDetailFindDay = (dayNo, dayOfTheWeek, faceColor, colorNumber, message) => {
 		props.detailScreenFindDay(dayNo, dayOfTheWeek, currentMonth, currentYear, faceColor, colorNumber, message);
 	};
+
+	useEffect(() => {
+		props.switchMonths(currentMonth);
+	}, [currentMonth]);
 
 	return (
 		<View style={styles.calendar}>
@@ -76,12 +106,13 @@ const MonthDetailCalendar = props => {
 					onPress={prevMonth}
 					style={{ padding: 12 }}>
 						<Svg style={{ 
-							opacity: (currentMonth === 0) ? 0 : 1,
-							transform: [{ rotateZ: "180deg" }], 
-							shadowColor: '#000',
-							shadowOffset: { width: 0, height: -3 },
-							shadowRadius: 2,
-							shadowOpacity: 1, }} 
+								opacity: (currentMonth === 0) ? 0 : 1,
+								transform: [{ rotateZ: "180deg" }], 
+								shadowColor: '#000',
+								shadowOffset: { width: 0, height: -3 },
+								shadowRadius: 2,
+								shadowOpacity: 1, 
+							}} 
 							width={14} 
 							height={16} 
 							viewBox="0 0 14 16">
@@ -89,6 +120,7 @@ const MonthDetailCalendar = props => {
 						</Svg>
 				</TouchableOpacity>
 
+				{/* Title */}
 				<View style={styles.titleRow_textGroup}>
 					<Text style={styles.titleRow_textLarge}>{monthList[currentMonth]}</Text>
 					<Text style={styles.titleRow_textSmall}>{currentYear}</Text>
@@ -100,11 +132,12 @@ const MonthDetailCalendar = props => {
 					onPress={nextMonth}
 					style={{ marginLeft: "auto", padding: 12 }}>
 						<Svg style={{ 
-							opacity: (currentMonth === 11) ? 0 : 1,
-							shadowColor: '#000',
-							shadowOffset: { width: 0, height: 3 },
-							shadowRadius: 2,
-							shadowOpacity: 1, }}
+								opacity: (currentMonth === 11) ? 0 : 1,
+								shadowColor: '#000',
+								shadowOffset: { width: 0, height: 3 },
+								shadowRadius: 2,
+								shadowOpacity: 1, 
+							}}
 							width={14} 
 							height={16} 
 							viewBox="0 0 14 16">
@@ -128,35 +161,11 @@ const MonthDetailCalendar = props => {
 			<View style={{ ...styles.calendarDays, marginTop: Tools.paddingHalf }}>
 				{/* Render our days */}
 				{monthData.days.map((dayObj, i) => {
-
-					let color = "";
-					switch (dayObj.color) {
-						case 0:
-							color = Tools.color0;
-							break;
-						case 1:
-							color = Tools.color1;
-							break;
-						case 2:
-							color = Tools.color2;
-							break;
-						case 3:
-							color = Tools.color3;
-							break;
-						case 4:
-							color = Tools.color4;
-							break;
-						case 5:
-							color = Tools.color5;
-							break;
-						default: break;
-					}
-
 					return (
 						<MonthDetailDay 
 							isFirstDay={i===0}
 							firstDayNo={monthData.firstDayOfWeekNo}
-							color={color} 
+							color={returnFaceColorHex(dayObj.color)} 
 							colorNumber={dayObj.color}
 							message={dayObj.message}
 							currentDay={getDay}
@@ -164,15 +173,16 @@ const MonthDetailCalendar = props => {
 							dayOfTheWeek={dayObj.dayOfWeek}
 							isCurrentMonth={isCurrentMonth}
 							key={dayObj.id}
-							pressEvent={monthDetailFindDay} />
+							pressEvent={monthDetailFindDay} 
+						/>
 					);
 				})}
 			</View>
 		</View>
 	);
-}
+};
 
-// ==================== Styles
+// ==================== Styles ====================
 const styles = StyleSheet.create({
 	calendar: {
 		position: "absolute",

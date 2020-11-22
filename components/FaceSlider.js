@@ -9,12 +9,13 @@ import Slider from "react-native-slider";
 import Svg, { G, Path } from 'react-native-svg';
 
 // Anim
-import { tween  } from 'popmotion';
+import { tween } from 'popmotion';
 import { interpolate } from 'flubber';
 
 // Constants
 import Tools from '../constants/Tools';
 
+// Face data
 const faceSvgPathsIndex = [
 	"one",
 	"two",
@@ -59,41 +60,41 @@ const faceSvgPaths = {
 // ==================== Component
 const FaceSlider = props => {
 
+	// State
 	const [faceColor, setFaceColor] = useState(props.faceColor);
-	// const [detailFaceColor, setDetailFaceColor] = useState();
-
 	const [leftEyePath, setLeftEyePath] = useState(faceSvgPaths.leftEye[faceSvgPathsIndex[props.sliderValue]]);
 	const [mouthPath, setMouthPath] = useState(faceSvgPaths.mouth[faceSvgPathsIndex[props.sliderValue]]);
 	const [rightEyePath, setRightEyePath] = useState(faceSvgPaths.rightEye[faceSvgPathsIndex[props.sliderValue]]);
 
-	// Interpolates between two svg paths
+	// Interpolates between two svg paths and two colors
 	const interpolatePaths = (val) => {
 		const leftEyeInterpolator = interpolate(leftEyePath, faceSvgPaths.leftEye[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
 		const mouthInterpolator = interpolate(mouthPath, faceSvgPaths.mouth[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
 		const rightEyeInterpolator = interpolate(rightEyePath, faceSvgPaths.rightEye[faceSvgPathsIndex[val]], { maxSegmentLength: 2 });
 
-		// Tween the path (i) and face color (color) 
+		// Tween the svg path (face) and face color (color) 
 		tween({
-			duration: 250,
-			from: { i: 0, color: faceColor },
-			to: { i: 1, color: faceColorIndex[val] }
-		})
-		.pipe(({ i, color }) => ({ 
-			leftEyePathInterpolator: leftEyeInterpolator(i), 
-			mouthPathInterpolator: mouthInterpolator(i), 
-			rightEyePathInterpolator: rightEyeInterpolator(i), 
-			color
-		}))
-		.start(({ leftEyePathInterpolator, mouthPathInterpolator, rightEyePathInterpolator, color }) => {
-			setLeftEyePath(leftEyePathInterpolator);
-			setMouthPath(mouthPathInterpolator);
-			setRightEyePath(rightEyePathInterpolator);
-			setFaceColor(color);
-		})
+				duration: 250,
+				from: { face: 0, color: faceColor },
+				to: { face: 1, color: faceColorIndex[val] }
+			})
+			.pipe(({ face, color }) => ({
+				leftEyePathInterpolator: leftEyeInterpolator(face),
+				mouthPathInterpolator: mouthInterpolator(face),
+				rightEyePathInterpolator: rightEyeInterpolator(face),
+				color
+			}))
+			.start(({ leftEyePathInterpolator, mouthPathInterpolator, rightEyePathInterpolator, color }) => {
+				setLeftEyePath(leftEyePathInterpolator);
+				setMouthPath(mouthPathInterpolator);
+				setRightEyePath(rightEyePathInterpolator);
+				setFaceColor(color);
+			});
 	};
 
 	return (
 		<View style={styles.screen}>
+
 			{/* Date row */}
 			<View style={styles.dateRow}>
 				{/* Date */}
@@ -103,35 +104,35 @@ const FaceSlider = props => {
 				</View>
 
 				{/* Icon for home screen & month detail */}
-				{props.showSlider === true ? 
-				<View style={{...styles.svgContainer, backgroundColor: faceColor }}>
-					<Svg width={58} height={58} viewBow="0 0 58 58">
-						<G>
-							<Path fill="white" d={leftEyePath} />
-							<Path fill="white" d={mouthPath} />
-							<Path fill="white" d={rightEyePath} />
-						</G>
-					</Svg>
-				</View> 
-				:
-				props.colorNumber >= 0 ? 
-				<View style={{...styles.svgContainer, backgroundColor: props.faceColor }}>
-					<Svg width={58} height={58} viewBow="0 0 58 58">
-						<G>
-							<Path fill="white" d={faceSvgPaths.leftEye[faceSvgPathsIndex[props.colorNumber]]} />
-							<Path fill="white" d={faceSvgPaths.mouth[faceSvgPathsIndex[props.colorNumber]]} />
-							<Path fill="white" d={faceSvgPaths.rightEye[faceSvgPathsIndex[props.colorNumber]]} />
-						</G>
-					</Svg>
-				</View>
-				: <View style={{width: 64, height: 64, opacity: 0}}></View>
+				{props.showSlider === true ?
+					<View style={{ ...styles.svgContainer, backgroundColor: faceColor }}>
+						<Svg width={58} height={58} viewBow="0 0 58 58">
+							<G>
+								<Path fill="white" d={leftEyePath} />
+								<Path fill="white" d={mouthPath} />
+								<Path fill="white" d={rightEyePath} />
+							</G>
+						</Svg>
+					</View>
+					:
+					props.colorNumber >= 0 ?
+						<View style={{ ...styles.svgContainer, backgroundColor: props.faceColor }}>
+							<Svg width={58} height={58} viewBow="0 0 58 58">
+								<G>
+									<Path fill="white" d={faceSvgPaths.leftEye[faceSvgPathsIndex[props.colorNumber]]} />
+									<Path fill="white" d={faceSvgPaths.mouth[faceSvgPathsIndex[props.colorNumber]]} />
+									<Path fill="white" d={faceSvgPaths.rightEye[faceSvgPathsIndex[props.colorNumber]]} />
+								</G>
+							</Svg>
+						</View>
+						: 
+						<View style={{ width: 64, height: 64, opacity: 0 }}></View>
 				}
-
 			</View>
 
-			{/* Slider row */}
-			{props.showSlider === true ? 
-				<Slider 
+			{/* Slider */}
+			{props.showSlider === true ?
+				<Slider
 					style={styles.slider}
 
 					minimumValue={0}
@@ -139,27 +140,28 @@ const FaceSlider = props => {
 					step={1}
 
 					// debugTouchArea={true}
-					
+
 					trackStyle={{ height: 10, borderRadius: 10 }}
-					thumbStyle={{ height: 30, width: 30, borderRadius: 30, shadowColor: "#000",	shadowOffset: {	width: 0, height: 2 }, shadowOpacity: 0.15,	shadowRadius: 3.5 }}
+					thumbStyle={styles.thumb}
 					thumbTouchSize={{ width: 60, height: 60 }}
 					thumbTintColor={"#ffffff"}
 
 					minimumTrackTintColor={faceColor}
 					maximumTrackTintColor={faceColor}
 
-					onSlidingComplete={ (val) => interpolatePaths(val) }
-					onValueChange={ (val) => props.sliderChange(val) }
+					onSlidingComplete={(val) => interpolatePaths(val)}
+					onValueChange={(val) => props.sliderChange(val)}
 					value={props.sliderValue}
-					/> 
-				: null
+				/>
+				: 
+				null
 			}
 
 		</View>
 	);
-}
+};
 
-// ==================== Styles
+// ==================== Styles ====================
 const styles = StyleSheet.create({
 	screen: {
 		minWidth: "100%",
@@ -182,7 +184,7 @@ const styles = StyleSheet.create({
 		fontSize: 28,
 		fontWeight: "500",
 		textShadowColor: "rgba(37,37,37,1)",
-		textShadowOffset: {width: 1, height: 2},
+		textShadowOffset: { width: 1, height: 2 },
 		textShadowRadius: 3
 	},
 	dateDate: {
@@ -190,7 +192,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		fontWeight: "100",
 		textShadowColor: "rgba(37,37,37,1)",
-		textShadowOffset: {width: 1, height: 2},
+		textShadowOffset: { width: 1, height: 2 },
 		textShadowRadius: 3
 	},
 	dateFace: {
@@ -210,6 +212,18 @@ const styles = StyleSheet.create({
 		height: 30,
 		marginTop: 24,
 	},
+	thumb: {
+		height: 30, 
+		width: 30, 
+		borderRadius: 30, 
+		shadowColor: "#000", 
+		shadowOffset: { 
+			width: 0, 
+			height: 2 
+		}, 
+		shadowOpacity: 0.15, 
+		shadowRadius: 3.5 
+	}	
 });
 
 export default FaceSlider;

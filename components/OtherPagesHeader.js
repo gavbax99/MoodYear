@@ -1,9 +1,8 @@
 // React
-import React, { useEffect, useState } from 'react';
-import { 
-	StyleSheet, 
-	View, 
-	Image,
+import React from 'react';
+import {
+	StyleSheet,
+	View,
 	Text,
 	TouchableOpacity
 } from 'react-native';
@@ -11,21 +10,15 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight, updateData, loadActiveYears, findYears, loadYearsArray } from "../store/actions/actions";
-
-// Icons
-import { Ionicons } from '@expo/vector-icons';
+import { setHeaderHeight } from "../store/actions/actions";
 
 // Constants
 import Tools from '../constants/Tools';
 
-// Redux
-import { useSelector } from "react-redux";
-
-
-// ==================== Component
+// ==================== Component ====================
 const OtherPagesHeader = props => {
 
+	// Redux
 	const dispatch = useDispatch();
 
 	const findHeaderHeight = (event) => {
@@ -33,60 +26,25 @@ const OtherPagesHeader = props => {
 		dispatch(setHeaderHeight(height));
 	};
 
-	// const data = useSelector(state => state.dataReducer.data);
-	// const years = useSelector(state => state.dataReducer.years);
-	// const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
-	// const uid = useSelector(state => state.authReducer.userId);
-
-	// const placeholder = () => {
-	// 	props.navigation.navigate("Settings");
-	// };
-
-	// const HeaderImage = () => {
-	// 	if (props.backButton) {
-	// 		return (
-	// 			<View style={styles.svgContainer}>
-	// 				<Svg style={{ 
-	// 					transform: [{ rotateZ: "180deg" }],
-	// 					shadowColor: '#000',
-	// 					shadowOffset: { width: 0, height: -3 },
-	// 					shadowRadius: 2,
-	// 					shadowOpacity: 1, }} 
-	// 					width={14} 
-	// 					height={16} 
-	// 					viewBox="0 0 14 16">
-	// 					<Path fill={Tools.color3} d={Tools.arrowPath} />
-	// 				</Svg>
-	// 			</View>
-	// 		);
-	// 	} else {
-	// 		return (
-	// 			<Image 
-	// 				style={styles.logoImage}
-	// 				source={require("../assets/images/sober-logo.png")}
-	// 				/>
-	// 		);
-	// 	}
-	// };
-
 	return (
 		<View style={styles.header} onLayout={findHeaderHeight}>
 			{/* Logo */}
 			<View style={styles.leftGroup}>
-				<TouchableOpacity 
-					activeOpacity={Tools.activeOpacity} 
-					style={{padding: Tools.paddingNormal}} 
-					onPress={() => {props.navigation.goBack()}}>
+				<TouchableOpacity
+					activeOpacity={Tools.activeOpacity}
+					style={{ padding: Tools.paddingNormal }}
+					onPress={() => { props.navigation.goBack() }}>
 
 					<View style={styles.svgContainer}>
-						<Svg style={{ 
-							transform: [{ rotateZ: "180deg" }],
-							shadowColor: '#000',
-							shadowOffset: { width: 0, height: -3 },
-							shadowRadius: 2,
-							shadowOpacity: 1, }} 
-							width={14} 
-							height={16} 
+						<Svg style={{
+								transform: [{ rotateZ: "180deg" }],
+								shadowColor: '#000',
+								shadowOffset: { width: 0, height: -3 },
+								shadowRadius: 2,
+								shadowOpacity: 1,
+							}}
+							width={14}
+							height={16}
 							viewBox="0 0 14 16">
 							<Path fill={Tools.color3} d={Tools.arrowPath} />
 						</Svg>
@@ -102,9 +60,9 @@ const OtherPagesHeader = props => {
 			</View>
 		</View>
 	);
-}
+};
 
-// ==================== Styles
+// ==================== Styles ====================
 const styles = StyleSheet.create({
 	header: {
 		height: 65,
@@ -136,14 +94,12 @@ const styles = StyleSheet.create({
 		padding: Tools.paddingNormal,
 		paddingHorizontal: Tools.paddingLarge,
 	},
-
 	svgContainer: {
-		paddingHorizontal: 12, 
-		height: 20, 
+		paddingHorizontal: 12,
+		height: 20,
 		justifyContent: "center",
 		alignItems: "center",
 	},
-
 	leftGroup: {
 		flexDirection: "row",
 		justifyContent: "center",

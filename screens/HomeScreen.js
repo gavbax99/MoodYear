@@ -1,12 +1,11 @@
 // React
-import React, { useEffect } from 'react';
-import { 
-	StyleSheet, 
-	View, 
-	TouchableWithoutFeedback, 
+import React from 'react';
+import {
+	StyleSheet,
+	View,
+	TouchableWithoutFeedback,
 	Keyboard,
 } from 'react-native';
-import { useSelector } from "react-redux";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -17,38 +16,41 @@ import HomeScreenCalendar from '../components/HomeScreenCalendar';
 import HomeScreenBottomCard from '../components/HomeScreenBottomCard';
 import Blackout from '../components/Blackout';
 
+// Static functions
+const handleTouchableWithoutFeedback = () => {
+	Keyboard.dismiss();
+};
 
-// ==================== Functional component 
+// ==================== Component ====================
 const HomeScreen = props => {
-
-	const handleTouchableWithoutFeedback = () => {
-		Keyboard.dismiss();
-	};
-
 	return (
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
 			<View style={styles.screen}>
+
 				{/* Header */}
-				<AppHeader navigation={props.navigation} backButton={false} isSettings={false} />
+				<AppHeader
+					navigation={props.navigation}
+					backButton={false}
+					isSettings={false}
+				/>
 
 				{/* Inner screen */}
 				<View style={styles.innerScreen}>
 					{/* Calendar */}
 					<HomeScreenCalendar navigation={props.navigation} />
+
+					{/* Darkens background when textbox opens */}
 					<Blackout />
 
 					{/* Bottom card */}
-
-					<HomeScreenBottomCard />
+					<HomeScreenBottomCard navigation={props.navigation} />
 				</View>
-
 			</View>
 		</TouchableWithoutFeedback>
 	);
 };
 
-
-// ==================== Styles
+// ==================== Styles ====================
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,
@@ -57,12 +59,12 @@ const styles = StyleSheet.create({
 		backgroundColor: Tools.colorBackground,
 	},
 	innerScreen: {
-		position: "relative",
-		width: "100%",
 		flex: 1,
 		flexDirection: "column",
 		justifyContent: "flex-end",
 		alignItems: "center",
+		width: "100%",
+		position: "relative",
 	}
 });
 

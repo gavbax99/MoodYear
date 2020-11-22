@@ -18,17 +18,23 @@ import Tools from '../constants/Tools';
 // Vars
 const windowHeight = Dimensions.get('window').height;
 
-
-// ==================== Component
+// ==================== Component ====================
 const Blackout = props => {
 
+	// Redux
+	const keyboardOpen = useSelector(state => state.keyboardReducer.keyboardReducerState);
+
+	// State
 	const [dynamicDisplay, setDynamicDisplay] = useState(false);
 	const [keyboardHeight, setKeyboardHeight] = useState(0);
 
-	// Keyboard open constant
-	const keyboardOpen = useSelector(state => state.keyboardReducer.keyboardReducerState);
+	// Set height of blackout
+	const handleSetKeyboardHeight = (e) => {
+		setKeyboardHeight(e.endCoordinates.height);
+		Keyboard.removeListener('keyboardDidShow', handleSetKeyboardHeight);
+	};
 
-	// ANIMATION
+	// Animation
 	const fadeAnim = React.useRef(new Animated.Value(0)).current;
 
 	const fadeIn = () => {
@@ -47,6 +53,10 @@ const Blackout = props => {
 		}).start();
 	};
 
+	// Fade the blackout depending on keyboard state
+	keyboardOpen ? fadeIn() : fadeOut();
+
+	// Use effect
 	useEffect(() => {
 		let timer;
 		if (keyboardOpen) {
@@ -59,39 +69,28 @@ const Blackout = props => {
 		return () => clearTimeout(timer);
 	}, [keyboardOpen]);
 
-	// Fade the blackout
-	keyboardOpen ? fadeIn() : fadeOut();
-
-
-	// Set height of blackout
-	const handleSetKeyboardHeight = (e) => {
-		setKeyboardHeight(e.endCoordinates.height);
-		Keyboard.removeListener('keyboardDidShow', handleSetKeyboardHeight);
-	};
-
 	useEffect(() => {
 		Keyboard.addListener('keyboardDidShow', handleSetKeyboardHeight);
-
-		// Cleanup
-		// return () => {Keyboard.removeListener('keyboardDidShow', handleSetKeyboardHeight)}
 	}, [useEffect]);
 	
+	// Return blackout or nothing
 	if (dynamicDisplay) {
 		return (
 			<Animated.View style={{
-				...styles.blackout,
-				opacity: fadeAnim,
-				height: windowHeight - keyboardHeight - 65, // is 65 gonna fuck me? who knows!
+					...styles.blackout,
+					opacity: fadeAnim,
+					height: windowHeight - keyboardHeight - 65, // is 65 gonna fuck me? who knows!
 				}}>
 					<Svg style={{ 
-						transform: [{ rotateZ: "90deg" }], 
-						shadowColor: "#000",
-						shadowOffset: {
-							width: 0,
-							height: 3,
-						},
-						shadowOpacity: 1,
-						shadowRadius: 3.5, }}
+							transform: [{ rotateZ: "90deg" }], 
+							shadowColor: "#000",
+							shadowOffset: {
+								width: 0,
+								height: 3,
+							},
+							shadowOpacity: 1,
+							shadowRadius: 3.5, 
+						}}
 						width={14} 
 						height={16} 
 						viewBox="0 0 14 16">
@@ -104,9 +103,9 @@ const Blackout = props => {
 			<View style={{ height: 0, width: 0 }}></View>
 		);
 	}
-}
+};
 
-// ==================== Styles
+// ==================== Styles ====================
 const styles = StyleSheet.create({
 	blackout: {
 		width: "100%",
