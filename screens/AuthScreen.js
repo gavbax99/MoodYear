@@ -219,7 +219,7 @@ const AuthScreen = props => {
 				</View>
 
 				{/*  */}
-				<TouchableOpacity 
+				{/* <TouchableOpacity 
 					style={{width: 100, height: 100, backgroundColor: "red"}} 
 					 onPress={() => {props.navigation.navigate({
 							routeName: "Ftue", 
@@ -228,7 +228,7 @@ const AuthScreen = props => {
 						})
 					}}>
 					<Text>About</Text>
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 				{/*  */}
 
 			</KeyboardAvoidingView>

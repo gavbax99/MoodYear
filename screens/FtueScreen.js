@@ -54,19 +54,19 @@ const FtueScreen = props => {
 		dispatch(updateEmptyYear(uid, getYear));
 	}
 
-	// useEffect(() => {
-	// 	setNewUser(newUserNavProp);
-	// }, [newUserNavProp]);
+	useEffect(() => {
+		setNewUser(newUserNavProp);
+	}, [newUserNavProp]);
 
-	// useEffect(() => {
-	// 	if (newUser === false) return;
+	useEffect(() => {
+		if (newUser === false) return;
 
-	// 	loadNewActiveYear().then(() => {
-	// 		loadActiveYear().then(() => {
-	// 			loadNewEmptyYearFromCalendar()
-	// 		})
-	// 	})
-	// }, [newUser]);
+		loadNewActiveYear().then(() => {
+			loadActiveYear().then(() => {
+				loadNewEmptyYearFromCalendar()
+			})
+		})
+	}, [newUser]);
 
 	const FtueHeader = () => {
 		return (
