@@ -22,5 +22,9 @@ ftue-home.psd
 ftue-month.psd
 ftue-arrow.psd
 
+.env
+local_assets
+local_assets/**
+
 # macOS
 .DS_Store

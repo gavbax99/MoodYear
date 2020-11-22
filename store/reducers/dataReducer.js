@@ -1,10 +1,6 @@
 import { 
-	LOAD_DATA,
-	UPDATE_SINGLE_DAY,
-	UPDATEDATA,
+	HANDLE_DATA_UPDATE,
 	LOAD_ACTIVE_YEARS,
-	REMOVE_DATA,
-	UPDATE_EMPTY_YEAR,
 	LOGOUT_DATA
  } from "../actions/actions";
 
@@ -16,28 +12,10 @@ const initialState = {
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case LOAD_DATA:
+		case HANDLE_DATA_UPDATE:
 			return { 
 				...state, 
 				data: action.data 
-			};
-
-		case UPDATE_SINGLE_DAY:
-			return { 
-				...state, 
-				data: action.data
-			};
-
-		case UPDATEDATA:
-			return { 
-				...state, 
-				data: action.data
-			};
-
-		case REMOVE_DATA:
-			return { 
-				...state, 
-				data: action.data
 			};
 
 		case LOAD_ACTIVE_YEARS:
@@ -47,18 +25,9 @@ export default (state = initialState, action) => {
 				yearsLoaded: action.yearsLoaded
 			};
 
-		case UPDATE_EMPTY_YEAR:
-			return { 
-				...state, 
-				data: action.data
-			};
-
 		case LOGOUT_DATA:
 			return initialState;
 
-	};
-	return state;
+		default: return state;
+	}
 };
-
-// import { useSelector } from "react-redux";
-// const headerHeightState = useSelector(state => state.navReducer.headerHeightState);
