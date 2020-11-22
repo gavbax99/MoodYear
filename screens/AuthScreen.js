@@ -209,25 +209,26 @@ const AuthScreen = props => {
 
 					{/* If loading, show loading icon. Otherwise show login button */}
 					{isLoading ?
-						<ActivityIndicator size="small" color={Tools.color1} />
+						<ActivityIndicator 
+							style={{marginTop: Tools.paddingDouble}}
+							size="large" 
+							color={Tools.color5} 
+						/>
 						:
 						<TouchableOpacity style={{ 
 								...styles.button, 
 								backgroundColor: isLogin ? Tools.color1 : Tools.color3 
 							}} 
 							onPress={loginHandler}>
-
 							<Text style={{ color: "#fff", fontSize: 18 }}>
 								{isLogin ? "Login" : "Register"}
 							</Text>
-							
 							<Svg style={{ marginLeft: 10 }}
 								width={8}
 								height={10}
 								viewBox="0 0 14 16">
 								<Path fill={Tools.colorLight} d={Tools.arrowPath} />
 							</Svg>
-							
 						</TouchableOpacity>
 					}
 

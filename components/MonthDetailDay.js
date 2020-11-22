@@ -1,8 +1,8 @@
 // React
-import React, { useState } from 'react';
-import { 
-	StyleSheet, 
-	View, 
+import React from 'react';
+import {
+	StyleSheet,
+	View,
 	Text,
 	TouchableOpacity
 } from 'react-native';
@@ -10,30 +10,28 @@ import {
 // Constants
 import Tools from '../constants/Tools';
 
-
-// ==================== Component
+// ==================== Component ====================
 const MonthDetailDay = props => {
 
+	// Clicking a day passes up these up to change the day
 	const handleDayClick = () => {
-		// console.log("day click in MonthDetailDay: ", )
 		props.pressEvent(props.dayOfTheMonth, props.dayOfTheWeek, props.color, props.colorNumber, props.message);
-	}
+	};
 
 	return (
-		<TouchableOpacity 
-			activeOpacity={Tools.activeOpacity} 
+		<TouchableOpacity
+			activeOpacity={Tools.activeOpacity}
 			style={{
-				...styles.day, 
+				...styles.day,
 				backgroundColor: props.color,
 				// add margin left of the first day to represent calendar format
-				marginLeft: props.isFirstDay ? `${(14.25*(props.firstDayNo-1))+1.75}%` : "1.75%",
-				}}
-			onPress={handleDayClick}
-			>
+				marginLeft: props.isFirstDay ? `${(14.25 * (props.firstDayNo - 1)) + 1.75}%` : "1.75%",
+			}}
+			onPress={handleDayClick}>
 
 			<Text style={{
-				...styles.dayText,
-				color: props.color === Tools.color0 ? Tools.colorTextboxGrey : Tools.colorLight, 
+					...styles.dayText,
+					color: props.color === Tools.color0 ? Tools.colorTextboxGrey : Tools.colorLight,
 				}}>
 				{props.dayOfTheMonth}
 			</Text>
@@ -42,14 +40,13 @@ const MonthDetailDay = props => {
 				<View style={{
 					...styles.today,
 					borderColor: Tools.colorLight,
-					}} />
+				}} />
 			)}
-
 		</TouchableOpacity>
 	);
-}
+};
 
-// ==================== Styles
+// ==================== Styles ====================
 const styles = StyleSheet.create({
 	day: {
 		position: "relative",
@@ -72,7 +69,7 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		fontWeight: "700",
 		textShadowColor: Tools.colorHeaderGrey,
-		textShadowOffset: {width: 1, height: 1},
+		textShadowOffset: { width: 1, height: 1 },
 		textShadowRadius: 0
 	},
 	today: {

@@ -43,7 +43,7 @@ const HomeScreen = props => {
 					<Blackout />
 
 					{/* Bottom card */}
-					<HomeScreenBottomCard />
+					<HomeScreenBottomCard navigation={props.navigation} />
 				</View>
 			</View>
 		</TouchableWithoutFeedback>

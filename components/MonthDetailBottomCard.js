@@ -1,16 +1,11 @@
 // React
 import React from "react";
-import { 
-	StyleSheet, 
-	View, 
-	ScrollView,
-	SafeAreaView, 
+import {
+	StyleSheet,
+	View,
 	Text,
-	KeyboardAvoidingView, 
+	// ScrollView,
 } from "react-native";
-
-// Redux
-import { useSelector } from "react-redux";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -18,87 +13,34 @@ import Tools from '../constants/Tools';
 // Components
 import FaceSlider from "./FaceSlider";
 
-// ==================== Component
+// ==================== Component ====================
 const MonthDetailBottomCard = props => {
 
 	return (
 		<View style={styles.screen}>
 
 			{/* Icon and slider */}
-			<FaceSlider 
-				day={props.dayOfWeek} 
-				dayDate={`${props.monthNo+1}/${props.dayNo}/${props.yearInt}`} 
+			<FaceSlider
+				day={props.dayOfWeek}
+				dayDate={`${props.monthNo + 1}/${props.dayNo}/${props.yearInt}`}
 				showSlider={false}
 				faceColor={props.faceColor}
 				colorNumber={props.colorNumber}
-				/>
+			/>
 
 			{/* Text row */}
 			<View style={styles.bottomTextView}>
-				<ScrollView style={styles.scrollView}>
-					<Text style={props.message.length > 0 ? styles.bottomText : {...styles.bottomText, color: Tools.colorBackground}}>
-						{props.message.length > 0 ? props.message : "No entry." }
+				{/* <ScrollView style={styles.scrollView}>    maybe someday  */}
+					<Text style={props.message.length > 0 ? styles.bottomText : { ...styles.bottomText, color: Tools.colorBackground }}>
+						{props.message.length > 0 ? props.message : "No entry."}
 					</Text>
-				</ScrollView>
+				{/* </ScrollView> */}
 			</View>
-
-			{/* <ScrollView
-				style={{flex: 1}}
-				contentContainerStyle={{flexGrow: 1}}
-				scrollEnabled={true}>
-
-				<View style={{flexGrow: 1}}>
-					<Text>
-						this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text this is text 
-					</Text>
-				</View>
-			</ScrollView> */}
-
-
-
-			{/* <ScrollView 
-				style={styles.scrollView} 
-				contentContainerStyle={styles.contentContainer}
-				>
-
-				<Text style={styles.paragraph}>
-					This is a ScrollView example HEADER.
-				</Text>
-				<Text style={styles.paragraph}>
-					This is a ScrollView example paragraph.
-				</Text>
-				<Text style={styles.paragraph}>
-					This is a ScrollView example paragraph.
-				</Text>
-				<Text style={styles.paragraph}>
-					This is a ScrollView example paragraph.
-				</Text>
-				<Text style={styles.paragraph}>
-					This is a ScrollView example paragraph.
-				</Text>
-				<Text style={styles.paragraph}>
-					This is a ScrollView example paragraph.
-				</Text>
-				<Text style={styles.paragraph}>
-					This is a ScrollView example FOOTER.
-				</Text>
-				<Text style={styles.paragraph}>
-					This is a ScrollView example FOOTER.
-				</Text>
-				<Text style={styles.paragraph}>
-					This is a ScrollView example FOOTER.
-				</Text>
-				<Text style={styles.paragraph}>
-					This is a ScrollView example FOOTER.
-				</Text>
-
-			</ScrollView> */}
-
 		</View>
 	);
 };
 
-// ==================== Styles
+// ==================== Styles ====================
 const styles = StyleSheet.create({
 	screen: {
 		height: 218,
@@ -109,16 +51,10 @@ const styles = StyleSheet.create({
 		padding: Tools.paddingNormal,
 		backgroundColor: Tools.colorBackground,
 		paddingBottom: Tools.paddingLarge,
-		// zIndex: 999,
-		// borderWidth: 1,
-		// borderColor: 'green'
 	},
-
 	bottomTextView: {
 		flex: 1,
 		width: "100%",
-		// minHeight: 96,
-		// maxHeight: 96,
 		marginTop: Tools.paddingNormal,
 		backgroundColor: Tools.colorTextboxGrey,
 		borderRadius: 5,
@@ -132,39 +68,10 @@ const styles = StyleSheet.create({
 		paddingBottom: 8,
 		lineHeight: 20,
 		fontSize: 16,
-		// borderWidth: 1,
-		// borderColor: 'blue'
 	},
-	scrollView: {
-		flex: 1,
-		// borderWidth: 1,
-		// borderColor: 'red',
-	},
-
-
-	// paragraph: {
-	// 	margin: 24,
-	// 	fontSize: 18,
-	// 	fontWeight: 'bold',
-	// 	textAlign: 'center',
-	//   },
-	//   scrollView: {
-	// 	height: '100%',
-	// 	width: '100%',
-	// 	margin: 20,
-	// 	alignSelf: 'center',
-	// 	padding: 20,
-	// 	borderWidth: 5,
-	// 	borderRadius: 5,
-	// 	borderColor: 'black',
-	// 	backgroundColor: 'lightblue'
-	//   },
-	//   contentContainer: {
-	// 	justifyContent: 'center',
-	// 	alignItems: 'center',
-	// 	backgroundColor: 'lightgrey',
-	// 	paddingBottom: 50
-	//   }
+	// scrollView: {
+	// 	flex: 1,
+	// },
 });
 
 export default MonthDetailBottomCard;

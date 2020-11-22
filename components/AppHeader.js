@@ -1,8 +1,8 @@
 // React
-import React, { useEffect, useState } from 'react';
-import { 
-	StyleSheet, 
-	View, 
+import React from 'react';
+import {
+	StyleSheet,
+	View,
 	Image,
 	Text,
 	TouchableOpacity
@@ -10,11 +10,15 @@ import {
 import Svg, { Path } from 'react-native-svg';
 
 // Redux
-import { useDispatch } from "react-redux";
-import { setHeaderHeight, updateData, loadActiveYears, findYears, loadYearsArray, addEmptyYear } from "../store/actions/actions";
-
-// Icons
-import { Ionicons } from '@expo/vector-icons';
+import { useDispatch, useSelector } from "react-redux";
+import { 
+	setHeaderHeight, 
+	updateData, 
+	loadActiveYears, 
+	findYears, 
+	loadYearsArray, 
+	addEmptyYear 
+} from "../store/actions/actions";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -24,59 +28,54 @@ import Year2020 from "../data/Year2020Populated";
 import Year2021 from "../data/Year2021Blank";
 import Year2020Blank from "../data/Year2020Blank";
 
-// Redux
-import { useSelector } from "react-redux";
-
-
-// ==================== Component
+// ==================== Component ====================
 const AppHeader = props => {
 
+	// Redux
 	const dispatch = useDispatch();
-
-	// const tempDate = new Date().getFullYear();
-	// const [yearInt, setYearInt] = useState(tempDate);
-
-	const findHeaderHeight = (event) => {
-		const { height } = event.nativeEvent.layout;
-		dispatch(setHeaderHeight(height));
-	};
-
 	const data = useSelector(state => state.dataReducer.data);
 	const years = useSelector(state => state.dataReducer.years);
 	const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
 	const uid = useSelector(state => state.authReducer.userId);
 	const token = useSelector(state => state.authReducer.token);
-	const placeholder = () => {
-		// console.log("placeholder");
-		
+
+	// Find header height on load
+	const findHeaderHeight = (event) => {
+		const { height } = event.nativeEvent.layout;
+		dispatch(setHeaderHeight(height));
+	};
+
+	// Temporary; will be inline after the dev use is gone
+	const handleSettingsChange = () => {
 		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2021", Year2021));
 		// dispatch(loadActiveYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
 		// dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", 2020));
 		// dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", 2021));
 		// dispatch(findYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
-		
+
 		// dispatch(addEmptyYear(2021, Year2021));
-		
+
 		// console.log("years", years);
 		// console.log("yearsLoaded", yearsLoaded);
 		// console.log("uid", uid);
-		console.log("token", token);
-		
+
 		props.navigation.navigate("Settings");
 	};
 
+	// Header image custom component
 	const HeaderImage = () => {
 		if (props.backButton) {
 			return (
 				<View style={styles.svgContainer}>
-					<Svg style={{ 
-						transform: [{ rotateZ: "180deg" }],
-						shadowColor: '#000',
-						shadowOffset: { width: 0, height: -3 },
-						shadowRadius: 2,
-						shadowOpacity: 1, }} 
-						width={14} 
-						height={16} 
+					<Svg style={{
+							transform: [{ rotateZ: "180deg" }],
+							shadowColor: '#000',
+							shadowOffset: { width: 0, height: -3 },
+							shadowRadius: 2,
+							shadowOpacity: 1,
+						}}
+						width={14}
+						height={16}
 						viewBox="0 0 14 16">
 						<Path fill={Tools.color3} d={Tools.arrowPath} />
 					</Svg>
@@ -84,54 +83,49 @@ const AppHeader = props => {
 			);
 		} else {
 			return (
-				<Image 
+				<Image
 					style={styles.logoImage}
 					source={require("../assets/images/sober-logo.png")}
-					/>
+				/>
 			);
 		}
 	};
 
 	return (
 		<View style={styles.header} onLayout={findHeaderHeight}>
+
 			{/* Logo */}
 			<View style={styles.leftGroup}>
-				<TouchableOpacity 
-					activeOpacity={props.backButton ? Tools.activeOpacity : 1} 
-					style={{padding: Tools.paddingNormal}} 
-					onPress={() => {props.navigation.goBack()}}>
+				<TouchableOpacity
+					activeOpacity={props.backButton ? Tools.activeOpacity : 1}
+					style={{ padding: Tools.paddingNormal }}
+					onPress={() => { props.navigation.goBack() }}>
 					<HeaderImage />
 				</TouchableOpacity>
 				{props.isSettings === false ?
-					<Text style={styles.yearText}>
-						{data.yearInt}
-					</Text>
-					: 
+					<Text style={styles.yearText}>{data.yearInt}</Text>
+					:
 					null
 				}
-
 			</View>
 
-
-
-			{/* Text */}
+			{/* Settings button */}
 			{props.isSettings === false ?
 				Object.keys(data).length !== 0 ?
-					<TouchableOpacity 
-						activeOpacity={Tools.activeOpacity} 
-						style={styles.textContainer} 
-						onPress={placeholder}>
-
-						<Image 
-							style={{...styles.logoImage, paddingHorizontal: 6}}
+					<TouchableOpacity
+						activeOpacity={Tools.activeOpacity}
+						style={styles.textContainer}
+						onPress={handleSettingsChange}>
+						<Image
+							style={{ ...styles.logoImage, paddingHorizontal: 6 }}
 							source={require("../assets/images/settings-kog.png")}
-							/>
+						/>
 					</TouchableOpacity>
-					: 
+					:
 					null
-				: 
+				:
 				<View style={styles.settingsTextContainer}>
-					<Text style={{...styles.yearText, color: Tools.color5, fontWeight: "500"}}>
+					<Text style={{ ...styles.yearText, color: Tools.color5, fontWeight: "500" }}>
 						Settings
 					</Text>
 				</View>
@@ -139,9 +133,9 @@ const AppHeader = props => {
 
 		</View>
 	);
-}
+};
 
-// ==================== Styles
+// ==================== Styles ====================
 const styles = StyleSheet.create({
 	header: {
 		height: 65,
@@ -174,8 +168,8 @@ const styles = StyleSheet.create({
 		paddingHorizontal: Tools.paddingLarge,
 	},
 	svgContainer: {
-		paddingHorizontal: 12, 
-		height: 20, 
+		paddingHorizontal: 12,
+		height: 20,
 		justifyContent: "center",
 		alignItems: "center",
 	},
