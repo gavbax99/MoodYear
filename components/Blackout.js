@@ -5,6 +5,7 @@ import {
 	Dimensions,
 	Animated,
 	View,
+	Keyboard
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
@@ -17,15 +18,12 @@ import Tools from '../constants/Tools';
 // Vars
 const windowHeight = Dimensions.get('window').height;
 
-// Arrow
-// const arrowPath = "M 0 14.4 V 1.6 c 0 -1.2 1.3 -1.9 2.3 -1.4 l 10.9 6.3 c 1.1 0.6 1.1 2.3 0 2.9 L 2.3 15.8 C 1.3 16.4 0 15.6 0 14.4 Z";
-
-
 
 // ==================== Component
 const Blackout = props => {
 
 	const [dynamicDisplay, setDynamicDisplay] = useState(false);
+	const [keyboardHeight, setKeyboardHeight] = useState(0);
 
 	// Keyboard open constant
 	const keyboardOpen = useSelector(state => state.keyboardReducer.keyboardReducerState);
@@ -56,19 +54,34 @@ const Blackout = props => {
 		} else {
 			timer = setTimeout(() => {setDynamicDisplay(false)}, 300);
 		}
+
+		// Cleanup
 		return () => clearTimeout(timer);
 	}, [keyboardOpen]);
 
-
-
 	// Fade the blackout
 	keyboardOpen ? fadeIn() : fadeOut();
+
+
+	// Set height of blackout
+	const handleSetKeyboardHeight = (e) => {
+		setKeyboardHeight(e.endCoordinates.height);
+		Keyboard.removeListener('keyboardDidShow', handleSetKeyboardHeight);
+	};
+
+	useEffect(() => {
+		Keyboard.addListener('keyboardDidShow', handleSetKeyboardHeight);
+
+		// Cleanup
+		// return () => {Keyboard.removeListener('keyboardDidShow', handleSetKeyboardHeight)}
+	}, [useEffect]);
 	
 	if (dynamicDisplay) {
 		return (
 			<Animated.View style={{
 				...styles.blackout,
 				opacity: fadeAnim,
+				height: windowHeight - keyboardHeight - 65, // is 65 gonna fuck me? who knows!
 				}}>
 					<Svg style={{ 
 						transform: [{ rotateZ: "90deg" }], 
@@ -97,7 +110,6 @@ const Blackout = props => {
 const styles = StyleSheet.create({
 	blackout: {
 		width: "100%",
-		height: windowHeight,
 		flex: 1,
 		position: "absolute",
 		top: 0,
@@ -107,7 +119,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 		backgroundColor: "rgba(16, 16, 16, 0.7)",
-		paddingTop: "4%",
+		paddingTop: Tools.paddingDouble,
 	}
 });
 
