@@ -3,20 +3,29 @@ export const SET_KEYBOARD_OPEN = "SET_KEYBOARD_OPEN";
 export const SET_HEADER_HEIGHT = "SET_HEADER_HEIGHT";
 
 // #################### AUTH ####################
-export const HANDLE_AUTH_DATA = "HANDLE_AUTH_DATA"; 
+export const SIGNUP = "SIGNUP";
+export const LOGIN = "LOGIN";
 export const LOGOUT_AUTH = "LOGOUT_AUTH";
-export const DELETE_ACCOUNT = "DELETE_ACCOUNT"; // no reducer import
+export const LOGOUT_DATA = "LOGOUT_DATA";
+export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
 
 // #################### DATA ####################
-export const HANDLE_DATA_UPDATE = "HANDLE_DATA_UPDATE";
-export const LOGOUT_DATA = "LOGOUT_DATA";
-export const LOAD_ACTIVE_YEARS = "LOAD_ACTIVE_YEARS"; 
+export const LOAD_DATA = "LOAD_DATA";
+export const UPDATE_SINGLE_DAY = "UPDATE_SINGLE_DAY";
+export const REMOVE_DATA = "REMOVE_DATA"; 
 
 // #################### YEARS ####################
-export const PUT_NEW_ACTIVE_YEAR = "PUT_NEW_ACTIVE_YEAR"; // no reducer import
+export const LOAD_ACTIVE_YEARS = "LOAD_ACTIVE_YEARS"; 
+export const PUT_NEW_ACTIVE_YEAR = "PUT_NEW_ACTIVE_YEAR";
+export const UPDATE_EMPTY_YEAR = "UPDATE_EMPTY_YEAR";
 
 // #################### DEV ####################
-export const ADD_EMPTY_YEAR = "ADD_EMPTY_YEAR"; // no reducer import
+export const UPDATEDATA = "UPDATEDATA";
+export const ADD_EMPTY_YEAR = "ADD_EMPTY_YEAR";
+
+// #################### MISC ####################
+// export const FIND_YEARS = "FIND_YEARS";
+// export const LOAD_SINGLE_DAY = "LOAD_SINGLE_DAY";
 
 
 // ==================== UI ====================
@@ -35,6 +44,7 @@ export const setHeaderHeight = (heightInt) => {
 		heightInt: heightInt
 	};
 };
+
 
 // ==================== AUTH ====================
 // Sign up
@@ -85,7 +95,7 @@ export const signup = (email, password) => {
 		});
 
 		dispatch({ 
-			type: HANDLE_AUTH_DATA,
+			type: SIGNUP,
 			token: resData.idToken,
 			userId: resData.localId,
 			email: resData.email,
@@ -136,7 +146,7 @@ export const login = (email, password) => {
 		const resAccountInfo = await accountInfo.json();
 
 		dispatch({ 
-			type: HANDLE_AUTH_DATA,
+			type: LOGIN,
 			token: resData.idToken,
 			userId: resData.localId,
 			email:  resAccountInfo.email,
@@ -149,6 +159,13 @@ export const login = (email, password) => {
 export const logoutAuth = () => {
 	return {
 		type: LOGOUT_AUTH,
+	};
+};
+
+// Logout DATA
+export const logoutData = () => {
+	return {
+		type: LOGOUT_DATA,
 	};
 };
 
@@ -179,6 +196,7 @@ export const deleteAccount = (uid, token) => {
 	};
 };
 
+
 // ==================== DATA ====================
 // Loading a yea'rs data (fetched from firebase) for login and changing year
 export const loadData = (uid, year) => {
@@ -189,7 +207,7 @@ export const loadData = (uid, year) => {
 		// console.log("loaddata in action: ", resData)
 
 		dispatch({
-			type: HANDLE_DATA_UPDATE,
+			type: LOAD_DATA,
 			data: resData
 		});
 	};
@@ -210,7 +228,7 @@ export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 		const newDataResData = await loadNewDataResponse.json(); 
 
 		dispatch({
-			type: HANDLE_DATA_UPDATE,
+			type: UPDATE_SINGLE_DAY,
 			data: newDataResData
 		});
 	};
@@ -219,17 +237,11 @@ export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 // Remove data (primarily for loading ui after changing years)
 export const removeData = () => {
 	return {
-		type: HANDLE_DATA_UPDATE,
+		type: REMOVE_DATA,
 		data: {}
 	};
 };
 
-// Logout DATA
-export const logoutData = () => {
-	return {
-		type: LOGOUT_DATA,
-	};
-};
 
 // ==================== YEARS =========================
 // Loading data (fetched from firebase)
@@ -279,7 +291,7 @@ export const updateEmptyYear = (uid, year) => {
 		const resLoadNewYearData = await loadNewYear.json(); 
 
 		dispatch({
-			type: HANDLE_DATA_UPDATE,
+			type: UPDATE_EMPTY_YEAR,
 			data: resLoadNewYearData
 		});
 	};
@@ -301,7 +313,7 @@ export const updateData = (uid, year, data) => {
 		const resData = await response.json(); 
 
 		dispatch({
-			type: HANDLE_DATA_UPDATE,
+			type: UPDATEDATA,
 			data: resData
 		});
 	};
@@ -323,3 +335,49 @@ export const addEmptyYear = (year, data) => {
 		});
 	};
 };
+
+
+
+// ADD THIS METHOD SOMEWHERE TO PUSH A NEW YEAR
+
+// const ADD_NEW_YEAR = () => {
+// 	async function setData() {
+// 		const response = await fetch(`https://rn-health.firebaseio.com/emptyCalendar.json`, {
+// 		method: "PUT",
+// 		headers: {
+// 			"Content-Type": "application/json"
+// 		},
+// 		body: JSON.stringify(Year2020Hold)
+// 	});
+// 		const resData = await response.json();
+// 	};
+
+// 	setData();
+// };
+
+
+
+
+// Loading single day (fetched from firebase) maybe works someday
+// export const loadSingleDay = (uid, year, monthNo, dayNo) => {
+// 	return async dispatch => {
+// 		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`);
+
+// 		const resData = await response.json(); 
+
+// 		console.log(resData);
+
+// 		dispatch({
+// 			type: LOAD_SINGLE_DAY,
+// 			// data: resData
+// 			data:
+// 		});
+// 	};
+// };
+
+
+
+// import { useDispatch } from "react-redux";
+//import * as Actions from "../store/actions/actions";
+// const dispatch = useDispatch();
+// dispatch(setKeyboardOpen(true));

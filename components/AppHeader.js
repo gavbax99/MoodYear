@@ -36,8 +36,11 @@ const AppHeader = props => {
 	const data = useSelector(state => state.dataReducer.data);
 	const years = useSelector(state => state.dataReducer.years);
 	const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
+
 	const uid = useSelector(state => state.authReducer.userId);
 	const token = useSelector(state => state.authReducer.token);
+	const email = useSelector(state => state.authReducer.email);
+	const registeredDate = useSelector(state => state.authReducer.registeredDate);
 
 	// Find header height on load
 	const findHeaderHeight = (event) => {
@@ -58,6 +61,11 @@ const AppHeader = props => {
 		// console.log("years", years);
 		// console.log("yearsLoaded", yearsLoaded);
 		// console.log("uid", uid);
+
+		// console.log("uid", uid);
+		// console.log("token", token);
+		// console.log("email", email);
+		// console.log("registeredDate", registeredDate);
 
 		props.navigation.navigate("Settings");
 	};
