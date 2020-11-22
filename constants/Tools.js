@@ -7,6 +7,7 @@ export default {
 	accentColor: "#12b9e0",
 	colorLight: "#ffffff",
 
+	// Greys
 	colorBackground: "#242424",
 	colorHeaderGrey: "#161616",
 	colorTextboxGrey: "#404040",
@@ -28,5 +29,6 @@ export default {
 	paddingDouble: "8%",
 	paddingMonths: "10%",
 
+	// Touchable opacity fade
 	activeOpacity: 0.35,
 };

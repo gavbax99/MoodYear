@@ -24,7 +24,7 @@ const defaultStackNavOptions = {
 	gestureEnabled: false,
 };
 
-// ***** Shop stack
+// Main nav
 const HomeNavigator = createStackNavigator({
 	Login: {
 		screen: AuthScreen,

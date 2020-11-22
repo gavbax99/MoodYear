@@ -1,30 +1,39 @@
 // React
-import React, { useState, useReducer, useCallback, useEffect } from 'react';
+import React, {
+	useState,
+	useReducer,
+	useCallback,
+	useEffect,
+} from 'react';
 import {
 	StyleSheet,
 	View,
 	Text,
 	KeyboardAvoidingView,
-	TextInput,
 	TouchableWithoutFeedback,
 	Keyboard,
 	TouchableOpacity,
 	ActivityIndicator,
-	Alert
+	Alert,
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import * as Actions from "../store/actions/actions";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-
-// Components
-import Input from "../components/Input";
+import { login, signup } from "../store/actions/actions";
 
 // Constants 
 import Tools from '../constants/Tools';
 
-// Form stat and reducer
+// Components
+import Input from "../components/Input";
+
+// Static functions
+const handleTouchableWithoutFeedback = () => {
+	Keyboard.dismiss();
+};
+
+// Form state and reducer
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 const initialState = {
 	inputValues: {
@@ -62,9 +71,12 @@ const formReducer = (state, action) => {
 	return state;
 };
 
-// ==================== Component
+// ==================== Component ====================
 const AuthScreen = props => {
+
+	// Redux
 	const dispatch = useDispatch();
+	const headerHeight = useSelector(state => state.navReducer.headerHeightState);
 
 	// State
 	const [formState, dispatchFormState] = useReducer(formReducer, initialState);
@@ -72,15 +84,10 @@ const AuthScreen = props => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLogin, setIsLogin] = useState(true);
 
-	// Min keyboard
-	const handleTouchableWithoutFeedback = () => {
-		Keyboard.dismiss();
-	}
-
 	// Login -> reg
 	const switchLogin = () => {
 		setIsLogin(!isLogin);
-	}
+	};
 
 	// Handle login/reg
 	const loginHandler = async () => {
@@ -98,15 +105,13 @@ const AuthScreen = props => {
 			return;
 		}
 
+		// Try to login or register with email/pass
 		try {
 			if (isLogin) {
-				console.log("loginHandler");
-				await dispatch(Actions.login(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+				await dispatch(login(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
 				props.navigation.replace("Home");
 			} else {
-				console.log("signupHandler");
-				await dispatch(Actions.signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
-				// props.navigation.replace("Home");
+				await dispatch(signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
 				props.navigation.replace({
 					routeName: "Ftue",
 					params: { newUser: true },
@@ -142,15 +147,16 @@ const AuthScreen = props => {
 		<TouchableWithoutFeedback onPress={handleTouchableWithoutFeedback}>
 			<KeyboardAvoidingView
 				behavior="padding"
-				keyboardVerticalOffset={useSelector(state => state.navReducer.headerHeightState)}
+				keyboardVerticalOffset={headerHeight}
 				style={{ flex: 1 }}>
 				<View style={styles.screen}>
 
+					{/* Title text */}
 					<View style={{ width: "100%" }}>
 						<Text style={styles.titleText}>FeelBetter</Text>
 					</View>
 
-					{/* EMAIL */}
+					{/* Email */}
 					<Input
 						id="email"
 						label="Email"
@@ -168,9 +174,9 @@ const AuthScreen = props => {
 						selectionColor={Tools.colorLight}
 						keyboardAppearance={"dark"}
 						keyboardType={"email-address"}
-						/>
+					/>
 
-					{/* PASSWORD */}
+					{/* Password */}
 					<Input
 						id="password"
 						label="Password"
@@ -187,34 +193,43 @@ const AuthScreen = props => {
 						selectionColor={Tools.colorLight}
 						keyboardAppearance={"dark"}
 						keyboardType={"default"}
-						/>
+					/>
 
+					{/* Switch login/reg state text */}
 					<View style={styles.switchTextContainer}>
 						<Text style={styles.switchText}>
-							{ isLogin ? "Don't have an account?" : "Already have an account?" }
+							{isLogin ? "Don't have an account?" : "Already have an account?"}
 						</Text>
 						<TouchableOpacity onPress={switchLogin}>
 							<Text style={{ ...styles.switchText, ...styles.switchTextButton }}>
-								{ isLogin ? "Register now." : "Login now." }
+								{isLogin ? "Register now." : "Login now."}
 							</Text>
 						</TouchableOpacity>
 					</View>
 
 					{/* If loading, show loading icon. Otherwise show login button */}
-					{ isLoading ? 
-					<ActivityIndicator size="small" color={Tools.color1} /> :
-					<TouchableOpacity style={{ ...styles.button, backgroundColor: isLogin ? Tools.color1 : Tools.color3 }} onPress={loginHandler}>
-						<Text style={{ color: "#fff", fontSize: 18 }}>
-							{ isLogin ? "Login" : "Register" }
-						</Text>
+					{isLoading ?
+						<ActivityIndicator size="small" color={Tools.color1} />
+						:
+						<TouchableOpacity style={{ 
+								...styles.button, 
+								backgroundColor: isLogin ? Tools.color1 : Tools.color3 
+							}} 
+							onPress={loginHandler}>
 
-						<Svg style={{ marginLeft: 10 }}
-							width={8}
-							height={10}
-							viewBox="0 0 14 16">
-							<Path fill={Tools.colorLight} d={Tools.arrowPath} />
-						</Svg>
-					</TouchableOpacity> }
+							<Text style={{ color: "#fff", fontSize: 18 }}>
+								{isLogin ? "Login" : "Register"}
+							</Text>
+							
+							<Svg style={{ marginLeft: 10 }}
+								width={8}
+								height={10}
+								viewBox="0 0 14 16">
+								<Path fill={Tools.colorLight} d={Tools.arrowPath} />
+							</Svg>
+							
+						</TouchableOpacity>
+					}
 
 				</View>
 
@@ -234,9 +249,9 @@ const AuthScreen = props => {
 			</KeyboardAvoidingView>
 		</TouchableWithoutFeedback>
 	);
-}
+};
 
-// ==================== Styles
+// ==================== Styles ====================
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,
@@ -252,11 +267,9 @@ const styles = StyleSheet.create({
 		fontSize: 40,
 		fontWeight: "700",
 		color: Tools.color5,
-
 	},
 	textInput: {
 		marginTop: Tools.paddingNormal,
-
 		minWidth: "100%",
 		maxWidth: "100%",
 		height: 46,
@@ -265,21 +278,18 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 12,
 		paddingTop: 10,
 		paddingBottom: 8,
-		// lineHeight: 22,
 		borderRadius: 3,
 		fontSize: 18
 	},
 	button: {
 		flexDirection: "row",
 		alignItems: "center",
-		// backgroundColor: Tools.color1,
 		marginTop: Tools.paddingDouble,
 		paddingVertical: Tools.paddingNormal,
 		paddingHorizontal: Tools.paddingDouble,
 		borderRadius: 3,
 	},
 	switchTextContainer: {
-		// marginTop: Tools.paddingHalf,
 		width: "100%",
 		flexDirection: "row",
 		alignItems: "flex-start",

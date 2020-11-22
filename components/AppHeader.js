@@ -20,8 +20,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Tools from '../constants/Tools';
 
 // Data
-import Year2020 from "../data/Year2020";
-import Year2021 from "../data/Year2021";
+import Year2020 from "../data/Year2020Populated";
+import Year2021 from "../data/Year2021Blank";
 import Year2020Blank from "../data/Year2020Blank";
 
 // Redux
