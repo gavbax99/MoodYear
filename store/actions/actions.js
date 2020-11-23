@@ -1,3 +1,5 @@
+import config from "../../config";
+
 // #################### UI ####################
 export const SET_KEYBOARD_OPEN = "SET_KEYBOARD_OPEN";
 export const SET_HEADER_HEIGHT = "SET_HEADER_HEIGHT";
@@ -41,7 +43,7 @@ export const setHeaderHeight = (heightInt) => {
 export const signup = (email, password) => {
 	return async dispatch => {
 		// any async code before dispatching
-		const response = await fetch("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBSmR6DzYUNSsWlaaeyqyMTP2etMA01sOU", {
+		const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${config.API_KEY}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -76,7 +78,7 @@ export const signup = (email, password) => {
 		const dayNumber = date.getDate();
 		const dayDate = ((monthNumber + 1) + '/' + dayNumber + '/' + yearNumber);
 
-		const newUid = await fetch(`https://rn-health.firebaseio.com/userData/${resData.localId}.json`, {
+		const newUid = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${resData.localId}.json`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -98,7 +100,7 @@ export const signup = (email, password) => {
 export const login = (email, password) => {
 	return async dispatch => {
 		// Login with email and password
-		const response = await fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBSmR6DzYUNSsWlaaeyqyMTP2etMA01sOU", {
+		const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${config.API_KEY}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -132,7 +134,7 @@ export const login = (email, password) => {
 		// console.log(resData);
 
 		// Grabs account info 
-		const accountInfo = await fetch(`https://rn-health.firebaseio.com/userData/${resData.localId}/accountInfo.json`);
+		const accountInfo = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${resData.localId}/accountInfo.json`);
 		const resAccountInfo = await accountInfo.json();
 
 		dispatch({ 
@@ -156,7 +158,7 @@ export const logoutAuth = () => {
 export const deleteAccount = (uid, token) => {
 	return async dispatch => {
 		// Deletes user data
-		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}.json`, {
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}.json`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json"
@@ -165,7 +167,7 @@ export const deleteAccount = (uid, token) => {
 		});
 
 		// Deletes associated account
-		const deleteAccount = await fetch("https://identitytoolkit.googleapis.com/v1/accounts:delete?key=AIzaSyBSmR6DzYUNSsWlaaeyqyMTP2etMA01sOU", {
+		const deleteAccount = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:delete?key=${config.API_KEY}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -183,7 +185,7 @@ export const deleteAccount = (uid, token) => {
 // Loading a yea'rs data (fetched from firebase) for login and changing year
 export const loadData = (uid, year) => {
 	return async dispatch => {
-		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`);
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json`);
 
 		const resData = await response.json(); 
 		// console.log("loaddata in action: ", resData)
@@ -198,7 +200,7 @@ export const loadData = (uid, year) => {
 // Updating single day (put to firebase)
 export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 	return async dispatch => {
-		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`, {
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -206,7 +208,7 @@ export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 			body: JSON.stringify(dayData)
 		});
 
-		const loadNewDataResponse = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`);
+		const loadNewDataResponse = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json`);
 		const newDataResData = await loadNewDataResponse.json(); 
 
 		dispatch({
@@ -235,7 +237,7 @@ export const logoutData = () => {
 // Loading data (fetched from firebase)
 export const loadActiveYears = (uid) => {
 	return async dispatch => {
-		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears.json`);
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/activeYears.json`);
 		const resData = await response.json(); 
 
 		dispatch({
@@ -249,7 +251,7 @@ export const loadActiveYears = (uid) => {
 // Put new year into /activeyears
 export const putNewActiveYear = (uid, year) => {
 	return async dispatch => {
-		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/activeYears/${year}.json`, {
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/activeYears/${year}.json`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -266,10 +268,10 @@ export const putNewActiveYear = (uid, year) => {
 // Updating ENTIRE year from empty calendar (put to firebase)
 export const updateEmptyYear = (uid, year) => {
 	return async dispatch => {
-		const response = await fetch(`https://rn-health.firebaseio.com/emptyCalendar/${year}.json`);
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/emptyCalendar/${year}.json`);
 		const resData = await response.json(); 
 
-		const loadNewYear = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
+		const loadNewYear = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -290,7 +292,7 @@ export const updateEmptyYear = (uid, year) => {
 // Updating ENTIRE data (put to firebase) ***FOR DEV USE ONLY***
 export const updateData = (uid, year, data) => {
 	return async dispatch => {
-		const response = await fetch(`https://rn-health.firebaseio.com/userData/${uid}/${year}.json`, {
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -310,7 +312,7 @@ export const updateData = (uid, year, data) => {
 // Add new empty year to emptyCalendar  ***FOR DEV USE ONLY***
 export const addEmptyYear = (year, data) => {
 	return async dispatch => {
-		const response = await fetch(`https://rn-health.firebaseio.com/emptyCalendar/${year}.json`, {
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/emptyCalendar/${year}.json`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"

@@ -119,7 +119,7 @@ const FtueScreen = props => {
 					<View style={styles.scrollContentContainer}>
 						{/* Summary text */}
 						<Text style={styles.bodyText}>
-							FeelGood is a simple daily mood tracking and journaling tool. Submitting a daily entry is easy: tap the bottom text bar to open the console, slide the mood bar, and write about your day. Submit your entry by tapping the <Text style={{ fontWeight: "500", color: Tools.accentColor }}>blue "+" button</Text>.
+							MoodYear is a simple daily mood tracking and journaling tool. Submitting a daily entry is easy: tap the bottom text bar to open the console, slide the mood bar, and write about your day. Submit your entry by tapping the <Text style={{ fontWeight: "500", color: Tools.accentColor }}>blue "+" button</Text>.
 						</Text>
 
 						{/* Image */}
@@ -197,7 +197,7 @@ const FtueScreen = props => {
 						</Text>
 
 						<Text style={styles.bodyText}>
-							FeelGood believes in privacy. The only data we store on our secure database is the email you registered with, the registration date, and your journal entries. Your data will <Text style={{ fontWeight: "500" }}>never</Text> be sold, transferred, or otherwise used outside of the FeelGood app. To learn more, read our Privacy Policy.
+							MoodYear believes in privacy. The only data we store on our secure database is the email you registered with, the registration date, and your journal entries. Your data will <Text style={{ fontWeight: "500" }}>never</Text> be sold, transferred, or otherwise used outside of the MoodYear app. To learn more, read our Privacy Policy.
 						</Text>
 
 						{/* PP button */}
