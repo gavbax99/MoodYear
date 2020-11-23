@@ -150,7 +150,7 @@ const AboutScreen = props => {
 						</TouchableOpacity>
 
 						{/* Year selection */}
-						<View style={{ ...styles.accountInfoContainer, marginTop: Tools.paddingLarge, marginBottom: Tools.paddingLarge }}>
+						<View style={{ ...styles.accountInfoContainer, marginTop: Tools.paddingLarge, marginBottom: Tools.paddingMonths }}>
 							<View style={styles.infoTextContainer}>
 								<Text style={styles.infoTitleText}>Version:</Text>
 								<Text style={styles.infoText}>1.0.0</Text>

@@ -4,7 +4,8 @@ import {
 	StyleSheet,
 	View,
 	Text,
-	TouchableOpacity
+	TouchableOpacity,
+	SafeAreaView
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
@@ -27,7 +28,7 @@ const OtherPagesHeader = props => {
 	};
 
 	return (
-		<View style={styles.header} onLayout={findHeaderHeight}>
+		<SafeAreaView style={styles.header} onLayout={findHeaderHeight}>
 			{/* Logo */}
 			<View style={styles.leftGroup}>
 				<TouchableOpacity
@@ -58,14 +59,14 @@ const OtherPagesHeader = props => {
 					{props.title}
 				</Text>
 			</View>
-		</View>
+		</SafeAreaView>
 	);
 };
 
 // ==================== Styles ====================
 const styles = StyleSheet.create({
 	header: {
-		height: 65,
+		// height: 65,
 		width: "100%",
 		backgroundColor: Tools.colorHeaderGrey,
 		justifyContent: "space-between",
@@ -91,8 +92,8 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
-		padding: Tools.paddingNormal,
 		paddingHorizontal: Tools.paddingLarge,
+		paddingVertical: Tools.paddingNormal,
 	},
 	svgContainer: {
 		paddingHorizontal: 12,
