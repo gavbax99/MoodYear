@@ -5,7 +5,8 @@ import {
 	View,
 	Image,
 	Text,
-	TouchableOpacity
+	TouchableOpacity,
+	SafeAreaView
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
@@ -100,13 +101,13 @@ const AppHeader = props => {
 	};
 
 	return (
-		<View style={styles.header} onLayout={findHeaderHeight}>
-
+		<SafeAreaView style={styles.header} onLayout={findHeaderHeight}>
+			
 			{/* Logo */}
 			<View style={styles.leftGroup}>
 				<TouchableOpacity
 					activeOpacity={props.backButton ? Tools.activeOpacity : 1}
-					style={{ padding: Tools.paddingNormal }}
+					style={{ paddingHorizontal: Tools.paddingNormal }}
 					onPress={() => { props.navigation.goBack() }}>
 					<HeaderImage />
 				</TouchableOpacity>
@@ -139,14 +140,14 @@ const AppHeader = props => {
 				</View>
 			}
 
-		</View>
+		</SafeAreaView>
 	);
 };
 
 // ==================== Styles ====================
 const styles = StyleSheet.create({
 	header: {
-		height: 65,
+		// height: 65,
 		width: "100%",
 		backgroundColor: Tools.colorHeaderGrey,
 		justifyContent: "space-between",
@@ -155,8 +156,8 @@ const styles = StyleSheet.create({
 		zIndex: 999,
 	},
 	logoImage: {
-		width: 24,
-		height: 24,
+		width: 28,
+		height: 28,
 		resizeMode: "contain",
 	},
 	headerText: {
@@ -172,8 +173,8 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
-		padding: Tools.paddingNormal,
 		paddingHorizontal: Tools.paddingLarge,
+		paddingVertical: Tools.paddingNormal,
 	},
 	svgContainer: {
 		paddingHorizontal: 12,
@@ -182,6 +183,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	leftGroup: {
+		paddingVertical: Tools.paddingNormal,
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
