@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		padding: Tools.paddingNormal,
 		backgroundColor: Tools.colorBackground,
-		paddingBottom: Tools.paddingLarge,
+		paddingBottom: Tools.paddingDouble,
 	},
 	bottomTextView: {
 		flex: 1,

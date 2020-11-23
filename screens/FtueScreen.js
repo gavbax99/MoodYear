@@ -7,7 +7,8 @@ import {
 	ScrollView,
 	TouchableOpacity,
 	Image,
-	Linking
+	Linking,
+	SafeAreaView
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
@@ -71,29 +72,31 @@ const FtueScreen = props => {
 	// Ftue header component
 	const FtueHeader = () => {
 		return (
-			<View style={styles.ftueHeader}>
-				{/* Title text */}
-				<Text style={styles.welcomeText}>Welcome!</Text>
+			<SafeAreaView style={styles.ftueHeader}>
+				<View style={styles.ftueInner}>
+					{/* Title text */}
+					<Text style={styles.welcomeText}>Welcome!</Text>
 
-				{/* Continue button */}
-				<TouchableOpacity
-					activeOpacity={Tools.activeOpacity}
-					style={styles.navButton}
-					onPress={() => { props.navigation.replace("Home") }}>
-					<Text style={{ ...styles.welcomeText, paddingRight: 10, color: Tools.color3 }}>Continue</Text>
-					<Svg style={{
-							shadowColor: '#000',
-							shadowOffset: { width: 0, height: -3 },
-							shadowRadius: 2,
-							shadowOpacity: 1,
-						}}
-						width={14}
-						height={16}
-						viewBox="0 0 14 16">
-						<Path fill={Tools.color3} d={Tools.arrowPath} />
-					</Svg>
-				</TouchableOpacity>
-			</View>
+					{/* Continue button */}
+					<TouchableOpacity
+						activeOpacity={Tools.activeOpacity}
+						style={styles.navButton}
+						onPress={() => { props.navigation.replace("Home") }}>
+						<Text style={{ ...styles.welcomeText, paddingRight: 10, color: Tools.color3 }}>Continue</Text>
+						<Svg style={{
+								shadowColor: '#000',
+								shadowOffset: { width: 0, height: -3 },
+								shadowRadius: 2,
+								shadowOpacity: 1,
+							}}
+							width={14}
+							height={16}
+							viewBox="0 0 14 16">
+							<Path fill={Tools.color3} d={Tools.arrowPath} />
+						</Svg>
+					</TouchableOpacity>
+				</View>
+			</SafeAreaView>
 		)
 	};
 
@@ -200,7 +203,7 @@ const FtueScreen = props => {
 						{/* PP button */}
 						<TouchableOpacity
 							activeOpacity={Tools.activeOpacity}
-							style={styles.accountButton}
+							style={{ ...styles.accountButton, marginBottom: Tools.paddingMonths }}
 							onPress={() => {
 								Linking.openURL("https://gavinbaxter.com");
 							}}>
@@ -233,14 +236,21 @@ const styles = StyleSheet.create({
 	},
 	// Header for FTUE
 	ftueHeader: {
-		height: 65,
+		// height: 65,
 		width: "100%",
 		backgroundColor: Tools.colorHeaderGrey,
 		justifyContent: "space-between",
 		flexDirection: "row",
 		alignItems: 'center',
 		zIndex: 999,
-		paddingHorizontal: Tools.paddingNormal,
+	},
+	ftueInner: {
+		flex: 1,
+		justifyContent: "space-between",
+		flexDirection: "row",
+		alignItems: 'center',
+		zIndex: 999,
+		padding: Tools.paddingNormal,
 	},
 	navButton: {
 		flexDirection: "row",
