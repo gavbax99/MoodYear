@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
 		justifyContent: "flex-start",
 		alignItems: "flex-start",
 		padding: Tools.paddingNormal,
+		paddingTop: Tools.paddingLarge,
 	},
 	selectYearContainer: {
 		width: "100%",
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
 		backgroundColor: Tools.colorTextboxGrey,
 		paddingHorizontal: Tools.paddingLarge,
 		paddingVertical: Tools.paddingNormal,
-		marginTop: Tools.paddingNormal,
+		marginTop: Tools.paddingLarge,
 		borderRadius: 3,
 	},
 	buttonText: {

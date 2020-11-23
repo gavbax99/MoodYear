@@ -94,7 +94,7 @@ const AppHeader = props => {
 			return (
 				<Image
 					style={styles.logoImage}
-					source={require("../assets/images/sober-logo.png")}
+					source={require("../assets/images/logo_sml.png")}
 				/>
 			);
 		}

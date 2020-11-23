@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "rnhealth",
-    "slug": "rnhealth",
+    "name": "MoodYear",
+    "slug": "MoodYear",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/logo_lrg.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/logo_splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#242424"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -20,7 +20,7 @@
       "supportsTablet": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/images/logo_sml.png"
     }
   }
 }

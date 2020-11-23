@@ -152,8 +152,9 @@ const AuthScreen = props => {
 				<View style={styles.screen}>
 
 					{/* Title text */}
-					<View style={{ width: "100%" }}>
-						<Text style={styles.titleText}>FeelBetter</Text>
+					<View style={{ width: "100%", marginBottom: Tools.paddingNormal }}>
+						<Text style={styles.titleText}>MoodYear</Text>
+						<View style={styles.underTitleBar}></View>
 					</View>
 
 					{/* Email */}
@@ -185,7 +186,7 @@ const AuthScreen = props => {
 						required
 						minLength={8}
 						autoCapitalize={"none"}
-						errorText={"Please enter a valid password."}
+						errorText={"Please enter a valid password (8 or more characters)."}
 
 						style={styles.textInput}
 						placeholder={"Password"}
@@ -217,10 +218,13 @@ const AuthScreen = props => {
 						:
 						<TouchableOpacity style={{ 
 								...styles.button, 
-								backgroundColor: isLogin ? Tools.color1 : Tools.color3 
+								backgroundColor: isLogin ? Tools.color3 : Tools.color4 
 							}} 
 							onPress={loginHandler}>
-							<Text style={{ color: "#fff", fontSize: 18 }}>
+							<Text style={{ 
+									color: isLogin ? Tools.colorLight : Tools.colorLight, 
+									fontSize: 18 
+								}}>
 								{isLogin ? "Login" : "Register"}
 							</Text>
 							<Svg style={{ marginLeft: 10 }}
@@ -237,12 +241,13 @@ const AuthScreen = props => {
 				{/*  */}
 				{/* <TouchableOpacity 
 					style={{width: 100, height: 100, backgroundColor: "red"}} 
-					 onPress={() => {props.navigation.navigate({
+					onPress={() => {props.navigation.navigate({
 							routeName: "Ftue", 
 							params: { newUser: true },
 							// params: { display: "About" },
 						})
 					}}>
+					//onPress={() => {dispatch(addEmptyYear(2021, year2021))}}>
 					<Text>About</Text>
 				</TouchableOpacity> */}
 				{/*  */}
@@ -297,13 +302,19 @@ const styles = StyleSheet.create({
 	},
 	switchText: {
 		color: Tools.colorLight,
-		fontSize: 12,
-		paddingVertical: Tools.paddingHalf,
+		fontSize: 14,
+		paddingTop: Tools.paddingNormal,
 	},
 	switchTextButton: {
-		color: Tools.color3,
+		color: Tools.accentColor,
 		paddingLeft: 4,
 	},
+	underTitleBar: {
+		width: 150,
+		height: 5,
+		backgroundColor: Tools.color3,
+		borderRadius: 4,
+	}
 });
 
 export default AuthScreen;
