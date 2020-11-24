@@ -14,6 +14,7 @@ import {
 import {
 	logoutAuth,
 	logoutData,
+	removeData,
 	deleteAccount
 } from "../store/actions/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -41,6 +42,7 @@ const AboutScreen = props => {
 	const handleLogout = () => {
 		dispatch(logoutAuth());
 		dispatch(logoutData());
+		// dispatch(removeData());
 		props.navigation.replace("Login");
 	};
 

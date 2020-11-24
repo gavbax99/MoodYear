@@ -77,6 +77,9 @@ const AuthScreen = props => {
 	// Redux
 	const dispatch = useDispatch();
 	const headerHeight = useSelector(state => state.navReducer.headerHeightState);
+	
+	const uid = useSelector(state => state.authReducer.userId);
+	const token = useSelector(state => state.authReducer.token);
 
 	// State
 	const [formState, dispatchFormState] = useReducer(formReducer, initialState);
@@ -238,19 +241,21 @@ const AuthScreen = props => {
 
 				</View>
 
-				{/*  */}
-				{/* <TouchableOpacity 
-					style={{width: 100, height: 100, backgroundColor: "red"}} 
-					onPress={() => {props.navigation.navigate({
-							routeName: "Ftue", 
-							params: { newUser: true },
-							// params: { display: "About" },
-						})
-					}}>
-					//onPress={() => {dispatch(addEmptyYear(2021, year2021))}}>
-					<Text>About</Text>
-				</TouchableOpacity> */}
-				{/*  */}
+				{/* DEV TOOL */}
+				<TouchableOpacity 
+					style={{width: 100, height: 100, backgroundColor: "red"}}
+					onPress={() => {
+						console.log("test: ", uid, token);
+					}} 
+					/>
+				{/* DEV TOOL */}
+
+				{/* onPress={() => {props.navigation.navigate({
+						routeName: "Ftue", 
+						params: { newUser: true },
+						// params: { display: "About" },
+					})
+				}} */}
 
 			</KeyboardAvoidingView>
 		</TouchableWithoutFeedback>

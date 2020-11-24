@@ -63,18 +63,20 @@ const HomeScreenCalendar = props => {
 
 	// SECOND call to database; once active years are loaded, either loads current year or creats new calendar if year not found
 	useEffect(() => {
-		if (yearsLoaded === false || years === null) return;
+		if (yearsLoaded === false || years === null || uid === null || years.error !== undefined) return;
 
 		if (years[currentYear] === currentYear) {
-			if (Object.keys(data).length == 0) {
+			if (Object.keys(data).length === 0) {
 				loadYearData();
 			}
-		} else if (years[currentYear] === undefined) {
+		} else if (years[currentYear] === undefined && years.error !== undefined) {
+			// CAN OVERWRITE USER DATA IF NOT CAREFUL
+			// should check if year exists before even trying
 			loadNewActiveYear().then(() => {
 				loadNewEmptyYearFromCalendar()
-			})
+			});
 		}
-	}, [yearsLoaded, years]);
+	}, [yearsLoaded, years, uid]);
 
 	// Loading custom component
 	const Loading = () => {
