@@ -14,7 +14,6 @@ import {
 import {
 	logoutAuth,
 	logoutData,
-	removeData,
 	deleteAccount
 } from "../store/actions/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -42,7 +41,6 @@ const AboutScreen = props => {
 	const handleLogout = () => {
 		dispatch(logoutAuth());
 		dispatch(logoutData());
-		// dispatch(removeData());
 		props.navigation.replace("Login");
 	};
 
@@ -116,12 +114,12 @@ const AboutScreen = props => {
 						</Text>
 
 						<Text style={styles.aboutText}>
-							FeelGood is a mood tracking and journaling tool designed to see how you've been feeling over time and to identify trends that make you feel better.
+							MoodYear is a mood tracking and journaling tool designed to see how you've been feeling over time and to identify trends that make you feel better.
 						</Text>
 
-						<Text style={styles.aboutText}>
-							If you like FeelGood, please consider leaving a positive review on the App Store:
-						</Text>
+						{/* <Text style={styles.aboutText}>
+							If you like MoodYear, please consider leaving a positive review on the App Store:
+						</Text> */}
 
 						{/* Review button */}
 						{/* <TouchableOpacity
@@ -138,7 +136,7 @@ const AboutScreen = props => {
 						</Text>
 
 						<Text style={styles.aboutText}>
-							FeelGood believes in privacy. The only data we store on our secure database is the email you registered with, the registration date, and your journal entries. Your data will <Text style={{ fontWeight: "500" }}>never</Text> be sold, transferred, or otherwise used outside of the FeelGood app. To learn more, read our Privacy Policy.
+							MoodYear believes in privacy. The only data we store on our secure database is the email you registered with, the registration date, and your journal entries. Your data will <Text style={{ fontWeight: "500" }}>never</Text> be sold, transferred, or otherwise used outside of the MoodYear app. To learn more, read our official Privacy Policy.
 						</Text>
 
 						{/* PP button */}
