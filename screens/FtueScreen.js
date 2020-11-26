@@ -117,13 +117,28 @@ const FtueScreen = props => {
 					scrollEnabled={true}
 					showsVerticalScrollIndicator={false}>
 					<View style={styles.scrollContentContainer}>
+						{/* If FTUE, show "How to Use" */}
+						{newUserNavProp === true ? 
+							<Text style={styles.bodyTextHeadline}>
+								How to Use MoodYear
+							</Text>
+							:
+							null
+						}
+
 						{/* Summary text */}
-						<Text style={styles.bodyText}>
+						<Text style={{
+								...styles.bodyText,
+								marginTop: newUserNavProp === false ? Tools.paddingLarge : Tools.paddingNormal
+							}}>
 							MoodYear is a simple daily mood tracking and journaling tool. Submitting a daily entry is easy: tap the bottom text bar to open the console, slide the mood bar, and write about your day. Submit your entry by tapping the <Text style={{ fontWeight: "500", color: Tools.accentColor }}>blue "+" button</Text>.
 						</Text>
 
 						{/* Image */}
 						<View style={styles.ftueImageContainer}>
+							<View style={styles.imageExampleTextContainer}>
+								<Text style={styles.imageExampleText}>Example Image:</Text>
+							</View>
 							<Image
 								style={{ width: "100%", height: 212 }}
 								source={require("../assets/images/ftue-home_op.png")}
@@ -134,12 +149,15 @@ const FtueScreen = props => {
 						{/* Arrow */}
 						<Image
 							style={styles.ftueArrow}
-							source={require("../assets/images/ftue-arrow_grey.png")}
+							source={require("../assets/images/ftue-arrow_blue.png")}
 							resizeMode={"contain"} 
 						/>
 
 						{/* Image */}
 						<View style={{ ...styles.ftueImageContainer, marginTop: 0 }}>
+							<View style={styles.imageExampleTextContainer}>
+								<Text style={styles.imageExampleText}>Example Image:</Text>
+							</View>
 							<Image
 								style={{ width: "100%", height: 280 }}
 								source={require("../assets/images/ftue-console_op.png")}
@@ -159,6 +177,9 @@ const FtueScreen = props => {
 
 						{/* Image */}
 						<View style={styles.ftueImageContainer}>
+							<View style={styles.imageExampleTextContainer}>
+								<Text style={styles.imageExampleText}>Example Image:</Text>
+							</View>
 							<Image
 								style={{ width: "100%", height: 220 }}
 								source={require("../assets/images/ftue-month_op.png")}
@@ -169,12 +190,15 @@ const FtueScreen = props => {
 						{/* Arrow */}
 						<Image
 							style={styles.ftueArrow}
-							source={require("../assets/images/ftue-arrow_grey.png")}
+							source={require("../assets/images/ftue-arrow_blue.png")}
 							resizeMode={"contain"} 
 						/>
 
 						{/* Image */}
 						<View style={{ ...styles.ftueImageContainer, marginTop: 0 }}>
+							<View style={styles.imageExampleTextContainer}>
+								<Text style={styles.imageExampleText}>Example Image:</Text>
+							</View>
 							<Image
 								style={{ width: "100%", height: 462 }}
 								source={require("../assets/images/ftue-detail_op.png")}
@@ -184,11 +208,11 @@ const FtueScreen = props => {
 
 						{/* Headline */}
 						<Text style={styles.bodyTextHeadline}>
-							Submit Daily!
+							Submitting Entries
 						</Text>
 
 						<Text style={styles.bodyText}>
-							It's easy for us to forget how we feel now in the future. Be sure to submit an entry every day; there is no way to submit or edit past entries. However, if you have already made an entry for today and would like to change it, simply create a new entry and submit it.
+							It's easy for us to forget how we felt today sometime in the future. Be sure to submit an entry every day; there is no way to submit or edit past entries. However, if you have already made an entry for today and would like to change it, simply create a new entry and submit it.
 						</Text>
 
 						{/* Headline */}
@@ -197,7 +221,7 @@ const FtueScreen = props => {
 						</Text>
 
 						<Text style={styles.bodyText}>
-							MoodYear believes in privacy. The only data we store on our secure database is the email you registered with, the registration date, and your journal entries. Your data will <Text style={{ fontWeight: "500" }}>never</Text> be sold, transferred, or otherwise used outside of the MoodYear app. To learn more, read our Privacy Policy.
+							MoodYear believes in privacy. The only data we store on our secure database is the email you registered with, your registration date, and your journal entries. Your data will <Text style={{ fontWeight: "500" }}>never</Text> be sold, transferred, or otherwise used outside of the MoodYear app. To learn more, read our official Privacy Policy.
 						</Text>
 
 						{/* PP button */}
@@ -268,14 +292,24 @@ const styles = StyleSheet.create({
 	// Images
 	ftueImageContainer: {
 		width: "100%",
-		marginTop: Tools.paddingNormal,
+		marginTop: Tools.paddingLarge,
 		borderRadius: 4,
 		borderWidth: 2,
-		borderColor: Tools.colorHeaderGrey,
+		borderColor: Tools.accentColor,
 	},
 	ftueArrow: {
 		width: "100%",
 		height: 30,
+	},
+	imageExampleTextContainer: {
+		width: "100%",
+		borderBottomWidth: 2,
+		borderColor: Tools.colorHeaderGrey,
+	},
+	imageExampleText: {
+		color: Tools.accentColor,
+		fontSize: 16,
+		padding: Tools.paddingHalf
 	},
 	// Text
 	welcomeText: {

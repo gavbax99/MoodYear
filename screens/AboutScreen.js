@@ -114,29 +114,29 @@ const AboutScreen = props => {
 						</Text>
 
 						<Text style={styles.aboutText}>
-							FeelGood is a mood tracking and journaling tool designed to see how you've been feeling over time and to identify trends that make you feel better.
+							MoodYear is a mood tracking and journaling tool designed to see how you've been feeling over time and to identify trends that make you feel better.
 						</Text>
 
-						<Text style={styles.aboutText}>
-							If you like FeelGood, please consider leaving a positive review on the App Store:
-						</Text>
+						{/* <Text style={styles.aboutText}>
+							If you like MoodYear, please consider leaving a positive review on the App Store:
+						</Text> */}
 
 						{/* Review button */}
-						<TouchableOpacity
+						{/* <TouchableOpacity
 							activeOpacity={Tools.activeOpacity}
 							style={{ ...styles.accountButton, backgroundColor: Tools.color3 }}
 							onPress={() => {
 								Linking.openURL("https://gavinbaxter.com");
 							}}>
 							<Text style={styles.buttonText}>Leave a Review</Text>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 
 						<Text style={styles.infoTextHeadline}>
 							Data &amp; Privacy
 						</Text>
 
 						<Text style={styles.aboutText}>
-							FeelGood believes in privacy. The only data we store on our secure database is the email you registered with, the registration date, and your journal entries. Your data will <Text style={{ fontWeight: "500" }}>never</Text> be sold, transferred, or otherwise used outside of the FeelGood app. To learn more, read our Privacy Policy.
+							MoodYear believes in privacy. The only data we store on our secure database is the email you registered with, the registration date, and your journal entries. Your data will <Text style={{ fontWeight: "500" }}>never</Text> be sold, transferred, or otherwise used outside of the MoodYear app. To learn more, read our official Privacy Policy.
 						</Text>
 
 						{/* PP button */}
@@ -144,7 +144,7 @@ const AboutScreen = props => {
 							activeOpacity={Tools.activeOpacity}
 							style={styles.accountButton}
 							onPress={() => {
-								Linking.openURL("https://gavinbaxter.com");
+								Linking.openURL("https://gavinbaxter.com/moodyear-privacy-policy.html");
 							}}>
 							<Text style={styles.buttonText}>Privacy Policy</Text>
 						</TouchableOpacity>

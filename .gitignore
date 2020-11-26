@@ -8,19 +8,6 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-notes.md
-ai_assets.ai
-ai_faces_small.ai
-ai_faces.ai
-ai_logo.ai
-ai_kog.ai
-ai_tap.ai
-ai_ftue-arrow.ai
-ftue-console.psd
-ftue-detail.psd
-ftue-home.psd
-ftue-month.psd
-ftue-arrow.psd
 
 .env
 local_assets

@@ -107,7 +107,7 @@ const HomeScreenBottomCard = props => {
 
 	return (
 		<KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={headerHeight}>
-			{ yearNumber === data.yearInt ?
+			{ yearNumber === data.yearInt && Object.keys(data).length !== 0 ?
 				<View style={[
 						styles.screen,
 						keyboardIsOpen ? styles.screenKeyboardOpen : null
@@ -177,11 +177,11 @@ const HomeScreenBottomCard = props => {
 				: 
 				Object.keys(data).length !== 0 ?
 					<View style={styles.screen}>
-						<Text style={{color: Tools.colorLight}}>You're viewing a previous year.</Text>
+						<Text style={{color: Tools.colorLight, fontSize: 14 }}>You're viewing a previous year.</Text>
 						<TouchableOpacity
 							activeOpacity={Tools.activeOpacity}
 							onPress={() => {props.navigation.navigate("Settings")}}>
-							<Text style={{color: Tools.colorLight}}>Click here to change the year.</Text>
+							<Text style={{color: Tools.accentColor, fontSize: 14 }}>Click here to change the year.</Text>
 						</TouchableOpacity>
 					</View>
 					: 

@@ -69,13 +69,15 @@ const MonthDetailCalendar = props => {
 	// Redux
 	const [currentMonth, setCurrentMonth] = useState(props.monthNo);
 	const [currentYear, setCurrentYear] = useState(props.yearInt);
+	const [isCurrentMonth, setIsCurrentMonth] = useState(false);
+	const [monthData, setMonthData] = useState(null);
 
 	// Data
 	const data = useSelector(state => state.dataReducer.data);
-	const monthData = data.months[currentMonth];
 
 	// Check for current month
-	const isCurrentMonth = getMonth === monthData.monthNo ? true : false;
+	// const monthData = data.months[currentMonth];
+	// const isCurrentMonth = getMonth === monthData.monthNo ? true : false;
 
 	const prevMonth = () => {
 		if (currentMonth === 0) return;
@@ -91,9 +93,21 @@ const MonthDetailCalendar = props => {
 		props.detailScreenFindDay(dayNo, dayOfTheWeek, currentMonth, currentYear, faceColor, colorNumber, message);
 	};
 
+	// For switching month number
 	useEffect(() => {
+		if (data.months[currentMonth] === undefined) return;
+
 		props.switchMonths(currentMonth);
+		setMonthData(data.months[currentMonth]);
+		setIsCurrentMonth(getMonth === data.months[currentMonth].monthNo ? true : false);
 	}, [currentMonth]);
+
+	useEffect(() => {
+		if (data.months[currentMonth] === undefined) return;
+
+		setMonthData(data.months[currentMonth]);
+		setIsCurrentMonth(getMonth === data.months[currentMonth].monthNo ? true : false);
+	}, [data]);
 
 	return (
 		<View style={styles.calendar}>
@@ -160,23 +174,27 @@ const MonthDetailCalendar = props => {
 			{/* List of days */}
 			<View style={{ ...styles.calendarDays, marginTop: Tools.paddingHalf }}>
 				{/* Render our days */}
-				{monthData.days.map((dayObj, i) => {
-					return (
-						<MonthDetailDay 
-							isFirstDay={i===0}
-							firstDayNo={monthData.firstDayOfWeekNo}
-							color={returnFaceColorHex(dayObj.color)} 
-							colorNumber={dayObj.color}
-							message={dayObj.message}
-							currentDay={getDay}
-							dayOfTheMonth={dayObj.dayNo}
-							dayOfTheWeek={dayObj.dayOfWeek}
-							isCurrentMonth={isCurrentMonth}
-							key={dayObj.id}
-							pressEvent={monthDetailFindDay} 
-						/>
-					);
-				})}
+				{monthData !== null ?
+					monthData.days.map((dayObj, i) => {
+						return (
+							<MonthDetailDay 
+								isFirstDay={i===0}
+								firstDayNo={monthData.firstDayOfWeekNo}
+								color={returnFaceColorHex(dayObj.color)} 
+								colorNumber={dayObj.color}
+								message={dayObj.message}
+								currentDay={getDay}
+								dayOfTheMonth={dayObj.dayNo}
+								dayOfTheWeek={dayObj.dayOfWeek}
+								isCurrentMonth={isCurrentMonth}
+								key={dayObj.id}
+								pressEvent={monthDetailFindDay} 
+							/>
+						);
+					})
+					:
+					null
+				}
 			</View>
 		</View>
 	);

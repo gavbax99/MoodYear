@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	StyleSheet,
 	View,
@@ -12,22 +12,10 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { 
-	setHeaderHeight, 
-	updateData, 
-	loadActiveYears, 
-	findYears, 
-	loadYearsArray, 
-	addEmptyYear 
-} from "../store/actions/actions";
+import { setHeaderHeight } from "../store/actions/actions";
 
 // Constants
 import Tools from '../constants/Tools';
-
-// Data
-import Year2020 from "../data/Year2020Populated";
-import Year2021 from "../data/Year2021Blank";
-import Year2020Blank from "../data/Year2020Blank";
 
 // ==================== Component ====================
 const AppHeader = props => {
@@ -35,13 +23,16 @@ const AppHeader = props => {
 	// Redux
 	const dispatch = useDispatch();
 	const data = useSelector(state => state.dataReducer.data);
-	const years = useSelector(state => state.dataReducer.years);
-	const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
 
-	const uid = useSelector(state => state.authReducer.userId);
-	const token = useSelector(state => state.authReducer.token);
-	const email = useSelector(state => state.authReducer.email);
-	const registeredDate = useSelector(state => state.authReducer.registeredDate);
+	// const years = useSelector(state => state.dataReducer.years);
+	// const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
+	// const uid = useSelector(state => state.authReducer.userId);
+	// const token = useSelector(state => state.authReducer.token);
+	// const email = useSelector(state => state.authReducer.email);
+	// const registeredDate = useSelector(state => state.authReducer.registeredDate);
+
+	// State
+	const [yearInt, setYearInt] = useState(null);
 
 	// Find header height on load
 	const findHeaderHeight = (event) => {
@@ -51,25 +42,14 @@ const AppHeader = props => {
 
 	// Temporary; will be inline after the dev use is gone
 	const handleSettingsChange = () => {
-		// dispatch(updateData("ip6v6kUBvShVaxOnJPmePBjuVsy1", "2021", Year2021));
-		// dispatch(loadActiveYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
-		// dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", 2020));
-		// dispatch(loadYearsArray("ip6v6kUBvShVaxOnJPmePBjuVsy1", 2021));
-		// dispatch(findYears("ip6v6kUBvShVaxOnJPmePBjuVsy1"));
-
-		// dispatch(addEmptyYear(2021, Year2021));
-
-		// console.log("years", years);
-		// console.log("yearsLoaded", yearsLoaded);
-		// console.log("uid", uid);
-
-		// console.log("uid", uid);
-		// console.log("token", token);
-		// console.log("email", email);
-		// console.log("registeredDate", registeredDate);
-
 		props.navigation.navigate("Settings");
 	};
+
+	useEffect(() => {
+		if (Object.keys(data).length === 0) return;
+
+		setYearInt(data.yearInt);
+	}, [data]);
 
 	// Header image custom component
 	const HeaderImage = () => {
@@ -112,7 +92,7 @@ const AppHeader = props => {
 					<HeaderImage />
 				</TouchableOpacity>
 				{props.isSettings === false ?
-					<Text style={styles.yearText}>{data.yearInt}</Text>
+					<Text style={styles.yearText}>{yearInt}</Text>
 					:
 					null
 				}

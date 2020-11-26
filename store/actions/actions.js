@@ -69,22 +69,27 @@ export const signup = (email, password) => {
 			throw new Error(message);
 		};
 
+		// 
 		const resData = await response.json();
-		// console.log("res in actions", resData)
 
+		// Date for registration
 		const date = new Date();
+		const fullTime = date.getTime();
 		const yearNumber = date.getFullYear();
 		const monthNumber = date.getMonth();
 		const dayNumber = date.getDate();
 		const dayDate = ((monthNumber + 1) + '/' + dayNumber + '/' + yearNumber);
 
-		const newUid = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${resData.localId}.json`, {
+		const newUid = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${resData.localId}.json?auth=${resData.idToken}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({accountInfo: {email: resData.email, registeredDate: dayDate}})
+			body: JSON.stringify({accountInfo: { email: resData.email, registeredDate: dayDate, registeredTime: fullTime }})
 		});
+
+		const resNewUidData = await newUid.json();
+		console.log("res in actions", resNewUidData);
 
 		dispatch({ 
 			type: HANDLE_AUTH_DATA,
@@ -131,10 +136,9 @@ export const login = (email, password) => {
 
 		// Grabs auth creds
 		const resData = await response.json();
-		// console.log(resData);
 
 		// Grabs account info 
-		const accountInfo = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${resData.localId}/accountInfo.json`);
+		const accountInfo = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${resData.localId}/accountInfo.json?auth=${resData.idToken}`);
 		const resAccountInfo = await accountInfo.json();
 
 		dispatch({ 
@@ -158,7 +162,7 @@ export const logoutAuth = () => {
 export const deleteAccount = (uid, token) => {
 	return async dispatch => {
 		// Deletes user data
-		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}.json`, {
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}.json?auth=${token}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json"
@@ -184,11 +188,11 @@ export const deleteAccount = (uid, token) => {
 // ==================== DATA ====================
 // Loading a yea'rs data (fetched from firebase) for login and changing year
 export const loadData = (uid, year) => {
-	return async dispatch => {
-		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json`);
+	return async (dispatch, getState) => {
+		const token = getState().authReducer.token;
 
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json?auth=${token}`);
 		const resData = await response.json(); 
-		// console.log("loaddata in action: ", resData)
 
 		dispatch({
 			type: HANDLE_DATA_UPDATE,
@@ -199,8 +203,10 @@ export const loadData = (uid, year) => {
 
 // Updating single day (put to firebase)
 export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
-	return async dispatch => {
-		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json`, {
+	return async (dispatch, getState) => {
+		const token = getState().authReducer.token;
+
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}/months/${monthNo}/days/${dayNo}.json?auth=${token}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -208,7 +214,7 @@ export const updateSingleDay = (uid, year, monthNo, dayNo, dayData) => {
 			body: JSON.stringify(dayData)
 		});
 
-		const loadNewDataResponse = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json`);
+		const loadNewDataResponse = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json?auth=${token}`);
 		const newDataResData = await loadNewDataResponse.json(); 
 
 		dispatch({
@@ -236,8 +242,10 @@ export const logoutData = () => {
 // ==================== YEARS =========================
 // Loading data (fetched from firebase)
 export const loadActiveYears = (uid) => {
-	return async dispatch => {
-		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/activeYears.json`);
+	return async (dispatch, getState) => {
+		const token = getState().authReducer.token;
+
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/activeYears.json?auth=${token}`);
 		const resData = await response.json(); 
 
 		dispatch({
@@ -250,8 +258,10 @@ export const loadActiveYears = (uid) => {
 
 // Put new year into /activeyears
 export const putNewActiveYear = (uid, year) => {
-	return async dispatch => {
-		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/activeYears/${year}.json`, {
+	return async (dispatch, getState) => {
+		const token = getState().authReducer.token;
+
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/activeYears/${year}.json?auth=${token}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -267,11 +277,13 @@ export const putNewActiveYear = (uid, year) => {
 
 // Updating ENTIRE year from empty calendar (put to firebase)
 export const updateEmptyYear = (uid, year) => {
-	return async dispatch => {
+	return async (dispatch, getState) => {
+		const token = getState().authReducer.token;
+
 		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/emptyCalendar/${year}.json`);
 		const resData = await response.json(); 
 
-		const loadNewYear = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json`, {
+		const loadNewYear = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json?auth=${token}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -291,8 +303,10 @@ export const updateEmptyYear = (uid, year) => {
 // ============================= DEV =================================
 // Updating ENTIRE data (put to firebase) ***FOR DEV USE ONLY***
 export const updateData = (uid, year, data) => {
-	return async dispatch => {
-		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json`, {
+	return async (dispatch, getState) => {
+		const token = getState().authReducer.token;
+
+		const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/${year}.json?auth=${token}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
