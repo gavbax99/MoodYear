@@ -124,14 +124,14 @@ const AboutScreen = props => {
 						</Text>
 
 						{/* Review button */}
-						<TouchableOpacity
+						{/* <TouchableOpacity
 							activeOpacity={Tools.activeOpacity}
 							style={{ ...styles.accountButton, backgroundColor: Tools.color3 }}
 							onPress={() => {
 								Linking.openURL("https://gavinbaxter.com");
 							}}>
 							<Text style={styles.buttonText}>Leave a Review</Text>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 
 						<Text style={styles.infoTextHeadline}>
 							Data &amp; Privacy
@@ -146,7 +146,7 @@ const AboutScreen = props => {
 							activeOpacity={Tools.activeOpacity}
 							style={styles.accountButton}
 							onPress={() => {
-								Linking.openURL("https://gavinbaxter.com");
+								Linking.openURL("https://gavinbaxter.com/moodyear-privacy-policy.html");
 							}}>
 							<Text style={styles.buttonText}>Privacy Policy</Text>
 						</TouchableOpacity>

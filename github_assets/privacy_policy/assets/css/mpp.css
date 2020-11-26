@@ -1,0 +1,248 @@
+/* @@@@@@@@@@@@@@@@@@ CSS STARTING TEMPLATE @@@@@@@@@@@@@@@@@@ */
+/* @@@@@@@@@@@@@@@@@@   UPDATED: 4/8/2019   @@@@@@@@@@@@@@@@@@ */
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+/* xi. **************         RESET         ****************** */
+/* *********************************************************** */
+
+/* v2.0 | 20110126 - MEYER RESET */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, 
+tbody, tfoot, thead, tr, th, td, article, 
+aside, canvas, details, embed, figure, figcaption, 
+footer, header, hgroup, menu, nav, output, ruby, 
+section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+button, input, optgroup, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1;
+  margin: 0;
+}
+
+*, :after, :before {-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box}
+html {height:100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%}
+body {height: 100%; line-height: 1; margin: 0 !important;}
+ol, ul {list-style: none; margin-block-start: 0; margin-block-end: 0; margin-inline-start: 0px; margin-inline-end: 0px; padding-inline-start: 0;}
+table {border-collapse: collapse; border-spacing: 0;}
+table, tr, td {padding: 0;}
+img {display: block; border: 0; border-style: none;}
+a, a:hover, a:focus, a:active, a[href^="tel"] {background-color: transparent; color: inherit; text-decoration: none; outline: 0;}
+
+/* xii. *************         TOOLS         ****************** */
+/* *********************************************************** */
+
+.flex-full {display: flex; justify-content: center; align-items: center;}
+.flex-row {flex-direction: row;}
+.flex-col {flex-direction: column;}
+
+.flex-jc-fs {justify-content: flex-start;}
+.flex-jc-fe {justify-content: flex-end;}
+.flex-jc-sb {justify-content: space-between;}
+.flex-jc-se {justify-content: space-evenly;}
+.flex-jc-sa {justify-content: space-around;}
+
+.flex-ai-fs {align-items: flex-start;}
+.flex-ai-fe {align-items: flex-end;}
+
+.w100 {width: 100%;}
+.mt-2 {margin-top: 2rem;}
+.mt-1 {margin-top: 1rem;}
+.mt-05 {margin-top: 0.5rem;}
+
+.color-5 {color: #ffb471;}
+.color-3 {color: #c6587a;}
+.color-lite {color: #fff;}
+.color-accent {color: #12b9e0;}
+
+/* 1. ***************         SETUP         ****************** */
+/* *********************************************************** */
+
+html {
+    font-size: 14px; 
+}
+
+body {
+    background-color: #242424; 
+    color: #fff;
+	font-family: sans-serif;
+	letter-spacing: 0.25px;
+}
+
+#wrapper{
+    max-width: 1000px;
+    position: relative; 
+	margin: 0 auto;
+	padding: 2rem;
+}
+
+ul {
+	list-style: disc;
+	padding-left: 1rem;
+}
+
+/* 2. ***************         MAIN          ****************** */
+/* *********************************************************** */
+
+.title {
+	font-size: 2rem;
+	font-weight: 600;
+}
+
+.title-pp {
+	font-weight: 100; 
+	font-size: 1.25rem; 
+	padding-left: 0.5rem;
+}
+
+.title-bar {
+	width: 135px;
+	height: 4px;
+	background-color: #c6587a;
+	border-radius: 4px;
+	margin-top: 0.25rem;
+}
+
+.date-ver-text {
+	font-size: 1rem;
+}
+
+.date-ver-text:last-child {
+	margin-top: 0.5rem;
+}
+
+/* content */
+
+.content-header {
+	font-weight: 700; 
+	font-size: 1.25rem; 
+}
+
+.content-body {
+	line-height: 1.25;
+}
+
+/* button */
+
+.button {
+	border: none !important;
+	border-style: none !important;
+
+	font-size: 1em;
+	font-weight: 600;
+	background-color: #c6587a;
+	color: #fff;
+	border-radius: 3px;
+	padding: 0.75rem 1.5rem;
+}
+
+/* table */
+
+.table-top {
+	border: none !important;
+}
+
+.table-top p {
+	background-color: rgb(55, 55, 55);
+	font-weight: 700;
+}
+
+.table-top .table-col-1, 
+.table-top .table-col-2 {
+	border: 1px solid #fff !important;
+	align-items: center !important;
+	justify-content: center !important;
+}
+
+.table-top .table-col-1 {
+	border-right: none !important;
+}
+
+.table-row {
+	align-items: flex-start;
+	border-left: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	border-right: 1px solid #fff;
+}
+
+.table-col-1, .table-col-2 {
+	flex-grow: 1;
+	height: 100%;
+	padding: 0.5rem;
+}
+
+.table-col-1 {
+	flex: 1;
+	border-right: none;
+	text-align: center;
+}
+
+.table-col-2 {
+	flex: 2;
+	border-left: 1px solid #fff;
+	text-align: left;
+	justify-content: flex-start;
+}
+
+/* link */
+
+.link,
+.link:visited,
+.link:active {
+	font-weight: 700;
+	color: #12b9e0;
+	text-decoration: underline;
+}
+
+/* Z. ***************     MEDIA QUERIES     ****************** */
+/* *********************************************************** */
+
+@media (pointer: fine) {
+	.link:hover {
+		font-weight: 700;
+		color: #12b9e0;
+		text-decoration: underline;
+	}
+}
+
+@media only screen and (max-width: 599px) {
+	#wrapper{
+		padding: 1rem;
+	}
+
+	.header {
+		flex-direction: column;
+	}
+
+	.title-text-container {
+		width: 100%;
+		justify-content: space-between;
+	}
+
+	.date-ver-container {
+		align-items: flex-start;
+	}
+
+	.date-ver-text:first-child {
+		margin-top: 0.75rem;
+	}
+}
+

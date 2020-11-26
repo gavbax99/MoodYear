@@ -30,6 +30,7 @@ const HomeScreenCalendar = props => {
 	const years = useSelector(state => state.dataReducer.years);
 	const data = useSelector(state => state.dataReducer.data);
 	const uid = useSelector(state => state.authReducer.userId);
+	const token = useSelector(state => state.authReducer.token);
 
 	// Current year var
 	const currentYear = new Date().getFullYear();
@@ -65,16 +66,27 @@ const HomeScreenCalendar = props => {
 	useEffect(() => {
 		if (yearsLoaded === false || years === null || uid === null || years.error !== undefined) return;
 
+		const handleNewYearAddition = async () => {
+			// checks if current year is active in userData
+			const response = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${uid}/activeYears/${currentYear}.json?auth=${token}`); 
+			const resData = await response.json(); 
+
+			// if it isn't, pull and add the year
+			if (resData === null) {
+				loadNewActiveYear().then(() => {
+					loadNewEmptyYearFromCalendar();
+				});
+			}
+		};
+
 		if (years[currentYear] === currentYear) {
 			if (Object.keys(data).length === 0) {
+				// for loading currentyear data
 				loadYearData();
 			}
-		} else if (years[currentYear] === undefined && years.error !== undefined) {
-			// CAN OVERWRITE USER DATA IF NOT CAREFUL
-			// should check if year exists before even trying
-			loadNewActiveYear().then(() => {
-				loadNewEmptyYearFromCalendar()
-			});
+		} else if (years[currentYear] === undefined) {
+			// for creating currentyear data
+			handleNewYearAddition();
 		}
 	}, [yearsLoaded, years, uid]);
 

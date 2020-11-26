@@ -242,12 +242,12 @@ const AuthScreen = props => {
 				</View>
 
 				{/* DEV TOOL */}
-				<TouchableOpacity 
+				{/* <TouchableOpacity 
 					style={{width: 100, height: 100, backgroundColor: "red"}}
 					onPress={() => {
 						console.log("test: ", uid, token);
 					}} 
-					/>
+				/> */}
 				{/* DEV TOOL */}
 
 				{/* onPress={() => {props.navigation.navigate({
