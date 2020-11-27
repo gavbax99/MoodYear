@@ -39,8 +39,8 @@ const AboutScreen = props => {
 
 	// Handle logout
 	const handleLogout = () => {
-		dispatch(logoutAuth());
 		dispatch(logoutData());
+		dispatch(logoutAuth());
 		props.navigation.replace("Login");
 	};
 
@@ -57,8 +57,8 @@ const AboutScreen = props => {
 				{
 					text: "Delete",
 					onPress: () => {
-						dispatch(logoutAuth());
 						dispatch(logoutData());
+						dispatch(logoutAuth());
 						dispatch(deleteAccount(uid, token));
 						props.navigation.replace("Login");
 					},

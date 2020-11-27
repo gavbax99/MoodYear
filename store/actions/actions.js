@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from "../../config";
 
 // #################### UI ####################
@@ -5,7 +6,7 @@ export const SET_KEYBOARD_OPEN = "SET_KEYBOARD_OPEN";
 export const SET_HEADER_HEIGHT = "SET_HEADER_HEIGHT";
 
 // #################### AUTH ####################
-export const HANDLE_AUTH_DATA = "HANDLE_AUTH_DATA"; 
+export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT_AUTH = "LOGOUT_AUTH";
 export const DELETE_ACCOUNT = "DELETE_ACCOUNT"; // no reducer import
 
@@ -20,6 +21,8 @@ export const PUT_NEW_ACTIVE_YEAR = "PUT_NEW_ACTIVE_YEAR"; // no reducer import
 // #################### DEV ####################
 export const ADD_EMPTY_YEAR = "ADD_EMPTY_YEAR"; // no reducer import
 
+// TIMER FOR AUTOLOGOUT
+// let timer;
 
 // ==================== UI ====================
 // Keyboard open bool
@@ -39,6 +42,135 @@ export const setHeaderHeight = (heightInt) => {
 };
 
 // ==================== AUTH ====================
+export const authenticate = (token, userId, email, registeredDate) => {
+	return dispatch => {
+		// dispatch(setLogoutTimer(expiryTime));
+		dispatch({ 
+			type: AUTHENTICATE,
+			token: token,
+			userId: userId,
+			email: email,
+			registeredDate: registeredDate
+		});
+	};
+};
+
+// Logout AUTH
+export const logoutAuth = () => {
+	// Clear auto logout timer
+	// clearLogoutTimer();
+	return {
+		type: LOGOUT_AUTH,
+	};
+};
+
+// Auto logout
+// const clearLogoutTimer = () => {
+// 	if (timer) {
+// 		clearTimeout(timer);
+// 	}
+// };
+
+// const setLogoutTimer = (expirationTime) => {
+// 	return dispatch => {
+// 		timer = setTimeout(() => {
+// 			dispatch(logoutAuth());
+// 		}, expirationTime);
+// 	};
+// };
+
+// Saving data to local storage
+const saveDataToStorage = (token, userId, expirationDate) => {
+	AsyncStorage.setItem("@authData", JSON.stringify({
+		token: token,
+		userId: userId,
+		expirationDate: expirationDate.toISOString()
+	}));
+};
+
+// Login from local storage
+export const loginFromLocalStorage = (token, userId) => {
+	return async dispatch => {
+		console.log("made it to actions");
+		
+		// Grabs account info 
+		const accountInfo = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${userId}/accountInfo.json?auth=${token}`);
+		const resAccountInfo = await accountInfo.json();
+		
+		console.log(resAccountInfo);
+		
+		dispatch(authenticate( 
+			token,
+			userId,
+			resAccountInfo.email,
+			resAccountInfo.registeredDate
+		));
+	};
+}
+
+// Login
+export const login = (email, password) => {
+	return async dispatch => {
+		// Login with email and password
+		const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${config.API_KEY}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				email: email,
+				password: password,
+				returnSecureToken: true,
+			})
+		});
+
+		// Error handling
+		if (!response.ok) {
+			const errorResData = await response.json();
+			const errorId = errorResData.error.message;
+			let message = "Something went wrong. Please try again.";
+			switch (errorId) {
+				case "EMAIL_NOT_FOUND": 
+					message = "This email cannot be found.";
+					break;
+				case "INVALID_PASSWORD":
+					message = "Invalid password.";
+					break;
+				default: break;
+			}
+			throw new Error(message);
+		};
+
+		// Grabs auth creds
+		const resData = await response.json();
+
+		// Grabs account info 
+		const accountInfo = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${resData.localId}/accountInfo.json?auth=${resData.idToken}`);
+		const resAccountInfo = await accountInfo.json();
+
+		dispatch(authenticate( 
+			resData.idToken,
+			resData.localId,
+			resAccountInfo.email,
+			resAccountInfo.registeredDate
+		));
+
+		// dispatch({ 
+		// 	type: HANDLE_AUTH_DATA,
+		// 	token: resData.idToken,
+		// 	userId: resData.localId,
+		// 	email:  resAccountInfo.email,
+		// 	registeredDate: resAccountInfo.registeredDate
+		// });
+
+		// Save data to local storage
+		const expirationDate = new Date(
+			new Date().getTime() + parseInt(resData.expiresIn) * 1000
+		);
+		saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+	};
+};
+
 // Sign up
 export const signup = (email, password) => {
 	return async dispatch => {
@@ -91,70 +223,26 @@ export const signup = (email, password) => {
 		const resNewUidData = await newUid.json();
 		console.log("res in actions", resNewUidData);
 
-		dispatch({ 
-			type: HANDLE_AUTH_DATA,
-			token: resData.idToken,
-			userId: resData.localId,
-			email: resData.email,
-			registeredDate: dayDate
-		});
-	};
-};
+		dispatch(authenticate( 
+			resData.idToken,
+			resData.localId,
+			resAccountInfo.email,
+			resAccountInfo.registeredDate
+		));
 
-// Login
-export const login = (email, password) => {
-	return async dispatch => {
-		// Login with email and password
-		const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${config.API_KEY}`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				email: email,
-				password: password,
-				returnSecureToken: true,
-			})
-		});
+		// dispatch({ 
+		// 	type: HANDLE_AUTH_DATA,
+		// 	token: resData.idToken,
+		// 	userId: resData.localId,
+		// 	email: resData.email,
+		// 	registeredDate: dayDate
+		// });
 
-		// Error handling
-		if (!response.ok) {
-			const errorResData = await response.json();
-			const errorId = errorResData.error.message;
-			let message = "Something went wrong. Please try again.";
-			switch (errorId) {
-				case "EMAIL_NOT_FOUND": 
-					message = "This email cannot be found.";
-					break;
-				case "INVALID_PASSWORD":
-					message = "Invalid password.";
-					break;
-				default: break;
-			}
-			throw new Error(message);
-		};
-
-		// Grabs auth creds
-		const resData = await response.json();
-
-		// Grabs account info 
-		const accountInfo = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${resData.localId}/accountInfo.json?auth=${resData.idToken}`);
-		const resAccountInfo = await accountInfo.json();
-
-		dispatch({ 
-			type: HANDLE_AUTH_DATA,
-			token: resData.idToken,
-			userId: resData.localId,
-			email:  resAccountInfo.email,
-			registeredDate: resAccountInfo.registeredDate
-		});
-	};
-};
-
-// Logout AUTH
-export const logoutAuth = () => {
-	return {
-		type: LOGOUT_AUTH,
+		// Save data to local storage
+		const expirationDate = new Date(
+			new Date().getTime() + parseInt(resData.expiresIn) * 1000
+		);
+		saveDataToStorage(resData.idToken, resData.localId, expirationDate);
 	};
 };
 

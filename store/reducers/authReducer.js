@@ -1,5 +1,5 @@
 import { 
-	HANDLE_AUTH_DATA,
+	AUTHENTICATE,
 	LOGOUT_AUTH
 } from "../actions/actions";
 
@@ -12,7 +12,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case HANDLE_AUTH_DATA:
+		case AUTHENTICATE:
 			return {
 				token: action.token,
 				userId: action.userId,
