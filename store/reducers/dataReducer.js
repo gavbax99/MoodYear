@@ -2,7 +2,7 @@ import {
 	HANDLE_DATA_UPDATE,
 	LOAD_ACTIVE_YEARS,
 	LOGOUT_DATA
- } from "../actions/actions";
+ } from "../actions/dataActions";
 
 const initialState = {
 	data: {},

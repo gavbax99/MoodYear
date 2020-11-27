@@ -1,6 +1,6 @@
 import { 
 	SET_KEYBOARD_OPEN,
-} from "../actions/actions";
+} from "../actions/uiActions";
 
 const initialState = {
 	keyboardReducerState: false,

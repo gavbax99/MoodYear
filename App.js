@@ -6,7 +6,8 @@ import { StatusBar } from "react-native";
 import { enableScreens } from 'react-native-screens';
 
 // Nav
-import AppNavigator from "./navigation/AppNavigator";
+// import AppNavigator from "./navigation/AppNavigator";
+import NavigationContainer from "./navigation/NavigationContainer";
 
 // Redux
 import { Provider } from "react-redux";
@@ -25,7 +26,7 @@ const store = createStore(reducer, applyMiddleware(ReduxThunk));
 export default function App() {
 	return (
 		<Provider store={store}>
-			<AppNavigator />
+			<NavigationContainer />
 		</Provider>
 	);
 };

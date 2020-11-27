@@ -12,7 +12,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { setHeaderHeight } from "../store/actions/actions";
+import { setHeaderHeight } from "../store/actions/uiActions";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -88,7 +88,11 @@ const AppHeader = props => {
 				<TouchableOpacity
 					activeOpacity={props.backButton ? Tools.activeOpacity : 1}
 					style={{ paddingHorizontal: Tools.paddingNormal }}
-					onPress={() => { props.navigation.goBack() }}>
+					onPress={() => { 
+						if (props.backButton === true) {
+							props.navigation.goBack();	
+						} 
+					}}>
 					<HeaderImage />
 				</TouchableOpacity>
 				{props.isSettings === false ?

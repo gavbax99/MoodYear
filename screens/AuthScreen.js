@@ -15,12 +15,14 @@ import {
 	TouchableOpacity,
 	ActivityIndicator,
 	Alert,
+	Image,
+	Linking
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { login, signup } from "../store/actions/actions";
+import { login, signup } from "../store/actions/authActions";
 
 // Constants 
 import Tools from '../constants/Tools';
@@ -86,10 +88,17 @@ const AuthScreen = props => {
 	const [error, setError] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLogin, setIsLogin] = useState(true);
+	const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
 	// Login -> reg
 	const switchLogin = () => {
+		setToggleCheckBox(false);
 		setIsLogin(!isLogin);
+	};
+
+	// Toggle checkbox
+	const handleCheckboxToggle = () => {
+		setToggleCheckBox(!toggleCheckBox);
 	};
 
 	// Handle login/reg
@@ -112,13 +121,22 @@ const AuthScreen = props => {
 		try {
 			if (isLogin) {
 				await dispatch(login(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+				setIsLoading(false);
 				props.navigation.replace("Home");
 			} else {
-				await dispatch(signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
-				props.navigation.replace({
-					routeName: "Ftue",
-					params: { newUser: true },
-				});
+				if (toggleCheckBox === true) {
+					await dispatch(signup(formState.inputValues.email.trim(), formState.inputValues.password.trim()));
+					setIsLogin(true);
+					setToggleCheckBox(false);
+					setIsLoading(false);
+					props.navigation.replace({
+						routeName: "Ftue",
+						params: { newUser: true },
+					});
+				} else {
+					setIsLoading(false);
+					Alert.alert("Privacy Policy", "Please read our Privacy Policy and check the associated box.", [{ text: "Okay" }]);
+				}
 			}
 		} catch (err) {
 			setError(err.message);
@@ -157,7 +175,10 @@ const AuthScreen = props => {
 					{/* Title text */}
 					<View style={{ width: "100%", marginBottom: Tools.paddingNormal }}>
 						<Text style={styles.titleText}>MoodYear</Text>
-						<View style={styles.underTitleBar}></View>
+						<View style={{
+							...styles.underTitleBar,
+							backgroundColor: isLogin === true ? Tools.color3 : Tools.color4
+							}}></View>
 					</View>
 
 					{/* Email */}
@@ -202,7 +223,7 @@ const AuthScreen = props => {
 					{/* Switch login/reg state text */}
 					<View style={styles.switchTextContainer}>
 						<Text style={styles.switchText}>
-							{isLogin ? "Don't have an account?" : "Already have an account?"}
+							{isLogin ? "Don't have an account? " : "Already have an account? "}
 						</Text>
 						<TouchableOpacity onPress={switchLogin}>
 							<Text style={{ ...styles.switchText, ...styles.switchTextButton }}>
@@ -210,6 +231,32 @@ const AuthScreen = props => {
 							</Text>
 						</TouchableOpacity>
 					</View>
+
+					{/* If reg, check box for PP */}
+					{!isLogin?
+						<View style={styles.ppContainer}>
+							<TouchableOpacity 
+								style={{
+									...styles.checkbox,
+									backgroundColor: toggleCheckBox === false ? Tools.colorBackground : Tools.color4
+								}}
+								activeOpacity={1}
+								onPress={handleCheckboxToggle}>
+								<Image
+									style={{ width: 30, height: 30 }}
+									source={require("../assets/images/check_pp.png")}
+									resizeMode={"contain"} 
+								/>
+							</TouchableOpacity>
+
+							<Text style={styles.ppText}>I have read the </Text>
+							<TouchableOpacity onPress={() => { Linking.openURL("https://gavinbaxter.com/moodyear-privacy-policy.html"); }}>
+								<Text style={{ ...styles.switchTextButton, fontSize: 16 }}>Privacy Policy.</Text>
+							</TouchableOpacity>
+						</View>
+						:
+						null
+					}
 
 					{/* If loading, show loading icon. Otherwise show login button */}
 					{isLoading ?
@@ -223,7 +270,8 @@ const AuthScreen = props => {
 								...styles.button, 
 								backgroundColor: isLogin ? Tools.color3 : Tools.color4 
 							}} 
-							onPress={loginHandler}>
+							onPress={loginHandler}
+							activeOpacity={Tools.activeOpacity}>
 							<Text style={{ 
 									color: isLogin ? Tools.colorLight : Tools.colorLight, 
 									fontSize: 18 
@@ -307,19 +355,37 @@ const styles = StyleSheet.create({
 	},
 	switchText: {
 		color: Tools.colorLight,
-		fontSize: 14,
+		fontSize: 16,
 		paddingTop: Tools.paddingNormal,
 	},
 	switchTextButton: {
 		color: Tools.accentColor,
-		paddingLeft: 4,
 	},
 	underTitleBar: {
-		width: 150,
+		width: 184,
 		height: 5,
-		backgroundColor: Tools.color3,
 		borderRadius: 4,
-	}
+	},
+	ppContainer: {
+		width: "100%",
+		flexDirection: "row",
+		paddingTop: Tools.paddingLarge,
+		alignItems: "center"
+	},
+	ppText: {
+		color: Tools.colorLight,
+		fontSize: 16,
+		paddingLeft: Tools.paddingNormal,
+	},
+	checkbox: {
+		alignItems: "center",
+		justifyContent: "center",
+		width: 30,
+		height: 30,
+		borderWidth: 2,
+		borderColor: Tools.color4,
+		borderRadius: 3,
+	},
 });
 
 export default AuthScreen;
