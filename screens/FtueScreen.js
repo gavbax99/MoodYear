@@ -18,7 +18,7 @@ import {
 	loadActiveYears,
 	updateEmptyYear,
 	putNewActiveYear
-} from "../store/actions/actions";
+} from "../store/actions/dataActions";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -229,7 +229,7 @@ const FtueScreen = props => {
 							activeOpacity={Tools.activeOpacity}
 							style={{ ...styles.accountButton, marginBottom: Tools.paddingMonths }}
 							onPress={() => {
-								Linking.openURL("https://gavinbaxter.com");
+								Linking.openURL("https://gavinbaxter.com/moodyear-privacy-policy.html");
 							}}>
 							<Text style={styles.buttonText}>Privacy Policy</Text>
 						</TouchableOpacity>

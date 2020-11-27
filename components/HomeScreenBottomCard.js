@@ -12,11 +12,8 @@ import {
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { 
-	setKeyboardOpen, 
-	updateSingleDay, 
-	loadData 
-} from "../store/actions/actions";
+import { updateSingleDay, loadData } from "../store/actions/dataActions";
+import { setKeyboardOpen } from "../store/actions/uiActions";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -177,11 +174,11 @@ const HomeScreenBottomCard = props => {
 				: 
 				Object.keys(data).length !== 0 ?
 					<View style={styles.screen}>
-						<Text style={{color: Tools.colorLight, fontSize: 14 }}>You're viewing a previous year.</Text>
+						<Text style={{color: Tools.colorLight, fontSize: 16, marginBottom: 5 }}>You're viewing a previous year.</Text>
 						<TouchableOpacity
 							activeOpacity={Tools.activeOpacity}
 							onPress={() => {props.navigation.navigate("Settings")}}>
-							<Text style={{color: Tools.accentColor, fontSize: 14 }}>Click here to change the year.</Text>
+							<Text style={{color: Tools.accentColor, fontSize: 16, marginBottom: 10 }}>Tap here to change the year.</Text>
 						</TouchableOpacity>
 					</View>
 					: 

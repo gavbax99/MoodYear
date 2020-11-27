@@ -1,7 +1,7 @@
 import { 
 	AUTHENTICATE,
 	LOGOUT_AUTH
-} from "../actions/actions";
+} from "../actions/authActions";
 
 const initialState = {
 	token: null,

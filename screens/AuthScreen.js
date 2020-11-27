@@ -22,7 +22,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { login, signup } from "../store/actions/actions";
+import { login, signup } from "../store/actions/authActions";
 
 // Constants 
 import Tools from '../constants/Tools';

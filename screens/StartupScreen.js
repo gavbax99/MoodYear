@@ -3,19 +3,17 @@ import React, { useEffect } from 'react';
 import { 
 	StyleSheet, 
 	View, 
-	ActivityIndicator, 
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Redux
 import { useDispatch } from "react-redux"; 
-import { loginFromLocalStorage } from "../store/actions/actions";
+import { loginFromLocalStorage } from "../store/actions/authActions";
 
 // Constants
 import Tools from '../constants/Tools';
-import { exp } from 'react-native/Libraries/Animated/src/Easing';
 
-// ==================== Component
+// ==================== Component ====================
 const StartupScreen = props => {
 
 	const dispatch = useDispatch();
@@ -58,7 +56,7 @@ const StartupScreen = props => {
 	);
 }
 
-// ==================== Styles
+// ==================== Styles ====================
 const styles = StyleSheet.create({
 	screen: {
 		flex: 1,

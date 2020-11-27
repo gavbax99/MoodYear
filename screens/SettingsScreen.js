@@ -13,7 +13,7 @@ import {
 	loadActiveYears,
 	loadData,
 	removeData
-} from "../store/actions/actions";
+} from "../store/actions/dataActions";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -58,7 +58,7 @@ const SettingsScreen = props => {
 			<View style={styles.innerScreen}>
 				{/* Year selection */}
 				<View style={styles.selectYearContainer}>
-					<Text style={styles.buttonText}>View Previous Years:</Text>
+					<Text style={styles.buttonText}>View Years:</Text>
 					{activeYears !== null ? 
 						Object.keys(activeYears).map((val) => {
 							return (

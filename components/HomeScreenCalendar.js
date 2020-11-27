@@ -13,7 +13,7 @@ import {
 	loadActiveYears,
 	updateEmptyYear,
 	putNewActiveYear
-} from "../store/actions/actions";
+} from "../store/actions/dataActions";
 
 // Constants
 import Tools from '../constants/Tools';

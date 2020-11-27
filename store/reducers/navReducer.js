@@ -1,6 +1,6 @@
 import { 
 	SET_HEADER_HEIGHT 
-} from "../actions/actions";
+} from "../actions/uiActions";
 
 const initialState = {
 	headerHeightState: 0,

@@ -11,12 +11,9 @@ import {
 } from 'react-native';
 
 // Redux
-import {
-	logoutAuth,
-	logoutData,
-	deleteAccount
-} from "../store/actions/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { logoutAuth, deleteAccount } from "../store/actions/authActions";
+import { logoutData } from "../store/actions/dataActions";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -41,7 +38,6 @@ const AboutScreen = props => {
 	const handleLogout = () => {
 		dispatch(logoutData());
 		dispatch(logoutAuth());
-		props.navigation.replace("Login");
 	};
 
 	// Delete account warning alert
@@ -60,7 +56,6 @@ const AboutScreen = props => {
 						dispatch(logoutData());
 						dispatch(logoutAuth());
 						dispatch(deleteAccount(uid, token));
-						props.navigation.replace("Login");
 					},
 					style: "destructive"
 				}

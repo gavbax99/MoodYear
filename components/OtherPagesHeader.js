@@ -11,7 +11,7 @@ import Svg, { Path } from 'react-native-svg';
 
 // Redux
 import { useDispatch } from "react-redux";
-import { setHeaderHeight } from "../store/actions/actions";
+import { setHeaderHeight } from "../store/actions/uiActions";
 
 // Constants
 import Tools from '../constants/Tools';
