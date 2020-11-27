@@ -22,7 +22,7 @@ export const PUT_NEW_ACTIVE_YEAR = "PUT_NEW_ACTIVE_YEAR"; // no reducer import
 export const ADD_EMPTY_YEAR = "ADD_EMPTY_YEAR"; // no reducer import
 
 // TIMER FOR AUTOLOGOUT
-// let timer;
+let timer;
 
 // ==================== UI ====================
 // Keyboard open bool
@@ -42,9 +42,9 @@ export const setHeaderHeight = (heightInt) => {
 };
 
 // ==================== AUTH ====================
-export const authenticate = (token, userId, email, registeredDate) => {
+export const authenticate = (token, userId, email, registeredDate, expirationTime) => {
 	return dispatch => {
-		// dispatch(setLogoutTimer(expiryTime));
+		dispatch(setLogoutTimer(expirationTime));
 		dispatch({ 
 			type: AUTHENTICATE,
 			token: token,
@@ -58,26 +58,31 @@ export const authenticate = (token, userId, email, registeredDate) => {
 // Logout AUTH
 export const logoutAuth = () => {
 	// Clear auto logout timer
-	// clearLogoutTimer();
+	clearLogoutTimer();
+
+	// Remove locally stored uid and token
+	AsyncStorage.removeItem("@authData");
+
 	return {
 		type: LOGOUT_AUTH,
 	};
 };
 
 // Auto logout
-// const clearLogoutTimer = () => {
-// 	if (timer) {
-// 		clearTimeout(timer);
-// 	}
-// };
+const clearLogoutTimer = () => {
+	if (timer) {
+		clearTimeout(timer);
+	}
+};
 
-// const setLogoutTimer = (expirationTime) => {
-// 	return dispatch => {
-// 		timer = setTimeout(() => {
-// 			dispatch(logoutAuth());
-// 		}, expirationTime);
-// 	};
-// };
+const setLogoutTimer = (expirationTime) => {
+	return dispatch => {
+		timer = setTimeout(() => {
+			console.log("logging out");
+			dispatch(logoutAuth());
+		}, expirationTime);
+	};
+};
 
 // Saving data to local storage
 const saveDataToStorage = (token, userId, expirationDate) => {
@@ -89,21 +94,18 @@ const saveDataToStorage = (token, userId, expirationDate) => {
 };
 
 // Login from local storage
-export const loginFromLocalStorage = (token, userId) => {
-	return async dispatch => {
-		console.log("made it to actions");
-		
+export const loginFromLocalStorage = (token, userId, expirationTime) => {
+	return async dispatch => {	
 		// Grabs account info 
 		const accountInfo = await fetch(`https://moodyear-e7dee.firebaseio.com/userData/${userId}/accountInfo.json?auth=${token}`);
 		const resAccountInfo = await accountInfo.json();
-		
-		console.log(resAccountInfo);
-		
+
 		dispatch(authenticate( 
 			token,
 			userId,
 			resAccountInfo.email,
-			resAccountInfo.registeredDate
+			resAccountInfo.registeredDate,
+			expirationTime
 		));
 	};
 }
@@ -152,16 +154,9 @@ export const login = (email, password) => {
 			resData.idToken,
 			resData.localId,
 			resAccountInfo.email,
-			resAccountInfo.registeredDate
+			resAccountInfo.registeredDate,
+			parseInt(resData.expiresIn) * 1000
 		));
-
-		// dispatch({ 
-		// 	type: HANDLE_AUTH_DATA,
-		// 	token: resData.idToken,
-		// 	userId: resData.localId,
-		// 	email:  resAccountInfo.email,
-		// 	registeredDate: resAccountInfo.registeredDate
-		// });
 
 		// Save data to local storage
 		const expirationDate = new Date(
@@ -226,17 +221,10 @@ export const signup = (email, password) => {
 		dispatch(authenticate( 
 			resData.idToken,
 			resData.localId,
-			resAccountInfo.email,
-			resAccountInfo.registeredDate
+			resData.email,
+			dayDate,
+			parseInt(resData.expiresIn) * 1000
 		));
-
-		// dispatch({ 
-		// 	type: HANDLE_AUTH_DATA,
-		// 	token: resData.idToken,
-		// 	userId: resData.localId,
-		// 	email: resData.email,
-		// 	registeredDate: dayDate
-		// });
 
 		// Save data to local storage
 		const expirationDate = new Date(

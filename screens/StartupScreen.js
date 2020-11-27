@@ -13,6 +13,7 @@ import { loginFromLocalStorage } from "../store/actions/actions";
 
 // Constants
 import Tools from '../constants/Tools';
+import { exp } from 'react-native/Libraries/Animated/src/Easing';
 
 // ==================== Component
 const StartupScreen = props => {
@@ -41,9 +42,10 @@ const StartupScreen = props => {
 				return;
 			}
 
-			console.log("has stuff: ", userId, token);
+			const expirationTime = expDate.getTime() - new Date().getTime();
 
-			dispatch(loginFromLocalStorage(token, userId));
+			// If stuff exists, autologin and go to home screen
+			dispatch(loginFromLocalStorage(token, userId, expirationTime));
 			props.navigation.navigate("Home");
 		};
 
@@ -52,9 +54,7 @@ const StartupScreen = props => {
 
 
 	return (
-		<View style={styles.screen}>
-			
-		</View>
+		<View style={styles.screen} />
 	);
 }
 

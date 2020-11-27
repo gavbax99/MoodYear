@@ -88,7 +88,11 @@ const AppHeader = props => {
 				<TouchableOpacity
 					activeOpacity={props.backButton ? Tools.activeOpacity : 1}
 					style={{ paddingHorizontal: Tools.paddingNormal }}
-					onPress={() => { props.navigation.goBack() }}>
+					onPress={() => { 
+						if (props.backButton === true) {
+							props.navigation.goBack();	
+						} 
+					}}>
 					<HeaderImage />
 				</TouchableOpacity>
 				{props.isSettings === false ?
