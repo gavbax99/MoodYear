@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	StyleSheet,
 	View,
@@ -20,6 +20,7 @@ import Tools from '../constants/Tools';
 
 // Components
 import OtherPagesHeader from '../components/OtherPagesHeader';
+import RecentFeelings from "../components/RecentFeelings";
 
 // ==================== Component ====================
 const AboutScreen = props => {
@@ -30,9 +31,16 @@ const AboutScreen = props => {
 	// Redux
 	const dispatch = useDispatch();
 	const registeredDate = useSelector(state => state.authReducer.registeredDate);
+	const data = useSelector(state => state.dataReducer.data);
 	const email = useSelector(state => state.authReducer.email);
 	const token = useSelector(state => state.authReducer.token);
 	const uid = useSelector(state => state.authReducer.userId);
+
+	// State
+	const [last7, setLast7] = useState(0);
+	const [last30, setLast30] = useState(0);
+	const [last7Entries, setLast7Entries] = useState(0);
+	const [last30Entries, setLast30Entries] = useState(0);
 
 	// Handle logout
 	const handleLogout = () => {
@@ -64,21 +72,117 @@ const AboutScreen = props => {
 		);
 	};
 
+	// Last 7/30 logic
+	useEffect(() => {
+		if (Object.keys(data).length === 0 || displayContentIdentifier === "About") return;
+
+		const date = new Date();
+		const monthNoForArray = date.getMonth();
+		const dayNoForArray = date.getDate();
+
+		// ==================== 30 ====================
+		let thirtyArray = [];
+		let thirtyTotal = 0;
+		const startingIndex30 = 30 - dayNoForArray >= 0 ? 0 : 1; // 30-27= 3 -> 0
+		const thirtyRemainder = startingIndex30 === 0 ? 30 - dayNoForArray : 0; // true -> 30-27= 3
+		const endingIndex30 = dayNoForArray;
+
+		// Current month
+		for (i = startingIndex30; i < endingIndex30; i++) {
+			const color = data.months[monthNoForArray].days[i].color;
+			if (color !== 0) {
+				thirtyTotal++;
+				thirtyArray = [...thirtyArray, color];
+			}
+		}
+
+		// If remainder, pull from previous month
+		if (thirtyRemainder > 0) {
+			const prevMonthLength = data.months[monthNoForArray - 1].days.length;
+			// Accounting for March 1st (pML - tR = -1)
+			for (i = prevMonthLength - thirtyRemainder >= 0 ? prevMonthLength - thirtyRemainder : 0; i < prevMonthLength; i++) {
+				const color = data.months[monthNoForArray - 1].days[i].color;
+				if (color !== 0) {
+					thirtyTotal++;
+					thirtyArray = [...thirtyArray, color];
+				}
+			}
+		}
+
+		if (thirtyArray.length > 0) {
+			const thirtyArraySum = thirtyArray.reduce((acc, t) => acc + t);
+			const thirtyArrayAverage = thirtyArraySum / thirtyArray.length;
+			console.log("30:", "sum:", thirtyArraySum, "average:", thirtyArrayAverage, "total:", thirtyTotal);
+
+			setLast30(Math.round(thirtyArrayAverage));
+			setLast30Entries(thirtyTotal);
+		}
+
+		// ==================== 7 ====================
+		let sevenArray = [];
+		let sevenTotal = 0;
+		const startingIndex7 = dayNoForArray - 7 >= 0 ? dayNoForArray - 7 : 0;
+		const sevenRemainder = startingIndex7 === 0 ? 7 - dayNoForArray : 0;
+		const endingIndex7 = dayNoForArray;
+
+		// Current month
+		for (i = startingIndex7; i < endingIndex7; i++) {
+			const color = data.months[monthNoForArray].days[i].color;
+			if (color !== 0) {
+				sevenTotal++;
+				sevenArray = [...sevenArray, color];
+			}
+		}
+
+		// If remainder, pull from previous month
+		if (sevenRemainder > 0) {
+			const prevMonthLength = data.months[monthNoForArray - 1].days.length;
+			for (i = prevMonthLength - sevenRemainder; i < prevMonthLength; i++) {
+				const color = data.months[monthNoForArray - 1].days[i].color;
+				if (color !== 0) {
+					sevenTotal++;
+					sevenArray = [...sevenArray, color];
+				}
+			}
+		}
+
+		if (sevenArray.length > 0) {
+			const sevenArraySum = sevenArray.reduce((acc, t) => acc + t);
+			const sevenArrayAverage = sevenArraySum / sevenArray.length;
+			console.log("7", "sum:", sevenArraySum, "average:", sevenArrayAverage, "total:", sevenTotal);
+
+			setLast7(Math.round(sevenArrayAverage));
+			setLast7Entries(sevenTotal);
+		}
+	}, [data])
+
 	// Dynamic component based on nav param
 	const ScreenContent = () => {
 		switch (displayContentIdentifier) {
 			case "Account":
 				return (
 					<View style={styles.dynamicContentContainer}>
-						{/* Year selection */}
-						<View style={{ ...styles.accountInfoContainer, marginTop: Tools.paddingLarge }}>
-							<View style={styles.infoTextContainer}>
-								<Text style={styles.infoTitleText}>Email:</Text>
-								<Text style={styles.infoText}>{email}</Text>
-							</View>
-							<View style={{ ...styles.infoTextContainer, marginTop: Tools.paddingHalf }}>
-								<Text style={styles.infoTitleText}>Registered:</Text>
-								<Text style={styles.infoText}>{registeredDate}</Text>
+						{/* Recent feelings */}
+						<View style={styles.feelingsContainer}>
+							<Text style={{ ...styles.infoTextHeadline, paddingHorizontal: 0, marginBottom: Tools.paddingNormal }}>
+								Recent Averages:
+							</Text>
+							
+							<View style={{ ...styles.accountInfoContainer }}>
+								{/* 7 */}
+								<RecentFeelings 
+									entries={last7Entries}
+									totalEntries={7}
+									faceColor={last7}
+								/>
+								
+								{/* 30 */}
+								<RecentFeelings 
+									style={{marginTop: Tools.paddingNormal}}
+									entries={last30Entries}
+									totalEntries={30}
+									faceColor={last30}
+								/>
 							</View>
 						</View>
 
@@ -97,6 +201,18 @@ const AboutScreen = props => {
 							onPress={handleDeleteAccount}>
 							<Text style={styles.buttonText}>Delete Account</Text>
 						</TouchableOpacity>
+
+						{/* Account info */}
+						<View style={{ ...styles.accountInfoContainer, marginTop: Tools.paddingLarge }}>
+							<View style={styles.infoTextContainer}>
+								<Text style={styles.infoTitleText}>Email:</Text>
+								<Text style={styles.infoText}>{email}</Text>
+							</View>
+							<View style={{ ...styles.infoTextContainer, marginTop: Tools.paddingHalf }}>
+								<Text style={styles.infoTitleText}>Registered:</Text>
+								<Text style={styles.infoText}>{registeredDate}</Text>
+							</View>
+						</View>
 
 					</View>)
 
@@ -279,6 +395,9 @@ const styles = StyleSheet.create({
 		color: Tools.colorLight,
 		fontSize: 24,
 		fontWeight: "200",
+	},
+	feelingsContainer: {
+		width: "100%",
 	},
 });
 
