@@ -112,7 +112,6 @@ const AboutScreen = props => {
 		if (thirtyArray.length > 0) {
 			const thirtyArraySum = thirtyArray.reduce((acc, t) => acc + t);
 			const thirtyArrayAverage = thirtyArraySum / thirtyArray.length;
-			console.log("30:", "sum:", thirtyArraySum, "average:", thirtyArrayAverage, "total:", thirtyTotal);
 
 			setLast30(Math.round(thirtyArrayAverage));
 			setLast30Entries(thirtyTotal);
@@ -149,7 +148,6 @@ const AboutScreen = props => {
 		if (sevenArray.length > 0) {
 			const sevenArraySum = sevenArray.reduce((acc, t) => acc + t);
 			const sevenArrayAverage = sevenArraySum / sevenArray.length;
-			console.log("7", "sum:", sevenArraySum, "average:", sevenArrayAverage, "total:", sevenTotal);
 
 			setLast7(Math.round(sevenArrayAverage));
 			setLast7Entries(sevenTotal);

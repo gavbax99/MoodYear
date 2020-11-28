@@ -1,9 +1,15 @@
 {
   "expo": {
-    "name": "MoodYear",
-    "slug": "MoodYear",
-    "version": "1.0.0",
-    "orientation": "portrait",
+	"name": "MoodYear",
+	"description": "MoodYear is a beautiful daily mood tracking and journaling application.",
+	"slug": "MoodYear",
+	"Owner": "GavinBaxter",
+	"Privacy": "public",
+	"sdkVersion": "38.0.2",
+	"version": "1.0.0",
+	"platforms": ["ios"],
+	"orientation": "portrait",
+	"githubUrl": "https://github.com/gavbax99/MoodYear",
     "icon": "./assets/images/logo_lrg.png",
     "splash": {
       "image": "./assets/images/logo_splash.png",
@@ -17,10 +23,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    },
-    "web": {
-      "favicon": "./assets/images/logo_sml.png"
+      "supportsTablet": false
     }
   }
 }

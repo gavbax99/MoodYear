@@ -75,10 +75,6 @@ const MonthDetailCalendar = props => {
 	// Data
 	const data = useSelector(state => state.dataReducer.data);
 
-	// Check for current month
-	// const monthData = data.months[currentMonth];
-	// const isCurrentMonth = getMonth === monthData.monthNo ? true : false;
-
 	const prevMonth = () => {
 		if (currentMonth === 0) return;
 		setCurrentMonth(currentMonth - 1);
