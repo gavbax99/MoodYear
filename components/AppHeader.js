@@ -24,13 +24,6 @@ const AppHeader = props => {
 	const dispatch = useDispatch();
 	const data = useSelector(state => state.dataReducer.data);
 
-	// const years = useSelector(state => state.dataReducer.years);
-	// const yearsLoaded = useSelector(state => state.dataReducer.yearsLoaded);
-	// const uid = useSelector(state => state.authReducer.userId);
-	// const token = useSelector(state => state.authReducer.token);
-	// const email = useSelector(state => state.authReducer.email);
-	// const registeredDate = useSelector(state => state.authReducer.registeredDate);
-
 	// State
 	const [yearInt, setYearInt] = useState(null);
 
@@ -40,7 +33,7 @@ const AppHeader = props => {
 		dispatch(setHeaderHeight(height));
 	};
 
-	// Temporary; will be inline after the dev use is gone
+	// Cog onpress
 	const handleSettingsChange = () => {
 		props.navigation.navigate("Settings");
 	};

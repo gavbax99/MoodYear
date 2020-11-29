@@ -79,9 +79,6 @@ const AuthScreen = props => {
 	// Redux
 	const dispatch = useDispatch();
 	const headerHeight = useSelector(state => state.navReducer.headerHeightState);
-	
-	const uid = useSelector(state => state.authReducer.userId);
-	const token = useSelector(state => state.authReducer.token);
 
 	// State
 	const [formState, dispatchFormState] = useReducer(formReducer, initialState);
@@ -297,13 +294,6 @@ const AuthScreen = props => {
 					}} 
 				/> */}
 				{/* DEV TOOL */}
-
-				{/* onPress={() => {props.navigation.navigate({
-						routeName: "Ftue", 
-						params: { newUser: true },
-						// params: { display: "About" },
-					})
-				}} */}
 
 			</KeyboardAvoidingView>
 		</TouchableWithoutFeedback>

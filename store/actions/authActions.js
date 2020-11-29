@@ -188,7 +188,6 @@ export const signup = (email, password) => {
 		});
 
 		const resNewUidData = await newUid.json();
-		console.log("res in actions", resNewUidData);
 
 		dispatch(authenticate( 
 			resData.idToken,

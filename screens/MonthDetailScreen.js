@@ -57,25 +57,14 @@ const MonthDetailScreen = props => {
 	// Redux
 	const data = useSelector(state => state.dataReducer.data);
 
-	// Data variables
-	// const startingFirstDayOfWeek = data.months[monthNo].firstDayOfWeek;
-	// const startingFaceColor = data.months[monthNo].days[0].color - 1;
-	// const startingMessage = data.months[monthNo].days[0].message;
-
 	// State
 	const [dayToFind, setDayToFind] = useState(1);
 	const [monthToFind, setMonthToFind] = useState(monthNo);
 	const [yearToFind, setYearToFind] = useState(yearInt);
-
 	const [dayOfTheWeek, setDayOfTheWeek] = useState(" ");
 	const [faceColor, setFaceColor] = useState(returnFaceColorHex(4));
 	const [colorNumber, setColorNumber] = useState(-1);
 	const [message, setMessage] = useState("");
-
-	// const [dayOfTheWeek, setDayOfTheWeek] = useState(startingFirstDayOfWeek);
-	// const [faceColor, setFaceColor] = useState(returnFaceColorHex(startingFaceColor));
-	// const [colorNumber, setColorNumber] = useState(startingFaceColor);
-	// const [message, setMessage] = useState(startingMessage);
 
 	// Change month data
 	const monthDetailScreenHandleDay = (dayNo, dayOfTheWeek, currentMonth, currentYear, newFaceColor, colorNumber, message) => {
