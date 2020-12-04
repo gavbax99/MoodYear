@@ -14,6 +14,10 @@ import Svg, { Path } from 'react-native-svg';
 import { useDispatch, useSelector } from "react-redux";
 import { setHeaderHeight } from "../store/actions/uiActions";
 
+// Dev
+// import { updateData } from "../store/actions/devActions";
+// import Year2020Pop from "../github_assets/data/Year2020Populated";
+
 // Constants
 import Tools from '../constants/Tools';
 
@@ -23,6 +27,9 @@ const AppHeader = props => {
 	// Redux
 	const dispatch = useDispatch();
 	const data = useSelector(state => state.dataReducer.data);
+
+	// Dev
+	// const uid = useSelector(state => state.authReducer.userId);
 
 	// State
 	const [yearInt, setYearInt] = useState(null);
@@ -35,6 +42,9 @@ const AppHeader = props => {
 
 	// Cog onpress
 	const handleSettingsChange = () => {
+		// Dev - to update the entire year from a dataobj
+		// dispatch(updateData(uid, <YEAR_INT>, <DATA_OBJ>));
+		
 		props.navigation.navigate("Settings");
 	};
 

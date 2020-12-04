@@ -1,0 +1,28 @@
+requires expo cli: npm install -g expo-cli
+
+1) PUBLISH
+https://docs.expo.io/workflow/publishing/
+expo publish
+ - from expo: ""Publish" is the term we use for deploying your project. It makes your project available at a persistent URL, for example https://expo.io/@community/native-component-list, which can be opened with the Expo client app. It also uploads all of your app images, fonts, and videos to a CDN"
+ - requires expo UN/PW
+ - publishes new code to expo servers
+
+2) BUILD
+https://docs.expo.io/distribution/building-standalone-apps/
+expo build:ios -t archive
+ - automatically runs "expo publish"
+ - requires apple dev UN/PW
+
+3) (depreciated/not working) UPLOADING
+expo upload:ios
+
+4) (does work but only from a mac) UPLOADING 
+ - download .ipa file from expo
+ - upload through Transporter (mac app)
+
+===================
+
+To update code:
+Just change the code; expo has built in OTA support (https://docs.expo.io/workflow/publishing/)
+ - update version number
+ - from expo: "The standalone app knows to look for updates at your app's published url, and if you publish an update then the next time a user opens your app they will automatically download the new version. These are commonly referred to as "Over the Air" (OTA) updates, the functionality is similar to CodePush, but it is built into Expo so you don't need to install anything."

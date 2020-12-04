@@ -62,7 +62,7 @@ const MonthDetailScreen = props => {
 	const [monthToFind, setMonthToFind] = useState(monthNo);
 	const [yearToFind, setYearToFind] = useState(yearInt);
 	const [dayOfTheWeek, setDayOfTheWeek] = useState(" ");
-	const [faceColor, setFaceColor] = useState(returnFaceColorHex(4));
+	const [faceColor, setFaceColor] = useState(Tools.color5);
 	const [colorNumber, setColorNumber] = useState(-1);
 	const [message, setMessage] = useState("");
 
@@ -93,7 +93,7 @@ const MonthDetailScreen = props => {
 		if (data.months[monthNo] === undefined) return;
 
 		setDayOfTheWeek(data.months[monthNo].firstDayOfWeek);
-		setFaceColor(data.months[monthNo].days[0].color - 1);
+		setFaceColor(returnFaceColorHex(data.months[monthNo].days[0].color - 1));
 		setColorNumber(data.months[monthNo].days[0].color - 1);
 		setMessage(data.months[monthNo].days[0].message);		
 	}, [data])
