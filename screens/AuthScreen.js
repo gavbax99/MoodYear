@@ -171,7 +171,7 @@ const AuthScreen = props => {
 
 					{/* Title text */}
 					<View style={{ width: "100%", marginBottom: Tools.paddingNormal }}>
-						<Text style={styles.titleText}>MoodYear</Text>
+						<Text style={styles.titleText}>MoodYear.</Text>
 						<View style={{
 							...styles.underTitleBar,
 							backgroundColor: isLogin === true ? Tools.color3 : Tools.color4

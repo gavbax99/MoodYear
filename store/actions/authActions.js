@@ -11,6 +11,7 @@ import config from "../../config";
 
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT_AUTH = "LOGOUT_AUTH";
+export const LOGOUT_CREDS = "LOGOUT_CREDS"; // no reducer import
 export const DELETE_ACCOUNT = "DELETE_ACCOUNT"; // no reducer import
 
 
@@ -40,6 +41,13 @@ const saveDataToStorage = (token, userId, expirationDate) => {
 	}));
 };
 
+const saveCredsToStorage = (email, password) => {
+	AsyncStorage.setItem("@authCreds", JSON.stringify({
+		email: email,
+		password: password
+	}));
+};
+
 
 // ==================== ACTIONS ====================
 // Authenticate user and set token expiraton time
@@ -62,6 +70,13 @@ export const logoutAuth = () => {
 	AsyncStorage.removeItem("@authData");
 	return {
 		type: LOGOUT_AUTH,
+	};
+};
+
+export const logoutCreds = () => {
+	AsyncStorage.removeItem("@authCreds");
+	return {
+		type: LOGOUT_CREDS,
 	};
 };
 
@@ -135,6 +150,7 @@ export const login = (email, password) => {
 			new Date().getTime() + parseInt(resData.expiresIn) * 1000
 		);
 		saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+		saveCredsToStorage(email, password);
 	};
 };
 
@@ -202,6 +218,7 @@ export const signup = (email, password) => {
 			new Date().getTime() + parseInt(resData.expiresIn) * 1000
 		);
 		saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+		saveCredsToStorage(email, password);
 	};
 };
 

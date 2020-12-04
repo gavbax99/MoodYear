@@ -60,6 +60,8 @@ const faceSvgPaths = {
 // ==================== Component
 const FaceSlider = props => {
 
+	console.log("slider rere");
+
 	// State
 	const [faceColor, setFaceColor] = useState(props.faceColor);
 	const [leftEyePath, setLeftEyePath] = useState(faceSvgPaths.leftEye[faceSvgPathsIndex[props.sliderValue]]);

@@ -45,6 +45,11 @@ const AppHeader = props => {
 		// Dev - to update the entire year from a dataobj
 		// dispatch(updateData(uid, <YEAR_INT>, <DATA_OBJ>));
 		
+		// props.navigation.navigate({
+		// 	routeName: "Startup",
+		// 	params: { update: Math.random() },
+		// });
+		
 		props.navigation.navigate("Settings");
 	};
 

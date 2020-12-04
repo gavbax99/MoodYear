@@ -12,7 +12,7 @@ import {
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { logoutAuth, deleteAccount } from "../store/actions/authActions";
+import { logoutAuth, logoutCreds, deleteAccount } from "../store/actions/authActions";
 import { logoutData } from "../store/actions/dataActions";
 
 // Constants
@@ -46,6 +46,7 @@ const AboutScreen = props => {
 	const handleLogout = () => {
 		dispatch(logoutData());
 		dispatch(logoutAuth());
+		dispatch(logoutCreds());
 	};
 
 	// Delete account warning alert
@@ -63,6 +64,7 @@ const AboutScreen = props => {
 					onPress: () => {
 						dispatch(logoutData());
 						dispatch(logoutAuth());
+						dispatch(logoutCreds());
 						dispatch(deleteAccount(uid, token));
 					},
 					style: "destructive"
