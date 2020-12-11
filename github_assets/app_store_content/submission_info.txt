@@ -1,0 +1,31 @@
+DESC:
+Track your mood, feel better — it's that easy. Got all your chores done today and it feels great? Track it! Didn't hang out with friends today and it feels crummy? Track it! Identifying these patterns can improve our mood; MoodYear makes daily mood tracking simple, beautiful, and meaningful.
+
+MoodYear is simple to use: write a short journal entry, slide the mood bar to the appropriate mood, and submit! Identify what makes you feel good by viewing past entries and by viewing 7-day and 30-day averages.
+
+MoodYear puts privacy first. Journal entries and login information are stored in our secure database and are never used or shared outside of the MoodYear app.
+
+Feel better today!
+
+
+
+KEYWORDS:
+calendar,mood,journal,mood board,emotion,self help,productivity,self improvement,feelings
+
+
+
+TEST NOTES:
+This test account has year 2021 pre-loaded, although users won't have access to that year until Jan 1st 2021. If you switch to year 2021 with this account, on the bottom it will say "You are viewing a previous year" which will be true in any case besides this test case (users can look back through time, but not forward). 
+
+Please do not delete this test account; if you would like to test that functionality, create a new account to delete.
+
+This app isn't designed for iPad and I have excluded iPad from the expo build settings, however I'm not sure how that works on your end.
+
+Forgive the password, I misspelled "testpass".
+
+This is my first app, very excited to see it go live (after any suggested fixes). Thank you!
+
+
+
+SITE:
+https://gavinbaxter.com/moodyear.html

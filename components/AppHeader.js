@@ -16,7 +16,7 @@ import { setHeaderHeight } from "../store/actions/uiActions";
 
 // Dev
 // import { updateData } from "../store/actions/devActions";
-// import Year2020Pop from "../github_assets/data/Year2020Populated";
+// import Year2021 from "../github_assets/data/Year2021Blank";
 
 // Constants
 import Tools from '../constants/Tools';
@@ -43,7 +43,7 @@ const AppHeader = props => {
 	// Cog onpress
 	const handleSettingsChange = () => {
 		// Dev - to update the entire year from a dataobj
-		// dispatch(updateData(uid, <YEAR_INT>, <DATA_OBJ>));
+		// dispatch(updateData(uid, 2021, Year2021));
 		
 		// props.navigation.navigate({
 		// 	routeName: "Startup",

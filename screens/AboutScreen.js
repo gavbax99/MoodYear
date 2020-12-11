@@ -44,9 +44,9 @@ const AboutScreen = props => {
 
 	// Handle logout
 	const handleLogout = () => {
-		dispatch(logoutData());
 		dispatch(logoutAuth());
 		dispatch(logoutCreds());
+		dispatch(logoutData());
 	};
 
 	// Delete account warning alert

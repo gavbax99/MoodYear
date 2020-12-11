@@ -4,7 +4,7 @@
 	"description": "MoodYear is a beautiful daily mood tracking and journaling application.",
 	"slug": "MoodYear",
 	"sdkVersion": "38.0.0",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"platforms": ["ios"],
 	"orientation": "portrait",
 	"githubUrl": "https://github.com/gavbax99/MoodYear",
@@ -22,7 +22,7 @@
     ],
     "ios": {
 	  "bundleIdentifier": "com.gavinbaxter.moodyear",
-	  "buildNumber": "1.0.0",
+	  "buildNumber": "1.0.2",
       "supportsTablet": false
     }
   }
