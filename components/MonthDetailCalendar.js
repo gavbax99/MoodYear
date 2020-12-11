@@ -89,21 +89,22 @@ const MonthDetailCalendar = props => {
 		props.detailScreenFindDay(dayNo, dayOfTheWeek, currentMonth, currentYear, faceColor, colorNumber, message);
 	};
 
-	// For switching month number
+	// On load and data switch
 	useEffect(() => {
-		if (data.months[currentMonth] === undefined) return;
-
-		props.switchMonths(currentMonth);
-		setMonthData(data.months[currentMonth]);
-		setIsCurrentMonth(getMonth === data.months[currentMonth].monthNo ? true : false);
-	}, [currentMonth]);
-
-	useEffect(() => {
-		if (data.months[currentMonth] === undefined) return;
+		if (Object.keys(data).length === 0) return;
 
 		setMonthData(data.months[currentMonth]);
 		setIsCurrentMonth(getMonth === data.months[currentMonth].monthNo ? true : false);
 	}, [data]);
+
+	// For switching month number
+	useEffect(() => {
+		if (Object.keys(data).length === 0) return;
+		
+		props.switchMonths(currentMonth);
+		setMonthData(data.months[currentMonth]);
+		setIsCurrentMonth(getMonth === data.months[currentMonth].monthNo ? true : false);
+	}, [currentMonth]);
 
 	return (
 		<View style={styles.calendar}>

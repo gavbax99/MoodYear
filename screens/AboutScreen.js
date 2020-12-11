@@ -44,9 +44,9 @@ const AboutScreen = props => {
 
 	// Handle logout
 	const handleLogout = () => {
-		dispatch(logoutAuth());
-		dispatch(logoutCreds());
 		dispatch(logoutData());
+		dispatch(logoutCreds());
+		dispatch(logoutAuth());
 	};
 
 	// Delete account warning alert
@@ -63,8 +63,8 @@ const AboutScreen = props => {
 					text: "Delete",
 					onPress: () => {
 						dispatch(logoutData());
-						dispatch(logoutAuth());
 						dispatch(logoutCreds());
+						dispatch(logoutAuth());
 						dispatch(deleteAccount(uid, token));
 					},
 					style: "destructive"
