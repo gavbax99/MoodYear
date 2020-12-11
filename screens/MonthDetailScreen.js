@@ -90,7 +90,7 @@ const MonthDetailScreen = props => {
 
 	// useEffect
 	useEffect(() => {
-		if (data.months[monthNo] === undefined) return;
+		if (Object.keys(data).length === 0) return;
 
 		setDayOfTheWeek(data.months[monthNo].firstDayOfWeek);
 		setFaceColor(returnFaceColorHex(data.months[monthNo].days[0].color - 1));

@@ -1,6 +1,6 @@
 // React
 import React, { useEffect, useRef } from 'react';
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, StackActions } from "react-navigation";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -23,6 +23,14 @@ const NavigationContainer = props => {
 					routeName: "Startup",
 					params: { update: Math.random() },
 				})
+
+				// StackActions.reset({
+				// 	index: 0,
+				// 	actions: [NavigationActions.navigate({ 
+				// 		routeName: 'Startup',
+				// 		params: { update: Math.random() }, 
+				// 	})],
+				// })
 			);
 		}
 	}, [isAuth]) 
