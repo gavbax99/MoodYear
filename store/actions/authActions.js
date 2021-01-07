@@ -142,11 +142,13 @@ export const login = (email, password) => {
 			resData.localId,
 			resAccountInfo.email,
 			resAccountInfo.registeredDate,
+			// parseInt(resData.expiresIn)
 			parseInt(resData.expiresIn) * 1000
 		));
 
 		// Save data to local storage
 		const expirationDate = new Date(
+			// new Date().getTime() + parseInt(resData.expiresIn)
 			new Date().getTime() + parseInt(resData.expiresIn) * 1000
 		);
 		saveDataToStorage(resData.idToken, resData.localId, expirationDate);

@@ -28,36 +28,40 @@ const OtherPagesHeader = props => {
 	};
 
 	return (
-		<SafeAreaView style={styles.header} onLayout={findHeaderHeight}>
-			{/* Logo */}
-			<View style={styles.leftGroup}>
-				<TouchableOpacity
-					activeOpacity={Tools.activeOpacity}
-					style={{ padding: Tools.paddingNormal }}
-					onPress={() => { props.navigation.goBack() }}>
+		<SafeAreaView style={styles.safeAreaView} onLayout={findHeaderHeight}>
+			<View style={styles.header}>
 
-					<View style={styles.svgContainer}>
-						<Svg style={{
-								transform: [{ rotateZ: "180deg" }],
-								shadowColor: '#000',
-								shadowOffset: { width: 0, height: -3 },
-								shadowRadius: 2,
-								shadowOpacity: 1,
-							}}
-							width={14}
-							height={16}
-							viewBox="0 0 14 16">
-							<Path fill={Tools.color3} d={Tools.arrowPath} />
-						</Svg>
-					</View>
-				</TouchableOpacity>
-			</View>
+				{/* Logo */}
+				<View style={styles.leftGroup}>
+					<TouchableOpacity
+						activeOpacity={Tools.activeOpacity}
+						style={{ padding: Tools.paddingNormal }}
+						onPress={() => { props.navigation.goBack() }}>
 
-			{/* Text */}
-			<View style={styles.settingsTextContainer}>
-				<Text style={styles.yearText}>
-					{props.title}
-				</Text>
+						<View style={styles.svgContainer}>
+							<Svg style={{
+									transform: [{ rotateZ: "180deg" }],
+									shadowColor: '#000',
+									shadowOffset: { width: 0, height: -3 },
+									shadowRadius: 2,
+									shadowOpacity: 1,
+								}}
+								width={14}
+								height={16}
+								viewBox="0 0 14 16">
+								<Path fill={Tools.color3} d={Tools.arrowPath} />
+							</Svg>
+						</View>
+					</TouchableOpacity>
+				</View>
+
+				{/* Text */}
+				<View style={styles.settingsTextContainer}>
+					<Text style={styles.yearText}>
+						{props.title}
+					</Text>
+				</View>
+
 			</View>
 		</SafeAreaView>
 	);
@@ -65,14 +69,17 @@ const OtherPagesHeader = props => {
 
 // ==================== Styles ====================
 const styles = StyleSheet.create({
-	header: {
-		// height: 65,
+	safeAreaView: {
 		width: "100%",
 		backgroundColor: Tools.colorHeaderGrey,
+		zIndex: 999,
+	},
+	header: {
+		width: "100%",
 		justifyContent: "space-between",
 		flexDirection: "row",
 		alignItems: 'center',
-		zIndex: 999,
+		paddingTop: 1
 	},
 	logoImage: {
 		width: 24,
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		paddingHorizontal: Tools.paddingLarge,
-		paddingVertical: Tools.paddingNormal,
+		paddingBottom: Tools.paddingNormal,
 	},
 	svgContainer: {
 		paddingHorizontal: 12,
@@ -102,6 +109,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	leftGroup: {
+		paddingBottom: Tools.paddingNormal,
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
