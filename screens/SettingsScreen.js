@@ -78,6 +78,18 @@ const SettingsScreen = props => {
 					}
 				</View>
 
+				{/* Notification button */}
+				<TouchableOpacity
+					activeOpacity={Tools.activeOpacity}
+					style={styles.settingsButton}
+					onPress={() => {
+						props.navigation.navigate({
+							routeName: "Notification",
+						})
+					}}>
+					<Text style={styles.buttonText}>Daily Notification</Text>
+				</TouchableOpacity>
+
 				{/* Account button */}
 				<TouchableOpacity
 					activeOpacity={Tools.activeOpacity}
@@ -172,7 +184,7 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		color: Tools.colorLight,
-		fontSize: 24,
+		fontSize: 22,
 		fontWeight: "200",
 	},
 });

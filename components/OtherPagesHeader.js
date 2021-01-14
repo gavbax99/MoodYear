@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		flexDirection: "row",
 		alignItems: 'center',
-		paddingTop: 1
+		paddingTop: Tools.paddingNormal
 	},
 	logoImage: {
 		width: 24,
