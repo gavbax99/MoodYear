@@ -99,7 +99,7 @@ const AboutScreen = props => {
 		}
 
 		// If remainder, pull from previous month
-		if (thirtyRemainder > 0) {
+		if (thirtyRemainder > 0 && monthNoForArray !== 0) {
 			const prevMonthLength = data.months[monthNoForArray - 1].days.length;
 			// Accounting for March 1st (pML - tR = -1)
 			for (i = prevMonthLength - thirtyRemainder >= 0 ? prevMonthLength - thirtyRemainder : 0; i < prevMonthLength; i++) {
@@ -136,7 +136,7 @@ const AboutScreen = props => {
 		}
 
 		// If remainder, pull from previous month
-		if (sevenRemainder > 0) {
+		if (sevenRemainder > 0 && monthNoForArray !== 0) {
 			const prevMonthLength = data.months[monthNoForArray - 1].days.length;
 			for (i = prevMonthLength - sevenRemainder; i < prevMonthLength; i++) {
 				const color = data.months[monthNoForArray - 1].days[i].color;
@@ -228,19 +228,19 @@ const AboutScreen = props => {
 							MoodYear is a mood tracking and journaling tool designed to see how you've been feeling over time and to identify trends that make you feel better.
 						</Text>
 
-						{/* <Text style={styles.aboutText}>
+						<Text style={styles.aboutText}>
 							If you like MoodYear, please consider leaving a positive review on the App Store:
-						</Text> */}
+						</Text>
 
 						{/* Review button */}
-						{/* <TouchableOpacity
+						<TouchableOpacity
 							activeOpacity={Tools.activeOpacity}
 							style={{ ...styles.accountButton, backgroundColor: Tools.color3 }}
 							onPress={() => {
-								Linking.openURL("https://gavinbaxter.com");
+								Linking.openURL("https://apps.apple.com/us/app/moodyear/id1542725152");
 							}}>
 							<Text style={styles.buttonText}>Leave a Review</Text>
-						</TouchableOpacity> */}
+						</TouchableOpacity>
 
 						<Text style={styles.infoTextHeadline}>
 							Data &amp; Privacy
@@ -264,7 +264,7 @@ const AboutScreen = props => {
 						<View style={{ ...styles.accountInfoContainer, marginTop: Tools.paddingLarge, marginBottom: Tools.paddingMonths }}>
 							<View style={styles.infoTextContainer}>
 								<Text style={styles.infoTitleText}>Version:</Text>
-								<Text style={styles.infoText}>1.0.0</Text>
+								<Text style={styles.infoText}>1.0.3</Text>
 							</View>
 							<View style={{ ...styles.infoTextContainer, marginTop: Tools.paddingHalf }}>
 								<Text style={styles.infoTitleText}>Built With:</Text>

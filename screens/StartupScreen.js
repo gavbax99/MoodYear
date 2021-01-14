@@ -34,6 +34,20 @@ const StartupScreen = props => {
 				return;
 			}
 
+			if (userCreds) {
+				// Gather creds
+				const jsonCreds = JSON.parse(userCreds);
+				const { email, password } = jsonCreds;
+
+				// Otherwise, regular login with un/pw
+				if (email && password) {
+					console.log("logging in w/creds");
+					dispatch(login(email, password));
+					props.navigation.navigate("Home");
+					return;
+				}
+			}
+
 			if (userData) {
 				// Gather data
 				const jsonData = JSON.parse(userData);
@@ -48,21 +62,9 @@ const StartupScreen = props => {
 
 				// If token is valid, login from local storage through token
 				if (expDate > new Date()) {
+					console.log("logging in w/data");
 					const expirationTime = expDate.getTime() - new Date().getTime();
 					dispatch(loginFromLocalStorage(token, userId, expirationTime));
-					props.navigation.navigate("Home");
-					return;
-				}
-			}
-
-			if (userCreds) {
-				// Gather creds
-				const jsonCreds = JSON.parse(userCreds);
-				const { email, password } = jsonCreds;
-
-				// Otherwise, regular login with un/pw
-				if (email && password) {
-					dispatch(login(email, password));
 					props.navigation.navigate("Home");
 					return;
 				}

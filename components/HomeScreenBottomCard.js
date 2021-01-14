@@ -86,15 +86,20 @@ const HomeScreenBottomCard = props => {
 
 	// Submit data for day
 	const submitMessage = () => {
-		const newDayObj = new NewObj(data.months[monthNumber].days[dayNumber - 1]);
+		const submitDate = new Date();
+		const submitYearNumber = submitDate.getFullYear();
+		const submitMonthNumber = submitDate.getMonth();
+		const submitDayNumber = submitDate.getDate();
+
+		const newDayObj = new NewObj(data.months[submitMonthNumber].days[submitDayNumber - 1]);
 
 		// #### Remove regex if can figure out scrollview in MonthDetailScreen bottom card
 		newDayObj.obj.message = textInputValue.replace(/\n/gi, " ");
 		newDayObj.obj.color = sliderVal + 1;
-		dispatch(updateSingleDay(uid, yearNumber, monthNumber, (dayNumber - 1), newDayObj.obj));
+		dispatch(updateSingleDay(uid, submitYearNumber, submitMonthNumber, (submitDayNumber - 1), newDayObj.obj));
 
 		// Reload day
-		dispatch(loadData(uid, yearNumber));
+		dispatch(loadData(uid, submitYearNumber));
 
 		// Reset keyboard stuff
 		dispatch(setKeyboardOpen(false));

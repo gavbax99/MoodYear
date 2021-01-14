@@ -89,63 +89,68 @@ const AppHeader = props => {
 	};
 
 	return (
-		<SafeAreaView style={styles.header} onLayout={findHeaderHeight}>
+		<SafeAreaView style={styles.safeAreaView} onLayout={findHeaderHeight}>
+			<View style={styles.header}>
 			
-			{/* Logo */}
-			<View style={styles.leftGroup}>
-				<TouchableOpacity
-					activeOpacity={props.backButton ? Tools.activeOpacity : 1}
-					style={{ paddingHorizontal: Tools.paddingNormal }}
-					onPress={() => { 
-						if (props.backButton === true) {
-							props.navigation.goBack();	
-						} 
-					}}>
-					<HeaderImage />
-				</TouchableOpacity>
-				{props.isSettings === false ?
-					<Text style={styles.yearText}>{yearInt}</Text>
-					:
-					null
-				}
-			</View>
-
-			{/* Settings button */}
-			{props.isSettings === false ?
-				Object.keys(data).length !== 0 ?
+				{/* Logo */}
+				<View style={styles.leftGroup}>
 					<TouchableOpacity
-						activeOpacity={Tools.activeOpacity}
-						style={styles.textContainer}
-						onPress={handleSettingsChange}>
-						<Image
-							style={{ ...styles.logoImage, paddingHorizontal: 6 }}
-							source={require("../assets/images/settings-kog.png")}
-						/>
+						activeOpacity={props.backButton ? Tools.activeOpacity : 1}
+						style={{ paddingHorizontal: Tools.paddingNormal }}
+						onPress={() => { 
+							if (props.backButton === true) {
+								props.navigation.goBack();	
+							} 
+						}}>
+						<HeaderImage />
 					</TouchableOpacity>
-					:
-					null
-				:
-				<View style={styles.settingsTextContainer}>
-					<Text style={{ ...styles.yearText, color: Tools.color5, fontWeight: "500" }}>
-						Settings
-					</Text>
+					{props.isSettings === false ?
+						<Text style={styles.yearText}>{yearInt}</Text>
+						:
+						null
+					}
 				</View>
-			}
 
+				{/* Settings button */}
+				{props.isSettings === false ?
+					Object.keys(data).length !== 0 ?
+						<TouchableOpacity
+							activeOpacity={Tools.activeOpacity}
+							style={styles.cogContainer}
+							onPress={handleSettingsChange}>
+							<Image
+								style={{ ...styles.logoImage, paddingHorizontal: 6 }}
+								source={require("../assets/images/settings-kog.png")}
+							/>
+						</TouchableOpacity>
+						:
+						null
+					:
+					<View style={styles.settingsTextContainer}>
+						<Text style={{ ...styles.yearText, color: Tools.color5, fontWeight: "500" }}>
+							Settings
+						</Text>
+					</View>
+				}
+
+			</View>
 		</SafeAreaView>
 	);
 };
 
 // ==================== Styles ====================
 const styles = StyleSheet.create({
-	header: {
-		// height: 65,
+	safeAreaView: {
 		width: "100%",
 		backgroundColor: Tools.colorHeaderGrey,
+		zIndex: 999,
+	},
+	header: {
+		width: "100%",
 		justifyContent: "space-between",
 		flexDirection: "row",
 		alignItems: 'center',
-		zIndex: 999,
+		paddingTop: 1
 	},
 	logoImage: {
 		width: 28,
@@ -157,8 +162,9 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: "600",
 	},
-	textContainer: {
-		padding: Tools.paddingNormal,
+	cogContainer: {
+		paddingHorizontal: Tools.paddingNormal,
+		paddingBottom: Tools.paddingNormal,
 		flexDirection: "row",
 	},
 	settingsTextContainer: {
@@ -166,7 +172,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		paddingHorizontal: Tools.paddingLarge,
-		paddingVertical: Tools.paddingNormal,
+		paddingBottom: Tools.paddingNormal,
 	},
 	svgContainer: {
 		paddingHorizontal: 12,
@@ -175,7 +181,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	leftGroup: {
-		paddingVertical: Tools.paddingNormal,
+		paddingBottom: Tools.paddingNormal,
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
