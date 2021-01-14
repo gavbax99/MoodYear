@@ -10,6 +10,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import FtueScreen from "../screens/FtueScreen";
 import AboutScreen from "../screens/AboutScreen";
 import StartupScreen from "../screens/StartupScreen";
+import NotificationScreen from "../screens/NotificationScreen";
 
 // Tools
 import Tools from "../constants/Tools";
@@ -48,6 +49,9 @@ const HomeNavigator = createStackNavigator({
 	About: {
 		screen: AboutScreen,
 	},
+	Notification: {
+		screen: NotificationScreen,
+	}
 }, {
 	defaultNavigationOptions: defaultStackNavOptions,
 });
