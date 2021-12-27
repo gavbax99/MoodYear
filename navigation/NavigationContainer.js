@@ -16,6 +16,7 @@ const NavigationContainer = props => {
 	const navRef = useRef();
 	const isAuth = useSelector(state => !!state.authReducer.token);
 
+	// This container is used to check if the user's login token is valid (action creates a timer that expires)
 	useEffect(() => {
 		if (!isAuth) {
 			navRef.current.dispatch(
